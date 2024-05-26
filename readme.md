@@ -1,6 +1,6 @@
 # markwiemer.com
 
-🚧 Well, currently, https://mark-wiemer-org.github.io/mark-wiemer-com, kinda 🚧
+🚧 Well, currently, https://mark-wiemer.github.io/mark-wiemer-com, kinda 🚧
 
 ## React + TypeScript + Vite
 
