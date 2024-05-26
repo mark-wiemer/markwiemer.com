@@ -16,22 +16,30 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>markwiemer.com</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+          Count is {count}
         </button>
         <p>
-          Hello, world! If you're reading this, it's because you're a cool
+          {`Hello, world! If you're reading this, it's because you're a cool
           person. There isn't much here yet, just wanted to show you my little
-          corner of the internet. I'll let you know when there's more to see 😊
+          corner of the internet. I'll let you know when there's more to see :)`}
+        </p>
+        <p>
+          <a href="https://github.com/mark-wiemer/mark-wiemer-com">
+            View on GitHub
+          </a>
         </p>
         <p>
           Built with <a href="https://bun.sh">Bun</a>
         </p>
         <p>
-          <a href="https://github.com/mark-wiemer/mark-wiemer-com">
-            View on GitHub
+          "Smiling face with sunglasses" graphic designed by{" "}
+          <a href="https://openmoji.org">OpenMoji</a> – the open-source emoji
+          and icon project.{" "}
+          <a href="https://creativecommons.org/licenses/by-sa/4.0">
+            License: CC BY-SA 4.0
           </a>
         </p>
       </div>
