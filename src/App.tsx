@@ -22,6 +22,11 @@ function App() {
           count is {count}
         </button>
         <p>
+          Hello, world! If you're reading this, it's because you're a cool
+          person. There isn't much here yet, just wanted to show you my little
+          corner of the internet. I'll let you know when there's more to see 😊
+        </p>
+        <p>
           Built with <a href="https://bun.sh">Bun</a>
         </p>
         <p>
