@@ -22,12 +22,14 @@ function App() {
           count is {count}
         </button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Built with <a href="https://bun.sh">Bun</a>
+        </p>
+        <p>
+          <a href="https://github.com/mark-wiemer/mark-wiemer-com">
+            View on GitHub
+          </a>
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
