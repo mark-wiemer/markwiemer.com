@@ -45,6 +45,7 @@ jobs:
           indexJS=$(find dist/assets -name *.js)
           sed 's/\/assets/.\/assets/g' $indexJS > dist/tmp.js
           cp dist/tmp.js $indexJS
+          rm dist/tmp.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
