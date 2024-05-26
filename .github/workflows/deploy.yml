@@ -37,6 +37,11 @@ jobs:
         run: bun install
       - name: Build site
         run: bun run dev build --outDir dist
+      - name: Fixup asset path
+        run: |
+          sed '7,8s/\/assets/.\/assets/' dist/index.html > dist/tmp.html 
+          cp dist/tmp.html dist/index.html 
+          rm dist/tmp.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
