@@ -37,18 +37,6 @@ jobs:
         run: bun install
       - name: Build site
         run: bun run dev build --outDir dist
-      - name: Fixup asset path
-        run: |
-          # When deploying to a relative path, replace `/assets` with `./assets`
-          # Be careful as running this twice results in `../assets` which is bad!
-          # No impact when deploying to TLD
-          sed '7,8s/\/assets/.\/assets/' dist/index.html > dist/tmp.html 
-          cp dist/tmp.html dist/index.html 
-          rm dist/tmp.html
-          indexJS=$(find dist/assets -name *.js)
-          sed 's/\/assets/.\/assets/g' $indexJS > dist/tmp.js
-          cp dist/tmp.js $indexJS
-          rm dist/tmp.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
