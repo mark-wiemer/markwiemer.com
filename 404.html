@@ -22,27 +22,27 @@
       // Otherwise, leave pathSegmentsToKeep as 0.
       let pathSegmentsToKeep = 0;
 
-      let location = window.location;
-      location.replace(
-        location.protocol +
+      let winLocation = window.location;
+      winLocation.replace(
+        winLocation.protocol +
           "//" +
-          location.hostname +
-          (location.port ? ":" + location.port : "") +
-          location.pathname
+          winLocation.hostname +
+          (winLocation.port ? ":" + winLocation.port : "") +
+          winLocation.pathname
             .split("/")
             .slice(0, 1 + pathSegmentsToKeep)
             .join("/") +
           "/?/" +
-          location.pathname
+          winLocation.pathname
             .slice(1)
             .split("/")
             .slice(pathSegmentsToKeep)
             .join("/")
             .replace(/&/g, "~and~") +
-          (location.search
-            ? "&" + location.search.slice(1).replace(/&/g, "~and~")
+          (winLocation.search
+            ? "&" + winLocation.search.slice(1).replace(/&/g, "~and~")
             : "") +
-          location.hash
+          winLocation.hash
       );
     </script>
   </head>
