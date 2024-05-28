@@ -22,6 +22,7 @@ function App() {
           Count is {count}
         </button>
         <p>
+          {/* Wrap as string to avoid VS Code yelling at raw HTML `)` */}
           {`Hello, world! If you're reading this, it's because you're a cool
           person. There isn't much here yet, just wanted to show you my little
           corner of the internet. I'll let you know when there's more to see :)`}
