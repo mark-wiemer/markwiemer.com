@@ -7,7 +7,7 @@ function Home() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="container">
+    <div className="homeContainer">
       <div>
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
