@@ -5,6 +5,7 @@ import About from "./routes/about/About.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./ErrorPage.tsx";
+import Breakout from "./routes/games/breakout/Breakout.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,11 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <About />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/games/breakout",
+    element: <Breakout />,
     errorElement: <ErrorPage />,
   },
 ]);
