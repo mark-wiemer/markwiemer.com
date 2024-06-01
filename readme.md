@@ -2,7 +2,7 @@
 
 🚧 Under construction! 🚧
 
-My personal site hosting my articles, picture of my dog, and other stuff I like 😊
+My personal site hosting my articles, pictures of my dog, and other stuff I like 😊
 
 ## Developer notes
 
