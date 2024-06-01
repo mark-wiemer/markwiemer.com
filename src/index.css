@@ -13,6 +13,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  display: flex;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
