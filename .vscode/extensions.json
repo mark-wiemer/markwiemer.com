@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "streetsidesoftware.code-spell-checker",
-    "aaron-bond.better-comments"
+    "aaron-bond.better-comments",
+    "github.vscode-pull-request-github"
   ]
 }
