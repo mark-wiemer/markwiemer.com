@@ -3,6 +3,7 @@ img {
 }
 
 .aboutContainer {
+  padding: 2rem;
   max-width: 640px;
   text-align: left;
 }
