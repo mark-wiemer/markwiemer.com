@@ -58,10 +58,13 @@ const BouncingBall = () => {
     const animate = () => {
       const { width, height } = dimensionsRef.current;
       const { x: dirX, y: dirY } = directionRef.current;
+      const directionRadians = Math.PI / 3; // 60 deg from horizontal
 
       // Move the ball
-      positionRef.current.x += speedRef.current * dirX * Math.cos(Math.PI / 3);
-      positionRef.current.y += speedRef.current * dirY * Math.sin(Math.PI / 3);
+      positionRef.current.x +=
+        speedRef.current * dirX * Math.cos(directionRadians);
+      positionRef.current.y +=
+        speedRef.current * dirY * Math.sin(directionRadians);
 
       // Bounce logic
       if (
