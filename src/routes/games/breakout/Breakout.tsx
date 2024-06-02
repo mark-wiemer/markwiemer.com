@@ -2,15 +2,22 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import * as THREE from "three";
 
 const BouncingBall = () => {
-  const mountRef = useRef<HTMLDivElement>(null);
-  const cameraRef = useRef<THREE.OrthographicCamera>();
-  const rendererRef = useRef<THREE.WebGLRenderer>();
-  const ballRef = useRef<THREE.Mesh>();
-  const positionYRef = useRef(0);
-  const directionRef = useRef(1);
-
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
+
+  const mountRef = useRef<HTMLDivElement>(null);
+  const cameraRef = useRef<THREE.OrthographicCamera>(
+    new THREE.OrthographicCamera()
+  );
+  const rendererRef = useRef<THREE.WebGLRenderer>(
+    new THREE.WebGLRenderer({ antialias: true })
+  );
+  const ballRef = useRef<THREE.Mesh>();
+  const positionRef = useRef({ x: 0, y: 0 });
+  const directionRef = useRef({ x: 1, y: 1 });
+  const speedRef = useRef(5);
+  const ballSize = useRef(50);
+  const dimensionsRef = useRef({ width, height });
 
   /** Update the camera to view the new given width and height */
   const updateCamera = useCallback(
@@ -31,20 +38,17 @@ const BouncingBall = () => {
   useEffect(() => {
     const currentMount = mountRef.current;
     const scene = new THREE.Scene();
+    const renderer = rendererRef.current;
 
     // Camera
-    const camera = new THREE.OrthographicCamera();
-    cameraRef.current = camera;
-    updateCamera(camera, width, height);
+    updateCamera(cameraRef.current, width, height);
 
     // Renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(width, height);
     mountRef.current?.appendChild(renderer.domElement);
-    rendererRef.current = renderer;
 
     // Ball
-    const geometry = new THREE.CircleGeometry(50);
+    const geometry = new THREE.CircleGeometry(ballSize.current);
     const material = new THREE.MeshBasicMaterial({ color: "red" });
     const ball = new THREE.Mesh(geometry, material);
     scene.add(ball);
@@ -52,17 +56,31 @@ const BouncingBall = () => {
 
     // Animation loop
     const animate = () => {
-      // Bounce logic
-      positionYRef.current += 5 * directionRef.current;
-      if (
-        positionYRef.current > height / 2 - 50 ||
-        positionYRef.current < -height / 2 + 50
-      ) {
-        directionRef.current *= -1;
-      }
-      ball.position.y = positionYRef.current;
+      const { width, height } = dimensionsRef.current;
+      const { x: dirX, y: dirY } = directionRef.current;
 
-      renderer.render(scene, camera);
+      // Move the ball
+      positionRef.current.x += speedRef.current * dirX * Math.cos(Math.PI / 3);
+      positionRef.current.y += speedRef.current * dirY * Math.sin(Math.PI / 3);
+
+      // Bounce logic
+      if (
+        positionRef.current.x > width / 2 - ballSize.current ||
+        positionRef.current.x < -width / 2 + ballSize.current
+      ) {
+        directionRef.current.x *= -1;
+      }
+      if (
+        positionRef.current.y > height / 2 - ballSize.current ||
+        positionRef.current.y < -height / 2 + ballSize.current
+      ) {
+        directionRef.current.y *= -1;
+      }
+
+      ball.position.x = positionRef.current.x;
+      ball.position.y = positionRef.current.y;
+
+      renderer.render(scene, cameraRef.current);
     };
 
     renderer.setAnimationLoop(animate);
@@ -84,10 +102,9 @@ const BouncingBall = () => {
       setWidth(newWidth);
       setHeight(newHeight);
 
-      if (cameraRef.current && rendererRef.current) {
-        updateCamera(cameraRef.current, newWidth, newHeight);
-        rendererRef.current.setSize(newWidth, newHeight);
-      }
+      updateCamera(cameraRef.current, newWidth, newHeight);
+      rendererRef.current.setSize(newWidth, newHeight);
+      dimensionsRef.current = { width: newWidth, height: newHeight };
     };
 
     window.addEventListener("resize", handleResize);
