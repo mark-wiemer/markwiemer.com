@@ -1,19 +1,7 @@
-.homeContainer {
-  max-width: 1280px;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
-.logo.react:hover {
+.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
@@ -27,6 +15,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Animate second sibling link with class logo */
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }

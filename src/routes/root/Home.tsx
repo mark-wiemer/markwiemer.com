@@ -2,18 +2,29 @@ import { useState } from "react";
 import reactLogo from "../../assets/react.svg";
 import viteLogo from "../../assets/vite.svg";
 import "./Home.css";
+import { useHomeStyles } from "./Home.styles";
+import { Link } from "@fluentui/react-components";
 
-function Home() {
+const Home = (): JSX.Element => {
   const [count, setCount] = useState(0);
+  const styles = useHomeStyles();
 
   return (
-    <div className="homeContainer">
+    <div className={styles.container}>
       <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
+        <Link href="https://vitejs.dev" target="_blank" rel="noreferrer">
+          <img
+            src={viteLogo}
+            className={`logo ${styles.logo}`}
+            alt="Vite logo"
+          />
+        </Link>
         <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+          <img
+            src={reactLogo}
+            className={`${styles.logo} react logo`}
+            alt="React logo"
+          />
         </a>
       </div>
       <h1>markwiemer.com</h1>
@@ -50,6 +61,6 @@ function Home() {
       </div>
     </div>
   );
-}
+};
 
 export default Home;
