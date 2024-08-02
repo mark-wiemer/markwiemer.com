@@ -15,7 +15,7 @@ const BouncingBall = () => {
   const ballRef = useRef<THREE.Mesh>();
   const positionRef = useRef({ x: 0, y: 0 });
   const directionRef = useRef({ x: 1, y: 1 });
-  const speedRef = useRef(5);
+  const pxPerSecondRef = useRef(100);
   const ballSize = useRef(50);
   const dimensionsRef = useRef({ width, height });
 
@@ -55,16 +55,19 @@ const BouncingBall = () => {
     ballRef.current = ball;
 
     // Animation loop
-    const animate = () => {
+    let lastFrameTime = 0;
+    const animate = (time: DOMHighResTimeStamp) => {
       const { width, height } = dimensionsRef.current;
       const { x: dirX, y: dirY } = directionRef.current;
       const directionRadians = Math.PI / 3; // 60 deg from horizontal
+      const deltaTime = (time - lastFrameTime) / 1000; // Convert time to seconds
+      lastFrameTime = time;
 
       // Move the ball
       positionRef.current.x +=
-        speedRef.current * dirX * Math.cos(directionRadians);
+        pxPerSecondRef.current * dirX * Math.cos(directionRadians) * deltaTime;
       positionRef.current.y +=
-        speedRef.current * dirY * Math.sin(directionRadians);
+        pxPerSecondRef.current * dirY * Math.sin(directionRadians) * deltaTime;
 
       // Bounce logic
       if (
