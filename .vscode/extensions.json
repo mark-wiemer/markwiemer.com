@@ -4,6 +4,7 @@
     "esbenp.prettier-vscode",
     "streetsidesoftware.code-spell-checker",
     "aaron-bond.better-comments",
-    "github.vscode-pull-request-github"
+    "github.vscode-pull-request-github",
+    "meganrogge.template-string-converter"
   ]
 }
