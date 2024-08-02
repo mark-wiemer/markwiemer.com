@@ -4,7 +4,7 @@ import forensicsTrophyPose from "../../assets/2014-XX-XX forensics trophy pose.p
 import profilePicture2020 from "../../assets/2020-02-01 profile picture blue shirt green background.jpg";
 import "./About.css";
 
-const About = () => (
+const About = (): JSX.Element => (
   <div className="aboutContainer">
     <h1>Who am I, anyway? A 5-minute autobiography</h1>
     <p>2023-04-17</p>
