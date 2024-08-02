@@ -14,5 +14,7 @@
     "schooler",
     "suicidality",
     "wasn"
-  ]
+  ],
+  "githubPullRequests.defaultMergeMethod": "squash",
+  "githubPullRequests.pullRequestDescription": "none"
 }
