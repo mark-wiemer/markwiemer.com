@@ -19,7 +19,14 @@ const About = (): JSX.Element => {
       >
         Home
       </Link>
-      <LargeTitle as="h1" style={{ textAlign: "center", marginBottom: ".2em" }}>
+      <LargeTitle
+        as="h1"
+        style={{
+          textAlign: "center",
+          marginBottom: ".2em",
+          hyphens: "auto",
+        }}
+      >
         Who am I, anyway? A 5-minute autobiography
       </LargeTitle>
       <p style={{ fontWeight: "bold" }}>
@@ -34,7 +41,11 @@ const About = (): JSX.Element => {
           target="_blank"
           rel="noreferrer"
         >
-          markwiemer.medium.com
+          markwiemer
+          <wbr />
+          .medium
+          <wbr />
+          .com
         </Link>{" "}
         on 2023-04-17
       </p>
