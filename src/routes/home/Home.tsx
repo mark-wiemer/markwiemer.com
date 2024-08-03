@@ -39,7 +39,7 @@ const Home = (): JSX.Element => {
           corner of the internet. I'll let you know when there's more to see :)`}
         </p>
         <p>
-          {`(P.S. I'm the one on the left. The cutie on the right is Wynonna, 
+          {`(P.S. I'm the human in the above photos. The cute dog is Wynonna, 
           my Australian shepherd 🥰)`}
         </p>
         <p>
