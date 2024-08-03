@@ -1,7 +1,7 @@
 import { useHomeStyles } from "./Home.styles";
 import { Link, LargeTitle } from "@fluentui/react-components";
 import profile2023 from "../../assets/2023-07-20 profile.png";
-import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside cropped.jpg";
+import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Home = (): JSX.Element => {
@@ -39,7 +39,7 @@ const Home = (): JSX.Element => {
           corner of the internet. I'll let you know when there's more to see :)`}
         </p>
         <p>
-          {`(P.S. I'm the one on the left. The cutie on the right is Wynonna, 
+          {`(P.S. I'm the human in the above photos. The cute dog is Wynonna, 
           my Australian shepherd 🥰)`}
         </p>
         <p>
