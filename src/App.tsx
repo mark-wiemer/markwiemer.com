@@ -9,7 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
 import About from "./routes/about/About";
 import Breakout from "./routes/games/breakout/Breakout";
-import Home from "./routes/root/Home";
+import Home from "./routes/home/Home";
 import { StrictMode } from "react";
 
 const useAppStyles = makeStyles({
