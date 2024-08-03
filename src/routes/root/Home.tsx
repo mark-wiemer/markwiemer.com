@@ -1,11 +1,9 @@
-import { useState } from "react";
 import reactLogo from "../../assets/react.svg";
 import viteLogo from "../../assets/vite.svg";
 import { useHomeStyles } from "./Home.styles";
 import { Link, mergeClasses } from "@fluentui/react-components";
 
 const Home = (): JSX.Element => {
-  const [count, setCount] = useState(0);
   const styles = useHomeStyles();
 
   return (
@@ -37,13 +35,6 @@ const Home = (): JSX.Element => {
       </div>
       <h1>markwiemer.com</h1>
       <div className={styles.card}>
-        <button
-          onClick={() => {
-            setCount((count) => count + 1);
-          }}
-        >
-          Count is {count}
-        </button>
         <p>
           {/* Wrap as string to avoid VS Code yelling at raw HTML `)` */}
           {`Hello, world! If you're reading this, it's because you're a cool
