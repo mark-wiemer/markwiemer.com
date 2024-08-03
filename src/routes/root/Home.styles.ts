@@ -5,6 +5,9 @@ export const useHomeStyles = makeStyles({
     maxWidth: "1280px",
     padding: "2rem",
     textAlign: "center",
+    "& p": {
+      fontSize: "18px",
+    },
   },
   logo: {
     height: "6em",
@@ -32,5 +35,8 @@ export const useHomeStyles = makeStyles({
   },
   card: {
     padding: "2em",
+  },
+  pTag: {
+    display: "block",
   },
 });
