@@ -14,5 +14,6 @@ body {
   display: flex;
   place-items: center;
   min-height: 100vh;
+  /* Fluent v9 dark theme background color */
   background-color: #292929;
 }
