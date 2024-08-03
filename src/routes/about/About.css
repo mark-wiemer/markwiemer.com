@@ -7,6 +7,10 @@ img {
   padding: 2rem;
   max-width: 640px;
   text-align: left;
+  @media (max-width: 640px) {
+    padding: 4px;
+    max-width: calc(100vw - 24px);
+  }
 }
 
 .aboutContainer hr {

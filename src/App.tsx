@@ -14,7 +14,9 @@ import { StrictMode } from "react";
 
 const useAppStyles = makeStyles({
   provider: {
-    minWidth: "320px",
+    // support 320px + 20px scrollbar
+    // scrollbar width varies by user agent
+    minWidth: "300px",
     maxWidth: "100vw",
     "& div": {
       display: "flex",
