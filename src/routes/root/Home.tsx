@@ -1,12 +1,34 @@
 import { useHomeStyles } from "./Home.styles";
-import { Link } from "@fluentui/react-components";
+import { Link, LargeTitle } from "@fluentui/react-components";
+import profile2023 from "../../assets/2023-07-20 profile.png";
+import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside cropped.jpg";
 
 const Home = (): JSX.Element => {
   const styles = useHomeStyles();
 
   return (
     <div className={styles.container}>
-      <h1>markwiemer.com</h1>
+      <LargeTitle as="h1" style={{ textAlign: "center" }}>
+        mark
+        <wbr />
+        wiemer
+        <wbr />
+        .com
+      </LargeTitle>
+      <div
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          columnGap: "1em",
+          rowGap: "1em",
+          alignSelf: "center",
+          flexWrap: "wrap",
+          justifyContent: "space-around",
+        }}
+      >
+        <img src={profile2023} className={styles.headerImage} />
+        <img src={wynonnaRaincoat} className={styles.headerImage} />
+      </div>
       <div className={styles.card}>
         <p>
           {/* Wrap as string to avoid VS Code yelling at raw HTML `)` */}
@@ -15,9 +37,8 @@ const Home = (): JSX.Element => {
           corner of the internet. I'll let you know when there's more to see :)`}
         </p>
         <p>
-          <Link href="https://github.com/mark-wiemer/mark-wiemer-com">
-            View on GitHub
-          </Link>
+          {`(P.S. I'm the one on the left. The cutie on the right is Wynonna, 
+          my Australian shepherd 🥰)`}
         </p>
         <p>
           {`"Smiling face with sunglasses" graphic designed by `}
@@ -25,6 +46,11 @@ const Home = (): JSX.Element => {
           emoji and icon project.{" "}
           <Link href="https://creativecommons.org/licenses/by-sa/4.0">
             License: CC BY-SA 4.0
+          </Link>
+        </p>
+        <p>
+          <Link href="https://github.com/mark-wiemer/mark-wiemer-com">
+            View on GitHub
           </Link>
         </p>
       </div>

@@ -9,4 +9,10 @@ export const useHomeStyles = makeStyles({
   card: {
     padding: "2em",
   },
+  headerImage: {
+    width: "12em",
+    height: "12em",
+    alignSelf: "center",
+    borderRadius: "50%",
+  },
 });
