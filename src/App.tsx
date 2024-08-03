@@ -14,7 +14,6 @@ const useAppStyles = makeStyles({
   provider: {
     minWidth: "320px",
     maxWidth: "100vw",
-    minHeight: "100vh",
     "& div": {
       display: "flex",
       flexDirection: "column",
