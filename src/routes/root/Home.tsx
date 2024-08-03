@@ -2,7 +2,7 @@ import { useState } from "react";
 import reactLogo from "../../assets/react.svg";
 import viteLogo from "../../assets/vite.svg";
 import { useHomeStyles } from "./Home.styles";
-import { mergeClasses } from "@fluentui/react-components";
+import { Link, mergeClasses } from "@fluentui/react-components";
 
 const Home = (): JSX.Element => {
   const [count, setCount] = useState(0);
@@ -11,14 +11,14 @@ const Home = (): JSX.Element => {
   return (
     <div className={styles.container}>
       <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
+        <Link href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img
             src={viteLogo}
             className={mergeClasses(styles.logo, styles.viteLogo)}
             alt="Vite logo"
           />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
+        </Link>
+        <Link href="https://react.dev" target="_blank" rel="noreferrer">
           <img
             src={reactLogo}
             className={`${mergeClasses(
@@ -27,7 +27,7 @@ const Home = (): JSX.Element => {
             )} react logo`}
             alt="React logo"
           />
-        </a>
+        </Link>
       </div>
       <h1>markwiemer.com</h1>
       <div className={styles.card}>
@@ -45,20 +45,20 @@ const Home = (): JSX.Element => {
           corner of the internet. I'll let you know when there's more to see :)`}
         </p>
         <p>
-          <a href="https://github.com/mark-wiemer/mark-wiemer-com">
+          <Link href="https://github.com/mark-wiemer/mark-wiemer-com">
             View on GitHub
-          </a>
+          </Link>
         </p>
         <p>
-          Built with <a href="https://bun.sh">Bun</a>
+          Built with <Link href="https://bun.sh">Bun</Link>
         </p>
         <p>
           {`"Smiling face with sunglasses" graphic designed by `}
-          <a href="https://openmoji.org">OpenMoji</a> – the open-source emoji
-          and icon project.{" "}
-          <a href="https://creativecommons.org/licenses/by-sa/4.0">
+          <Link href="https://openmoji.org">OpenMoji</Link> – the open-source
+          emoji and icon project.{" "}
+          <Link href="https://creativecommons.org/licenses/by-sa/4.0">
             License: CC BY-SA 4.0
-          </a>
+          </Link>
         </p>
       </div>
     </div>
