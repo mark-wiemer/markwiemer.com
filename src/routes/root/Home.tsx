@@ -1,7 +1,6 @@
 import { useState } from "react";
 import reactLogo from "../../assets/react.svg";
 import viteLogo from "../../assets/vite.svg";
-import "./Home.css";
 import { useHomeStyles } from "./Home.styles";
 import { Link, mergeClasses } from "@fluentui/react-components";
 
@@ -15,7 +14,7 @@ const Home = (): JSX.Element => {
         <Link href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img
             src={viteLogo}
-            className={`logo ${styles.logo}`}
+            className={mergeClasses(styles.logo, styles.viteLogo)}
             alt="Vite logo"
           />
         </Link>
@@ -31,7 +30,7 @@ const Home = (): JSX.Element => {
         </a>
       </div>
       <h1>markwiemer.com</h1>
-      <div className="card">
+      <div className={styles.card}>
         <button
           onClick={() => {
             setCount((count) => count + 1);

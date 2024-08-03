@@ -11,7 +11,15 @@ export const useHomeStyles = makeStyles({
     padding: "1.5em",
     ...shorthands.transition("filter", "300ms"),
   },
+  viteLogo: {
+    ":hover": {
+      filter: "drop-shadow(0 0 2em #646cffaa)",
+    },
+  },
   reactLogo: {
+    ":hover": {
+      filter: "drop-shadow(0 0 2em #61dafbaa)",
+    },
     "@media (prefers-reduced-motion: no-preference)": {
       animationIterationCount: "infinite",
       animationDuration: "20s",
@@ -20,5 +28,8 @@ export const useHomeStyles = makeStyles({
         to: { transform: "rotate(360deg)" },
       },
     },
+  },
+  card: {
+    padding: "2em",
   },
 });
