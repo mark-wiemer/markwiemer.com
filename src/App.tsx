@@ -20,6 +20,7 @@ const useAppStyles = makeStyles({
       display: "flex",
       flexDirection: "column",
     },
+    fontSize: "18px",
   },
 });
 

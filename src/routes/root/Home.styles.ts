@@ -5,9 +5,6 @@ export const useHomeStyles = makeStyles({
     maxWidth: "1280px",
     padding: "2rem",
     textAlign: "center",
-    "& p": {
-      fontSize: "18px",
-    },
   },
   logo: {
     height: "6em",
