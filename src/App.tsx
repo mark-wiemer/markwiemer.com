@@ -21,6 +21,9 @@ const useAppStyles = makeStyles({
       flexDirection: "column",
     },
     fontSize: "18px",
+    "& h1": {
+      fontSize: "3em",
+    },
   },
 });
 
