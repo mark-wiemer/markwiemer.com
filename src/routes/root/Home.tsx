@@ -3,7 +3,7 @@ import reactLogo from "../../assets/react.svg";
 import viteLogo from "../../assets/vite.svg";
 import "./Home.css";
 import { useHomeStyles } from "./Home.styles";
-import { Link } from "@fluentui/react-components";
+import { Link, mergeClasses } from "@fluentui/react-components";
 
 const Home = (): JSX.Element => {
   const [count, setCount] = useState(0);
@@ -22,7 +22,10 @@ const Home = (): JSX.Element => {
         <a href="https://react.dev" target="_blank" rel="noreferrer">
           <img
             src={reactLogo}
-            className={`${styles.logo} react logo`}
+            className={`${mergeClasses(
+              styles.logo,
+              styles.reactLogo
+            )} react logo`}
             alt="React logo"
           />
         </a>

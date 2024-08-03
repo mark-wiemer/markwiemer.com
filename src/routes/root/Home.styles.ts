@@ -11,4 +11,14 @@ export const useHomeStyles = makeStyles({
     padding: "1.5em",
     ...shorthands.transition("filter", "300ms"),
   },
+  reactLogo: {
+    "@media (prefers-reduced-motion: no-preference)": {
+      animationIterationCount: "infinite",
+      animationDuration: "20s",
+      animationName: {
+        from: { transform: "rotate(0deg)" },
+        to: { transform: "rotate(360deg)" },
+      },
+    },
+  },
 });
