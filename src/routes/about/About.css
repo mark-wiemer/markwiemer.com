@@ -1,9 +1,15 @@
 img {
   max-width: 640px;
+  border-radius: 5%;
 }
 
 .aboutContainer {
   padding: 2rem;
   max-width: 640px;
   text-align: left;
+}
+
+.aboutContainer hr {
+  width: 320px;
+  max-width: calc(100% - 64px);
 }

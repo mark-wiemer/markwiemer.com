@@ -3,11 +3,27 @@ import pizzaBoxArmor from "../../assets/20XX-XX-XX pizza box armor.jpg";
 import forensicsTrophyPose from "../../assets/2014-XX-XX forensics trophy pose.png";
 import profilePicture2020 from "../../assets/2020-02-01 profile picture blue shirt green background.jpg";
 import "./About.css";
+import { LargeTitle, Link, Text } from "@fluentui/react-components";
 
 const About = (): JSX.Element => (
   <div className="aboutContainer">
-    <h1>Who am I, anyway? A 5-minute autobiography</h1>
-    <p>2023-04-17</p>
+    <LargeTitle as="h1" style={{ textAlign: "center" }}>
+      Who am I, anyway? A 5-minute autobiography
+    </LargeTitle>
+    <div style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <Text>2023-04-17</Text>
+      <Text>
+        {/* todo ExternalLink component */}
+        Originally posted at{" "}
+        <Link
+          href="https://markwiemer.medium.com/who-am-i-anyway-a-5-minute-autobiography-f46fb3e6ead4"
+          target="_blank"
+          rel="noreferrer"
+        >
+          markwiemer.medium.com
+        </Link>
+      </Text>
+    </div>
     <p>
       In which your author divulges too much (and also not enough) personal
       information in the hopes of better connecting with you, his audience
@@ -153,9 +169,6 @@ const About = (): JSX.Element => (
       better. Remember that every article you read and interaction you have is
       attached to a story - a person - just like this, except a lot different.
       Isn&apos;t that amazing? I think it&apos;s pretty neat.
-    </p>
-    <p>
-      Thank you for reading. What do you want to learn next? How can I help? 🤓
     </p>
   </div>
 );

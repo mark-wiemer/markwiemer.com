@@ -42,14 +42,24 @@ const Home = (): JSX.Element => {
         </p>
         <p>
           {`"Smiling face with sunglasses" graphic designed by `}
-          <Link href="https://openmoji.org">OpenMoji</Link> – the open-source
-          emoji and icon project.{" "}
-          <Link href="https://creativecommons.org/licenses/by-sa/4.0">
+          <Link href="https://openmoji.org" target="_blank" rel="noreferrer">
+            OpenMoji
+          </Link>{" "}
+          – the open-source emoji and icon project.{" "}
+          <Link
+            href="https://creativecommons.org/licenses/by-sa/4.0"
+            target="_blank"
+            rel="noreferrer"
+          >
             License: CC BY-SA 4.0
           </Link>
         </p>
         <p>
-          <Link href="https://github.com/mark-wiemer/mark-wiemer-com">
+          <Link
+            href="https://github.com/mark-wiemer/mark-wiemer-com"
+            target="_blank"
+            rel="noreferrer"
+          >
             View on GitHub
           </Link>
         </p>
