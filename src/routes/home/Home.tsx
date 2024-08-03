@@ -1,7 +1,7 @@
 import { useHomeStyles } from "./Home.styles";
 import { Link, LargeTitle } from "@fluentui/react-components";
 import profile2023 from "../../assets/2023-07-20 profile.png";
-import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside cropped.jpg";
+import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Home = (): JSX.Element => {
