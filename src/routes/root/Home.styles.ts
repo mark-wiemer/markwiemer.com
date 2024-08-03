@@ -27,6 +27,7 @@ export const useHomeStyles = makeStyles({
         from: { transform: "rotate(0deg)" },
         to: { transform: "rotate(360deg)" },
       },
+      animationDelay: "0s",
     },
   },
   card: {
