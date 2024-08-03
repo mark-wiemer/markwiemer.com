@@ -10,7 +10,13 @@ const Home = (): JSX.Element => {
 
   return (
     <div className={styles.container}>
-      <div>
+      <div
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          alignSelf: "center",
+        }}
+      >
         <Link href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img
             src={viteLogo}
