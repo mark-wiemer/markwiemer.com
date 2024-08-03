@@ -1,38 +1,11 @@
-import reactLogo from "../../assets/react.svg";
-import viteLogo from "../../assets/vite.svg";
 import { useHomeStyles } from "./Home.styles";
-import { Link, mergeClasses } from "@fluentui/react-components";
+import { Link } from "@fluentui/react-components";
 
 const Home = (): JSX.Element => {
   const styles = useHomeStyles();
 
   return (
     <div className={styles.container}>
-      <div
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          alignSelf: "center",
-        }}
-      >
-        <Link href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img
-            src={viteLogo}
-            className={mergeClasses(styles.logo, styles.viteLogo)}
-            alt="Vite logo"
-          />
-        </Link>
-        <Link href="https://react.dev" target="_blank" rel="noreferrer">
-          <img
-            src={reactLogo}
-            className={`${mergeClasses(
-              styles.logo,
-              styles.reactLogo
-            )} react logo`}
-            alt="React logo"
-          />
-        </Link>
-      </div>
       <h1>markwiemer.com</h1>
       <div className={styles.card}>
         <p>
@@ -45,9 +18,6 @@ const Home = (): JSX.Element => {
           <Link href="https://github.com/mark-wiemer/mark-wiemer-com">
             View on GitHub
           </Link>
-        </p>
-        <p>
-          Built with <Link href="https://bun.sh">Bun</Link>
         </p>
         <p>
           {`"Smiling face with sunglasses" graphic designed by `}
