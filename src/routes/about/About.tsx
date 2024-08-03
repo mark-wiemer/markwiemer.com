@@ -3,7 +3,7 @@ import pizzaBoxArmor from "../../assets/20XX-XX-XX pizza box armor.jpg";
 import forensicsTrophyPose from "../../assets/2014-XX-XX forensics trophy pose.png";
 import profilePicture2020 from "../../assets/2020-02-01 profile picture blue shirt green background.jpg";
 import "./About.css";
-import { LargeTitle, Link, Text } from "@fluentui/react-components";
+import { LargeTitle, Link } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
 
 const About = (): JSX.Element => {
@@ -11,33 +11,32 @@ const About = (): JSX.Element => {
   return (
     <div className="aboutContainer">
       <Link
+        as="a"
         onClick={() => {
           navigate("/");
         }}
-        style={{ textAlign: "center" }}
+        style={{ textAlign: "center", fontSize: "18px" }}
       >
         Home
       </Link>
-      <LargeTitle as="h1" style={{ textAlign: "center" }}>
+      <LargeTitle as="h1" style={{ textAlign: "center", marginBottom: ".2em" }}>
         Who am I, anyway? A 5-minute autobiography
       </LargeTitle>
-      <div style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text>2023-04-17</Text>
-        <Text>
-          {/* todo ExternalLink component */}
-          Originally posted at{" "}
-          <Link
-            href="https://markwiemer.medium.com/who-am-i-anyway-a-5-minute-autobiography-f46fb3e6ead4"
-            target="_blank"
-            rel="noreferrer"
-          >
-            markwiemer.medium.com
-          </Link>
-        </Text>
-      </div>
       <p style={{ fontWeight: "bold" }}>
         In which your author divulges too much (and also not enough) personal
         information in the hopes of better connecting with you, his audience
+      </p>
+      <p>
+        {/* todo ExternalLink component */}
+        Originally posted at{" "}
+        <Link
+          href="https://markwiemer.medium.com/who-am-i-anyway-a-5-minute-autobiography-f46fb3e6ead4"
+          target="_blank"
+          rel="noreferrer"
+        >
+          markwiemer.medium.com
+        </Link>{" "}
+        on 2023-04-17
       </p>
       <img src={babyPicture} alt="Me as a cute baby"></img>
       <p>

@@ -2,9 +2,11 @@ import { useHomeStyles } from "./Home.styles";
 import { Link, LargeTitle } from "@fluentui/react-components";
 import profile2023 from "../../assets/2023-07-20 profile.png";
 import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside cropped.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Home = (): JSX.Element => {
   const styles = useHomeStyles();
+  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
@@ -54,15 +56,33 @@ const Home = (): JSX.Element => {
             License: CC BY-SA 4.0
           </Link>
         </p>
-        <p>
+        <div
+          style={{
+            flexDirection: "row",
+            columnGap: "1em",
+            rowGap: "1em",
+            alignSelf: "center",
+          }}
+        >
+          <Link
+            as="a"
+            onClick={() => {
+              navigate("/about");
+            }}
+            style={{ fontSize: "18px" }}
+          >
+            About me
+          </Link>
+          |
           <Link
             href="https://github.com/mark-wiemer/mark-wiemer-com"
             target="_blank"
             rel="noreferrer"
+            style={{ textAlign: "center" }}
           >
             View on GitHub
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );
