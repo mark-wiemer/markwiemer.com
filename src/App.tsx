@@ -2,7 +2,6 @@ import {
   BrandVariants,
   createDarkTheme,
   FluentProvider,
-  makeStyles,
   Theme,
 } from "@fluentui/react-components";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -11,24 +10,7 @@ import About from "./routes/about/About";
 import Breakout from "./routes/games/breakout/Breakout";
 import Home from "./routes/home/Home";
 import { StrictMode } from "react";
-
-const useAppStyles = makeStyles({
-  provider: {
-    // support 320px + 20px scrollbar
-    // scrollbar width varies by user agent
-    minWidth: "300px",
-    maxWidth: "100vw",
-    "& div": {
-      display: "flex",
-      flexDirection: "column",
-    },
-    fontSize: "18px",
-    lineHeight: "1.5",
-    "& h1": {
-      fontSize: "3em",
-    },
-  },
-});
+import useAppStyles from "./App.styles";
 
 // https://react.fluentui.dev/?path=/docs/theme-theme-designer--page
 // 2024-08-03

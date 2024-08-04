@@ -2,18 +2,17 @@ import babyPicture from "../../assets/1999-XX-XX Mark baby picture.jpg";
 import pizzaBoxArmor from "../../assets/20XX-XX-XX pizza box armor.jpg";
 import forensicsTrophyPose from "../../assets/2014-XX-XX forensics trophy pose.png";
 import profilePicture2020 from "../../assets/2020-02-01 profile picture blue shirt green background.jpg";
-import { LargeTitle, Link, makeStyles } from "@fluentui/react-components";
+import {
+  LargeTitle,
+  Link,
+  makeStyles,
+  mergeClasses,
+} from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
+import useAppStyles from "../../App.styles";
 
 const useAboutStyles = makeStyles({
-  container: {
-    padding: "2rem",
-    maxWidth: "640px",
-    textAlign: "left",
-    "@media (max-width: 640px)": {
-      padding: "4px",
-      maxWidth: "calc(100vw - 24px)",
-    },
+  article: {
     "& img": {
       maxWidth: "640px",
       borderRadius: "5%",
@@ -26,10 +25,12 @@ const useAboutStyles = makeStyles({
 });
 
 const About = (): JSX.Element => {
-  const styles = useAboutStyles();
+  const aboutStyles = useAboutStyles();
+  const appStyles = useAppStyles();
+
   const navigate = useNavigate();
   return (
-    <div className={styles.container}>
+    <div className={mergeClasses(appStyles.article, aboutStyles.article)}>
       <Link
         as="a"
         onClick={() => {

@@ -2,13 +2,9 @@ import { Link, LargeTitle, makeStyles } from "@fluentui/react-components";
 import profile2023 from "../../assets/2023-07-20 profile.png";
 import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside.jpg";
 import { useNavigate } from "react-router-dom";
+import useAppStyles from "../../App.styles";
 
 const useHomeStyles = makeStyles({
-  container: {
-    maxWidth: "1280px",
-    padding: "2rem",
-    textAlign: "center",
-  },
   card: {
     padding: "2em",
   },
@@ -21,11 +17,12 @@ const useHomeStyles = makeStyles({
 });
 
 const Home = (): JSX.Element => {
-  const styles = useHomeStyles();
+  const homeStyles = useHomeStyles();
+  const appStyles = useAppStyles();
   const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
+    <div className={appStyles.article}>
       <LargeTitle as="h1" style={{ textAlign: "center" }}>
         mark
         <wbr />
@@ -44,10 +41,10 @@ const Home = (): JSX.Element => {
           justifyContent: "space-around",
         }}
       >
-        <img src={profile2023} className={styles.headerImage} />
-        <img src={wynonnaRaincoat} className={styles.headerImage} />
+        <img src={profile2023} className={homeStyles.headerImage} />
+        <img src={wynonnaRaincoat} className={homeStyles.headerImage} />
       </div>
-      <div className={styles.card}>
+      <div className={homeStyles.card}>
         <p>
           {/* Wrap as string to avoid VS Code yelling at raw HTML `)` */}
           {`Hello, world! If you're reading this, it's because you're a cool
