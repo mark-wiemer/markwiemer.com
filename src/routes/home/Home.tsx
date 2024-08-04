@@ -75,6 +75,7 @@ const Home = (): JSX.Element => {
             columnGap: "1em",
             rowGap: "1em",
             alignSelf: "center",
+            alignItems: "center",
           }}
         >
           <Link
