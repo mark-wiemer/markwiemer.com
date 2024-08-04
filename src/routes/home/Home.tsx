@@ -1,8 +1,24 @@
-import { useHomeStyles } from "./Home.styles";
-import { Link, LargeTitle } from "@fluentui/react-components";
+import { Link, LargeTitle, makeStyles } from "@fluentui/react-components";
 import profile2023 from "../../assets/2023-07-20 profile.png";
 import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside.jpg";
 import { useNavigate } from "react-router-dom";
+
+const useHomeStyles = makeStyles({
+  container: {
+    maxWidth: "1280px",
+    padding: "2rem",
+    textAlign: "center",
+  },
+  card: {
+    padding: "2em",
+  },
+  headerImage: {
+    width: "12em",
+    height: "12em",
+    alignSelf: "center",
+    borderRadius: "50%",
+  },
+});
 
 const Home = (): JSX.Element => {
   const styles = useHomeStyles();
