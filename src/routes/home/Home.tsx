@@ -3,6 +3,7 @@ import profile2023 from "../../assets/2023-07-20 profile.png";
 import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside.jpg";
 import { useNavigate } from "react-router-dom";
 import useAppStyles from "../../App.styles";
+import { Emoji } from "../../components/Emoji";
 
 const useHomeStyles = makeStyles({
   card: {
@@ -53,10 +54,13 @@ const Home = (): JSX.Element => {
         </p>
         <p>
           {`(P.S. I'm the human in the above photos. The cute dog is Wynonna, 
-          my Australian shepherd 🥰)`}
+          my Australian shepherd `}
+          <Emoji emoji="🥰" />
+          {" She's super cute and the best and I love her so much! "}
+          <Emoji emoji="🥰" />
         </p>
         <p>
-          {`"Smiling face with sunglasses" graphic designed by `}
+          {`Emojis designed by `}
           <Link href="https://openmoji.org" target="_blank" rel="noreferrer">
             OpenMoji
           </Link>{" "}
