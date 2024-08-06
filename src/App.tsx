@@ -5,7 +5,7 @@ import About from "./routes/about/About";
 import Breakout from "./routes/games/breakout/Breakout";
 import Home from "./routes/home/Home";
 import { StrictMode } from "react";
-import useAppStyles, { brandDarkThemeColors } from "./App.styles";
+import useAppStyles, { brandThemeColors } from "./App.styles";
 
 const App = () => {
   const styles = useAppStyles();
@@ -31,7 +31,7 @@ const App = () => {
   return (
     <StrictMode>
       <FluentProvider
-        theme={{ ...webDarkTheme, ...brandDarkThemeColors }}
+        theme={{ ...webDarkTheme, ...brandThemeColors }}
         className={styles.provider}
       >
         <RouterProvider router={router} />

@@ -53,7 +53,7 @@ export const brandVariants: BrandVariants = {
 // Custom colors applied for APCA compliance
 // https://www.myndex.com/APCA (see below link for SSL issues)
 // https://github.com/mark-wiemer/mark-wiemer-com/issues/22
-export const brandDarkThemeColors: Partial<Theme> = {
+export const brandThemeColors: Partial<Theme> = {
   colorBackgroundOverlay: "rgba(0, 0, 0, 0.5)",
   colorBrandBackground: "#226571",
   colorBrandBackground2: "#111B1F",
