@@ -1,20 +1,60 @@
 {
   "git.branchProtection": [],
   "cSpell.words": [
+    "APCA",
     "asquare",
+    "autohotkey",
     "Avenir",
     "BBBS",
     "didn",
     "doesn",
     "emojified",
+    "fluentui",
+    "griffel",
     "headshot",
     "markwiemer",
     "Moji",
+    "parens",
+    "plusplus",
     "PTSD",
     "schooler",
+    "Seafoam",
     "suicidality",
-    "wasn"
+    "thqby",
+    "wasn",
+    "Wiemer",
+    "Wynonna"
   ],
   "githubPullRequests.defaultMergeMethod": "squash",
-  "githubPullRequests.pullRequestDescription": "none"
+  "githubPullRequests.pullRequestDescription": "none",
+  "colorInfo.languages": [
+    {
+      "selector": "css",
+      "colors": "css"
+    },
+    {
+      "selector": "sass",
+      "colors": "css"
+    },
+    {
+      "selector": "scss",
+      "colors": "css"
+    },
+    {
+      "selector": "less",
+      "colors": "css"
+    },
+    {
+      "selector": "typescript",
+      "colors": "css"
+    },
+    {
+      "selector": "typescriptreact",
+      "colors": "css"
+    },
+    {
+      "selector": "html",
+      "colors": "css"
+    }
+  ]
 }
