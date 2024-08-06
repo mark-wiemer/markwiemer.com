@@ -53,10 +53,8 @@ const Home = (): JSX.Element => {
           corner of the internet. I'll let you know when there's more to see :)`}
         </p>
         <p>
-          {`(P.S. I'm the human in the above photos. The cute dog is Wynonna, 
+          {`P.S. I'm the human in the above photos. The cute dog is Wynonna, 
           my Australian shepherd `}
-          <Emoji emoji="🥰" />
-          {" She's super cute and the best and I love her so much! "}
           <Emoji emoji="🥰" />
         </p>
         <p>
