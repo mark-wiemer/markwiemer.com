@@ -1,6 +1,6 @@
 import { FluentProvider, webDarkTheme } from "@fluentui/react-components";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./ErrorPage";
+import ErrorPage from "./components/ErrorPage";
 import About from "./routes/about/About";
 import Breakout from "./routes/games/breakout/Breakout";
 import Home from "./routes/home/Home";
