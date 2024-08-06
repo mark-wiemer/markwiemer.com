@@ -12,7 +12,7 @@ export const Emoji = (props: { emoji: string }): JSX.Element => {
       <img
         width="27px" // text line height
         src={openmoji.url(props.emoji)}
-        style={{ verticalAlign: "text-bottom" }}
+        style={{ verticalAlign: `-7px` }}
       />
     </span>
   );
