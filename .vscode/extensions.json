@@ -6,6 +6,8 @@
     "aaron-bond.better-comments",
     "github.vscode-pull-request-github",
     "meganrogge.template-string-converter",
-    "simonsiefke.svg-preview"
+    "simonsiefke.svg-preview",
+    "bierner.color-info",
+    "circlecodesolution.ccs-flutter-color"
   ]
 }
