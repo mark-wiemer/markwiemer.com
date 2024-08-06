@@ -29,6 +29,8 @@ const useAppStyles = makeStyles({
 
 export default useAppStyles;
 
+// Scaffolded with https://react.fluentui.dev/?path=/docs/theme-theme-designer--page
+// 2024-08-05, key value #00ffff, hue torsion -40, vibrancy 20
 export const brandVariants: BrandVariants = {
   10: "#020405",
   20: "#0F1B20",
@@ -48,8 +50,6 @@ export const brandVariants: BrandVariants = {
   160: "#00F7F9",
 };
 
-// Scaffolded with https://react.fluentui.dev/?path=/docs/theme-theme-designer--page
-// 2024-08-05, key value #00ffff, hue torsion -40, vibrancy 20
 // Custom colors applied for APCA compliance
 // https://www.myndex.com/APCA (see below link for SSL issues)
 // https://github.com/mark-wiemer/mark-wiemer-com/issues/22
