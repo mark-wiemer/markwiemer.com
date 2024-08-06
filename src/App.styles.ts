@@ -29,6 +29,7 @@ const useAppStyles = makeStyles({
 
 export default useAppStyles;
 
+// Properties are in a semantic order
 // https://react.fluentui.dev/?path=/docs/theme-theme-designer--page
 // https://fluentuipr.z22.web.core.windows.net/pull/24507/theme-designer/storybook/index.html?path=/story/themedesigner--page
 // https://www.myndex.com/APCA (see below link for SSL issues)
@@ -89,7 +90,7 @@ export const brandDarkThemeColors: Partial<Theme> = {
   colorBrandForegroundOnLightHover: "#9608AB",
   colorBrandForegroundOnLightPressed: "#6E0873",
   colorBrandForegroundOnLightSelected: "#82058F",
-  colorNeutralBackground1: "#292929",
+  colorNeutralBackground1: "#1f1f1f",
   colorNeutralBackground1Hover: "#3d3d3d",
   colorNeutralBackground1Pressed: "#1f1f1f",
   colorNeutralBackground1Selected: "#383838",
