@@ -185,7 +185,6 @@ const About = (): JSX.Element => {
       <p>
         I like this shirt because it&apos;s full of equal signs. It covers my
         love of math and social justice! <Emoji emoji="🤓" />
-        <Emoji emoji="😄" />
       </p>
       <hr />
       <p>
