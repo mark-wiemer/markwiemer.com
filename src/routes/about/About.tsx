@@ -57,7 +57,6 @@ const About = (): JSX.Element => {
         information in the hopes of better connecting with you, his audience
       </p>
       <p>
-        {/* todo ExternalLink component */}
         Originally posted at{" "}
         <ExternalLink href="https://markwiemer.medium.com/who-am-i-anyway-a-5-minute-autobiography-f46fb3e6ead4">
           <span>
