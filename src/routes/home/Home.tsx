@@ -60,13 +60,9 @@ const Home = (): JSX.Element => {
         </p>
         <p>
           {`(Emojis rendered in `}
-          <Link
-            href="https://fonts.google.com/noto/specimen/Noto+Color+Emoji"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <ExternalLink href="https://fonts.google.com/noto/specimen/Noto+Color+Emoji">
             Noto Color Emoji
-          </Link>
+          </ExternalLink>
           {`)`}
         </p>
         <div

@@ -1,4 +1,9 @@
-import { BrandVariants, makeStyles, Theme } from "@fluentui/react-components";
+import {
+  BrandVariants,
+  makeStyles,
+  Theme,
+  tokens,
+} from "@fluentui/react-components";
 
 const useAppStyles = makeStyles({
   provider: {
@@ -15,8 +20,16 @@ const useAppStyles = makeStyles({
     "& h1": {
       fontSize: "3em",
     },
-    "& a": {
+    // Applies to both in-app and external links
+    "& .fui-Link": {
       textDecoration: "underline",
+      borderRadius: "5px",
+      ":hover": {
+        outline: `2px solid ${tokens.colorBrandForegroundLinkHover}`,
+      },
+      ":active": {
+        outline: `2px solid ${tokens.colorBrandForegroundLinkPressed}`,
+      },
     },
   },
   article: {
