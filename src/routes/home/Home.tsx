@@ -3,6 +3,7 @@ import profile2023 from "../../assets/2023-07-20 profile.png";
 import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside.jpg";
 import { useNavigate } from "react-router-dom";
 import useAppStyles from "../../App.styles";
+import { Emoji } from "../../components/Emoji";
 
 const useHomeStyles = makeStyles({
   card: {
@@ -52,22 +53,20 @@ const Home = (): JSX.Element => {
           corner of the internet. I'll let you know when there's more to see :)`}
         </p>
         <p>
-          {`(P.S. I'm the human in the above photos. The cute dog is Wynonna, 
-          my Australian shepherd 🥰)`}
+          {`P.S. I'm the human in the above photos. The cute dog is Wynonna, 
+          my Australian shepherd `}
+          <Emoji emoji="🥰" />
         </p>
         <p>
-          {`"Smiling face with sunglasses" graphic designed by `}
-          <Link href="https://openmoji.org" target="_blank" rel="noreferrer">
-            OpenMoji
-          </Link>{" "}
-          – the open-source emoji and icon project.{" "}
+          {`(Emojis rendered in `}
           <Link
-            href="https://creativecommons.org/licenses/by-sa/4.0"
+            href="https://fonts.google.com/noto/specimen/Noto+Color+Emoji"
             target="_blank"
             rel="noreferrer"
           >
-            License: CC BY-SA 4.0
+            Noto Color Emoji
           </Link>
+          {`)`}
         </p>
         <div
           style={{
