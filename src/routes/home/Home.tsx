@@ -58,18 +58,15 @@ const Home = (): JSX.Element => {
           <Emoji emoji="🥰" />
         </p>
         <p>
-          {`Emojis designed by `}
-          <Link href="https://openmoji.org" target="_blank" rel="noreferrer">
-            OpenMoji
-          </Link>{" "}
-          – the open-source emoji and icon project.{" "}
+          {`(Emojis rendered in `}
           <Link
-            href="https://creativecommons.org/licenses/by-sa/4.0"
+            href="https://fonts.google.com/noto/specimen/Noto+Color+Emoji"
             target="_blank"
             rel="noreferrer"
           >
-            License: CC BY-SA 4.0
+            Noto Color Emoji
           </Link>
+          {`)`}
         </p>
         <div
           style={{
