@@ -79,8 +79,6 @@ const Home = (): JSX.Element => {
             onClick={() => {
               navigate("/about");
             }}
-            // todo set default fontSize at theme level
-            style={{ fontSize: "18px" }}
           >
             About me
           </Link>

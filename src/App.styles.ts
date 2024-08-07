@@ -15,8 +15,6 @@ const useAppStyles = makeStyles({
       display: "flex",
       flexDirection: "column",
     },
-    fontSize: "18px",
-    lineHeight: "1.5",
     "& h1": {
       fontSize: "3em",
     },
@@ -44,6 +42,12 @@ const useAppStyles = makeStyles({
 });
 
 export default useAppStyles;
+
+/** Color-scheme-invariant changes to the Fluent default theme */
+export const brandThemeCustomizations: Partial<Theme> = {
+  fontSizeBase300: "18px",
+  lineHeightBase300: "27px",
+};
 
 // Scaffolded with https://react.fluentui.dev/?path=/docs/theme-theme-designer--page
 // 2024-08-05, key value #00ffff, hue torsion -40, vibrancy 20
