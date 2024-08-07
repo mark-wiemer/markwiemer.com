@@ -11,6 +11,7 @@ import Home from "./routes/home/Home";
 import { StrictMode, useEffect, useMemo, useState } from "react";
 import useAppStyles, {
   brandDarkThemeColors,
+  brandThemeCustomizations,
   brandLightThemeColors,
   brandVariants,
 } from "./App.styles";
@@ -24,6 +25,7 @@ const App = () => {
     () => ({
       ...createDarkTheme(brandVariants),
       ...brandDarkThemeColors,
+      ...brandThemeCustomizations,
     }),
     []
   );
@@ -31,6 +33,7 @@ const App = () => {
     () => ({
       ...createLightTheme(brandVariants),
       ...brandLightThemeColors,
+      ...brandThemeCustomizations,
     }),
     []
   );
@@ -39,14 +42,9 @@ const App = () => {
     document.body.style.backgroundColor = useDarkTheme ? "#1f1f1f" : "#ffffff";
   }, [useDarkTheme]);
 
-  // Run on mount only: check for dark mode preference
+  // Run on mount only: listen for color scheme preference changes
   useEffect(() => {
-    // Get current state
     const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
-    if (prefersDarkMode.matches) setUseDarkTheme(true);
-    else setUseDarkTheme(false);
-
-    // Listen for future changes
     prefersDarkMode.addEventListener("change", (e) => {
       if (e.matches) setUseDarkTheme(true);
       else setUseDarkTheme(false);
