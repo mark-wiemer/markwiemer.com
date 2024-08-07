@@ -1,5 +1,5 @@
 import { Link } from "@fluentui/react-components";
-import { ArrowExitRegular } from "@fluentui/react-icons";
+import { OpenRegular } from "@fluentui/react-icons";
 
 export const ExternalLink = (props: {
   href: string;
@@ -17,7 +17,7 @@ export const ExternalLink = (props: {
       >
         &nbsp;
       </span>
-      <ArrowExitRegular style={{ verticalAlign: "-3px" }} />
+      <OpenRegular style={{ verticalAlign: "-3px" }} />
     </Link>
   );
 };
