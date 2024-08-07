@@ -2,8 +2,6 @@ import {
   createDarkTheme,
   createLightTheme,
   FluentProvider,
-  webDarkTheme,
-  webLightTheme,
 } from "@fluentui/react-components";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
@@ -24,7 +22,6 @@ const App = () => {
   );
   const darkTheme = useMemo(
     () => ({
-      ...webDarkTheme,
       ...createDarkTheme(brandVariants),
       ...brandDarkThemeColors,
     }),
@@ -32,7 +29,6 @@ const App = () => {
   );
   const lightTheme = useMemo(
     () => ({
-      ...webLightTheme,
       ...createLightTheme(brandVariants),
       ...brandLightThemeColors,
     }),
