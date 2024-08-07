@@ -15,6 +15,9 @@ const useAppStyles = makeStyles({
     "& h1": {
       fontSize: "3em",
     },
+    "& a": {
+      textDecoration: "underline",
+    },
   },
   article: {
     padding: "2rem",
