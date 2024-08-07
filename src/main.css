@@ -7,6 +7,8 @@ body {
   display: flex;
   place-items: center;
   min-height: 100vh;
-  /* Dark theme background color */
-  background-color: #1f1f1f;
+  background-color: #fff;
+  @media (prefers-color-scheme: dark) {
+    background-color: #1f1f1f;
+  }
 }
