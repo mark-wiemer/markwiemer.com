@@ -11,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import useAppStyles from "../../App.styles";
 import { Emoji } from "../../components/Emoji";
+import { ExternalLink } from "../../components/ExternalLink";
 
 const useAboutStyles = makeStyles({
   article: {
@@ -58,17 +59,15 @@ const About = (): JSX.Element => {
       <p>
         {/* todo ExternalLink component */}
         Originally posted at{" "}
-        <Link
-          href="https://markwiemer.medium.com/who-am-i-anyway-a-5-minute-autobiography-f46fb3e6ead4"
-          target="_blank"
-          rel="noreferrer"
-        >
-          markwiemer
-          <wbr />
-          .medium
-          <wbr />
-          .com
-        </Link>{" "}
+        <ExternalLink href="https://markwiemer.medium.com/who-am-i-anyway-a-5-minute-autobiography-f46fb3e6ead4">
+          <span>
+            markwiemer
+            <wbr />
+            .medium
+            <wbr />
+            .com
+          </span>
+        </ExternalLink>{" "}
         on 2023-04-17
       </p>
       <img src={babyPicture} alt="Me as a cute baby"></img>

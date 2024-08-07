@@ -4,6 +4,7 @@ import wynonnaRaincoat from "../../assets/2024-04-29 Wynonna rain coat outside.j
 import { useNavigate } from "react-router-dom";
 import useAppStyles from "../../App.styles";
 import { Emoji } from "../../components/Emoji";
+import { ExternalLink } from "../../components/ExternalLink";
 
 const useHomeStyles = makeStyles({
   card: {
@@ -59,13 +60,9 @@ const Home = (): JSX.Element => {
         </p>
         <p>
           {`(Emojis rendered in `}
-          <Link
-            href="https://fonts.google.com/noto/specimen/Noto+Color+Emoji"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <ExternalLink href="https://fonts.google.com/noto/specimen/Noto+Color+Emoji">
             Noto Color Emoji
-          </Link>
+          </ExternalLink>
           {`)`}
         </p>
         <div
@@ -82,19 +79,15 @@ const Home = (): JSX.Element => {
             onClick={() => {
               navigate("/about");
             }}
+            // todo set default fontSize at theme level
             style={{ fontSize: "18px" }}
           >
             About me
           </Link>
           |
-          <Link
-            href="https://github.com/mark-wiemer/mark-wiemer-com"
-            target="_blank"
-            rel="noreferrer"
-            style={{ textAlign: "center" }}
-          >
+          <ExternalLink href="https://github.com/mark-wiemer/mark-wiemer-com">
             View on GitHub
-          </Link>
+          </ExternalLink>
         </div>
       </div>
     </div>
