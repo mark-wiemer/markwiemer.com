@@ -56,7 +56,7 @@ const Home = (): JSX.Element => {
         <p>
           {`P.S. I'm the human in the above photos. The cute dog is Wynonna, 
           my Australian shepherd `}
-          <Emoji emoji="🥰" /><Emoji emoji="🫙" />
+          <Emoji emoji="🥰" />
         </p>
         <p>
           {`(Emojis rendered in `}
