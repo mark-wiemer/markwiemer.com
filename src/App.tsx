@@ -5,7 +5,7 @@ import {
 } from "@fluentui/react-components";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
-import About from "./routes/about/About";
+import About from './routes/about/About.mdx';
 import Breakout from "./routes/games/breakout/Breakout";
 import Home from "./routes/home/Home";
 import { StrictMode, useEffect, useMemo, useState } from "react";
