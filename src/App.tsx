@@ -6,6 +6,7 @@ import {
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
 import AboutPage from './routes/about/About';
+import About from './routes/about/About.mdx';
 import Breakout from "./routes/games/breakout/Breakout";
 import Home from "./routes/home/Home";
 import { StrictMode, useEffect, useMemo, useState } from "react";
@@ -65,6 +66,11 @@ const App = () => {
     {
       path: "/about",
       element: <AboutPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/about/secret",
+      element: <About />,
       errorElement: <ErrorPage />,
     },
     {
