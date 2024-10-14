@@ -38,6 +38,21 @@ const useAppStyles = makeStyles({
       padding: "4px",
       maxWidth: "calc(100vw - 24px)",
     },
+    "& h1": {
+      hyphens: "auto",
+      fontWeight: "600",
+      lineHeight: "52px",
+      textAlign: "center",
+      marginBottom: "10.8px",
+    },
+    "& img": {
+      maxWidth: "640px",
+      borderRadius: "5%",
+    },
+    "& hr": {
+      width: "320px",
+      maxWidth: "calc(100% - 64px)",
+    },
   },
 });
 
