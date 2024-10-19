@@ -77,7 +77,7 @@ const Home = (): JSX.Element => {
                     <Link
                         as="a"
                         onClick={() => {
-                            navigate('/about');
+                            navigate('/blog/about');
                         }}
                     >
                         About me

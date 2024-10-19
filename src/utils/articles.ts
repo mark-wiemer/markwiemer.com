@@ -1,5 +1,5 @@
 import ErrorPage from '../components/ErrorPage';
-import About from '../routes/about/About.mdx';
+import About from '../routes/blog/About.mdx';
 
 export enum ArticleId {
     About = 'about',

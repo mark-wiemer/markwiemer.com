@@ -3,9 +3,13 @@ import {
     createLightTheme,
     FluentProvider,
 } from '@fluentui/react-components';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+    createBrowserRouter,
+    Navigate,
+    RouterProvider,
+} from 'react-router-dom';
 import ErrorPage from './components/ErrorPage';
-import About from './routes/about/About.mdx';
+import About from './routes/blog/About.mdx';
 import Breakout from './routes/games/breakout/Breakout';
 import Home from './routes/home/Home';
 import { StrictMode, useEffect, useMemo, useState } from 'react';
@@ -17,7 +21,6 @@ import useAppStyles, {
 } from './App.styles';
 import ArticlePage from './components/ArticlePage';
 import BlogPage from './routes/blog/BlogPage';
-import { ArticleId } from './utils/articles';
 
 const App = () => {
     const styles = useAppStyles();
@@ -63,10 +66,11 @@ const App = () => {
         };
     }, []);
 
+    //* All paths will always be preserved!!
     const router = createBrowserRouter(
         [
             { path: '/', element: <Home /> },
-            { path: '/about', element: <ArticlePage id={ArticleId.About} /> },
+            { path: '/about', element: <Navigate to="/blog/about" /> },
             { path: '/about/secret', element: <About /> },
             { path: '/blog', element: <BlogPage /> },
             {
