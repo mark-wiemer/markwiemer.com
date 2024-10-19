@@ -48,22 +48,21 @@ const Home = (): JSX.Element => {
             </div>
             <div className={homeStyles.card}>
                 <p>
-                    {/* Wrap as string to avoid VS Code yelling at raw HTML `)` */}
-                    {`Hello, world! If you're reading this, it's because you're a cool
-          person. There isn't much here yet, just wanted to show you my little
-          corner of the internet. I'll let you know when there's more to see :)`}
+                    Hello, world! If you're reading this, it's because you're a
+                    cool person. There isn't much here yet, just wanted to show
+                    you my little corner of the internet. I'll let you know when
+                    there's more to see :{')'}
                 </p>
                 <p>
-                    {`P.S. I'm the human in the above photos. The cute dog is Wynonna, 
-          my Australian shepherd `}
-                    <Emoji emoji="🥰" />
+                    P.S. I'm the human in the above photos. The cute dog is
+                    Wynonna, my Australian shepherd <Emoji emoji="🥰" />
                 </p>
                 <p>
-                    {`(Emojis rendered in `}
+                    (Emojis rendered in{' '}
                     <ExternalLink href="https://fonts.google.com/noto/specimen/Noto+Color+Emoji">
                         Noto Color Emoji
                     </ExternalLink>
-                    {`)`}
+                    )
                 </p>
                 <div
                     style={{
