@@ -11,8 +11,8 @@
         "format": "prettier . --check",
         "format:fix": "prettier . --write",
         "preview": "vite preview",
-        "validate": "bun lint && bun format",
-        "validate:fix": "bun lint:fix && bun format:fix"
+        "validate": "bun lint && bun format && echo ✅ All checks passed",
+        "validate:fix": "bun lint:fix && bun format:fix && echo ✅ All checks passed"
     },
     "prettier": {
         "singleQuote": true,
