@@ -2,6 +2,10 @@ import ErrorPage from '../components/ErrorPage';
 import About from '../routes/blog/2023-04-17-who-am-i.mdx';
 import MonthsWithoutMusic from '../routes/blog/2024-10-08-months-without-music.mdx';
 
+/**
+ * These article IDs also serve as the URL
+ * e.g. https://markwiemer.com/blog/months-without-music
+ */
 export enum ArticleId {
     About = 'about',
     MonthsWithoutMusic = 'months-without-music',
