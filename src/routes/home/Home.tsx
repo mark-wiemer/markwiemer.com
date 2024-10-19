@@ -1,6 +1,6 @@
 import { Link, LargeTitle, makeStyles } from '@fluentui/react-components';
 import profile2023 from '../../assets/2023-07-20 profile.png';
-import wynonnaRaincoat from '../../assets/2024-04-29 Wynonna rain coat outside.jpg';
+import wynonnaRaincoat from '../../assets/2024-04-29 Wynonna raincoat outside.jpg';
 import { useNavigate } from 'react-router-dom';
 import useAppStyles from '../../App.styles';
 import { Emoji } from '../../components/Emoji';
