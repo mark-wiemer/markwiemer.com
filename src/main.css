@@ -1,14 +1,14 @@
 #root {
-  margin: 0 auto;
+    margin: 0 auto;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-height: 100vh;
-  background-color: #fff;
-  @media (prefers-color-scheme: dark) {
-    background-color: #1f1f1f;
-  }
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-height: 100vh;
+    background-color: #fff;
+    @media (prefers-color-scheme: dark) {
+        background-color: #1f1f1f;
+    }
 }
