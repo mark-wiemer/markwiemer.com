@@ -15,7 +15,8 @@ import useAppStyles, {
     brandLightThemeColors,
     brandVariants,
 } from './App.styles';
-import Article from './components/Article';
+import ArticlePage from './components/ArticlePage';
+import BlogPage from './routes/blog/BlogPage';
 
 const App = () => {
     const styles = useAppStyles();
@@ -61,32 +62,15 @@ const App = () => {
         };
     }, []);
 
-    const router = createBrowserRouter([
-        {
-            path: '/',
-            element: <Home />,
-            errorElement: <ErrorPage />,
-        },
-        {
-            path: '/about',
-            element: (
-                <Article>
-                    <About />
-                </Article>
-            ),
-            errorElement: <ErrorPage />,
-        },
-        {
-            path: '/about/secret',
-            element: <About />,
-            errorElement: <ErrorPage />,
-        },
-        {
-            path: '/games/breakout',
-            element: <Breakout />,
-            errorElement: <ErrorPage />,
-        },
-    ]);
+    const router = createBrowserRouter(
+        [
+            { path: '/', element: <Home /> },
+            { path: '/about', element: <ArticlePage article={<About />} /> },
+            { path: '/about/secret', element: <About /> },
+            { path: '/blog', element: <BlogPage /> },
+            { path: '/games/breakout', element: <Breakout /> },
+        ].map((i) => ({ ...i, errorElement: <ErrorPage /> })),
+    );
 
     return (
         <StrictMode>

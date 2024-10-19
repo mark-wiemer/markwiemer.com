@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import useAppStyles from '../App.styles';
 
 interface ArticleProps {
-    children: React.ReactNode;
+    article: React.ReactNode;
 }
 
-const Article: React.FC<ArticleProps> = ({ children }): JSX.Element => {
+/** Wraps the provided article with appropriate styles and a link home */
+const ArticlePage: React.FC<ArticleProps> = ({ article }): JSX.Element => {
     const appStyles = useAppStyles();
 
     const navigate = useNavigate();
@@ -21,9 +22,9 @@ const Article: React.FC<ArticleProps> = ({ children }): JSX.Element => {
             >
                 Home
             </Link>
-            {children}
+            {article}
         </div>
     );
 };
 
-export default Article;
+export default ArticlePage;
