@@ -1,6 +1,5 @@
-import { Link } from '@fluentui/react-components';
-import { useNavigate } from 'react-router-dom';
 import useAppStyles from '../App.styles';
+import InternalLink from './InternalLink';
 
 interface ArticleProps {
     article: React.ReactNode;
@@ -9,19 +8,13 @@ interface ArticleProps {
 /** Wraps the provided article with appropriate styles and a link home */
 const ArticlePage: React.FC<ArticleProps> = ({ article }): JSX.Element => {
     const appStyles = useAppStyles();
-
-    const navigate = useNavigate();
     return (
         <div className={appStyles.article}>
-            <Link
-                as="a"
-                onClick={() => {
-                    navigate('/');
-                }}
+            <InternalLink
+                href="/"
                 style={{ textAlign: 'center', fontSize: '18px' }}
-            >
-                Home
-            </Link>
+                text="Home"
+            />
             {article}
         </div>
     );
