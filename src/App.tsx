@@ -5,7 +5,6 @@ import {
 } from "@fluentui/react-components";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
-import AboutPage from './routes/about/About';
 import About from './routes/about/About.mdx';
 import Breakout from "./routes/games/breakout/Breakout";
 import Home from "./routes/home/Home";
@@ -16,6 +15,7 @@ import useAppStyles, {
   brandLightThemeColors,
   brandVariants,
 } from "./App.styles";
+import Article from "./components/Article";
 
 const App = () => {
   const styles = useAppStyles();
@@ -65,7 +65,7 @@ const App = () => {
     },
     {
       path: "/about",
-      element: <AboutPage />,
+      element: <Article><About /></Article>,
       errorElement: <ErrorPage />,
     },
     {
