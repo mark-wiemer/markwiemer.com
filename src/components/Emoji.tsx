@@ -1,5 +1,5 @@
 /** Render a single emoji in a consistent font on any device */
-export const Emoji = (props: { emoji: string }): JSX.Element => {
+const Emoji: React.FC<{ emoji: string }> = ({ emoji }) => {
     return (
         <span
             style={{
@@ -8,7 +8,9 @@ export const Emoji = (props: { emoji: string }): JSX.Element => {
                 fontStyle: 'normal',
             }}
         >
-            {props.emoji}
+            {emoji}
         </span>
     );
 };
+
+export default Emoji;

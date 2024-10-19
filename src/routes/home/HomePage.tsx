@@ -1,27 +1,20 @@
-import { Link, LargeTitle, makeStyles } from '@fluentui/react-components';
+import { LargeTitle, makeStyles } from '@fluentui/react-components';
 import profile2023 from '../../assets/2023-07-20 profile.png';
 import wynonnaRaincoat from '../../assets/2024-04-29 Wynonna raincoat outside.jpg';
-import { useNavigate } from 'react-router-dom';
 import useAppStyles from '../../App.styles';
-import { Emoji } from '../../components/Emoji';
-import { ExternalLink } from '../../components/ExternalLink';
+import Emoji from '../../components/Emoji';
+import ExternalLink from '../../components/ExternalLink';
+import InternalLink from '../../components/InternalLink';
 
+const headerImageSize = '12em';
 const useHomeStyles = makeStyles({
-    card: {
-        padding: '2em',
-    },
-    headerImage: {
-        width: '12em',
-        height: '12em',
-        alignSelf: 'center',
-        borderRadius: '50%',
-    },
+    mainText: { padding: '2em' },
+    headerImage: { width: headerImageSize, height: headerImageSize },
 });
 
-const Home = (): JSX.Element => {
+const HomePage = (): JSX.Element => {
     const homeStyles = useHomeStyles();
     const appStyles = useAppStyles();
-    const navigate = useNavigate();
 
     return (
         <div className={appStyles.article}>
@@ -46,7 +39,7 @@ const Home = (): JSX.Element => {
                 <img src={profile2023} className={homeStyles.headerImage} />
                 <img src={wynonnaRaincoat} className={homeStyles.headerImage} />
             </div>
-            <div className={homeStyles.card}>
+            <div className={homeStyles.mainText}>
                 <p>
                     Hello, world! If you're reading this, it's because you're a
                     cool person. There isn't much here yet, just wanted to show
@@ -73,15 +66,8 @@ const Home = (): JSX.Element => {
                         alignItems: 'center',
                     }}
                 >
-                    <Link
-                        as="a"
-                        onClick={() => {
-                            navigate('/blog/about');
-                        }}
-                    >
-                        About me
-                    </Link>
-                    |
+                    <InternalLink href="/blog/about" text="About me" />|
+                    <InternalLink href="/blog" text="Blog" />|
                     <ExternalLink href="https://github.com/mark-wiemer/mark-wiemer-com">
                         View on GitHub
                     </ExternalLink>
@@ -91,4 +77,4 @@ const Home = (): JSX.Element => {
     );
 };
 
-export default Home;
+export default HomePage;

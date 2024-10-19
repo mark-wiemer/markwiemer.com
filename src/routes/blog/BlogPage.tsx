@@ -1,5 +1,5 @@
 const BlogPage: React.FC = () => {
-    return <>Hello world</>;
+    return <>Blog is under construction, check back soon :{')'}</>;
 };
 
 export default BlogPage;

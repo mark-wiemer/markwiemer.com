@@ -11,7 +11,7 @@ import {
 import ErrorPage from './components/ErrorPage';
 import About from './routes/blog/2023-04-17-who-am-i.mdx';
 import Breakout from './routes/games/breakout/Breakout';
-import Home from './routes/home/Home';
+import HomePage from './routes/home/HomePage';
 import { StrictMode, useEffect, useMemo, useState } from 'react';
 import useAppStyles, {
     brandDarkThemeColors,
@@ -66,10 +66,10 @@ const App = () => {
         };
     }, []);
 
-    //* All paths will always be preserved!!
+    //* All paths will always be preserved :)
     const router = createBrowserRouter(
         [
-            { path: '/', element: <Home /> },
+            { path: '/', element: <HomePage /> },
             { path: '/about', element: <Navigate to="/blog/about" /> },
             { path: '/about/secret', element: <About /> },
             { path: '/blog', element: <BlogPage /> },
