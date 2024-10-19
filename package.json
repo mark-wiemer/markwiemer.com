@@ -1,18 +1,20 @@
 {
     "name": "mark-wiemer-com",
-    "private": true,
     "version": "0.0.0",
+    "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
         "build": "tsc && vite build",
-        "lint": "eslint . --max-warnings 0",
-        "lint:fix": "eslint . --fix --max-warnings 0",
+        "dev": "vite",
         "format": "prettier . --check",
         "format:fix": "prettier . --write",
+        "lint": "eslint . --max-warnings 0",
+        "lint:fix": "eslint . --fix --max-warnings 0",
         "preview": "vite preview",
-        "validate": "bun lint && bun format && echo ✅ All checks passed",
-        "validate:fix": "bun lint:fix && bun format:fix && echo ✅ All checks passed"
+        "sort-package-json": "sort-package-json --check",
+        "sort-package-json:fix": "sort-package-json",
+        "validate": "bun sort-package-json && bun lint && bun format && echo ✅ All checks passed",
+        "validate:fix": "bun sort-package-json:fix && bun lint:fix && bun format:fix && echo ✅ All checks passed"
     },
     "prettier": {
         "singleQuote": true,
@@ -50,6 +52,7 @@
         "eslint-plugin-react-hooks": "^5.0.0",
         "eslint-plugin-react-refresh": "^0.4.12",
         "prettier": "3.3.3",
+        "sort-package-json": "^2.10.1",
         "typescript": "^5.2.2",
         "typescript-eslint": "^8.10.0",
         "vite": "^5.2.0"
