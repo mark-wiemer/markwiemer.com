@@ -8,14 +8,16 @@ interface IBlogCardProps {
 
 const BlogCard: React.FC<IBlogCardProps> = ({ metadata }) => {
     return (
-        <>
+        <div
+            style={{ border: '1px solid', borderRadius: '4px', padding: '4px' }}
+        >
             <InternalLink
                 href={articleRoute(metadata.id)}
                 text={metadata.mainHeading}
                 style={{ width: 'fit-content' }}
             />
-            <p>{metadata.subheading}</p>
-        </>
+            {metadata.subheading && <p>{metadata.subheading}</p>}
+        </div>
     );
 };
 
