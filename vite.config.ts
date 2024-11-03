@@ -5,4 +5,5 @@ import react from '@vitejs/plugin-react-swc';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [{ enforce: 'pre', ...mdx() }, react()],
+    server: { open: true },
 });

@@ -21,6 +21,8 @@ import useAppStyles, {
 } from './App.styles';
 import ArticlePage from './components/ArticlePage';
 import BlogPage from './routes/blog/BlogPage';
+import { articleRoute } from './utils/routes';
+import { ArticleId } from './utils/articles';
 
 const App = () => {
     const styles = useAppStyles();
@@ -66,11 +68,14 @@ const App = () => {
         };
     }, []);
 
-    //* All paths will always be preserved :)
     const router = createBrowserRouter(
         [
             { path: '/', element: <HomePage /> },
-            { path: '/about', element: <Navigate to="/blog/about" /> },
+            //* All paths will always be preserved :)
+            {
+                path: '/about',
+                element: <Navigate to={articleRoute(ArticleId.About)} />,
+            },
             { path: '/about/secret', element: <About /> },
             { path: '/blog', element: <BlogPage /> },
             {

@@ -18,7 +18,8 @@ export const articlesById: Record<ArticleId, React.FC> = {
     [ArticleId.NotFound]: ErrorPage,
 };
 
-interface ArticleMetadata {
+export interface ArticleMetadata {
+    id: ArticleId;
     // todo To be displayed in the browser tab
     pageTitle: string;
     mainHeading: string;
@@ -27,17 +28,20 @@ interface ArticleMetadata {
 
 export const articleMetadata: Record<ArticleId, ArticleMetadata> = {
     [ArticleId.About]: {
+        id: ArticleId.About,
         pageTitle: 'About',
         mainHeading: 'Who am I anyway? A 5-minute autobiography',
         subheading:
             'In which your author divulges too much (and also not enough) personal information in the hopes of better connecting with you, his audience',
     },
     [ArticleId.MonthsWithoutMusic]: {
+        id: ArticleId.MonthsWithoutMusic,
         pageTitle: 'Months without music',
         mainHeading: 'Months without music: a divorce story',
         subheading: '',
     },
     [ArticleId.NotFound]: {
+        id: ArticleId.NotFound,
         pageTitle: 'Not found',
         mainHeading: '404',
         subheading: `We couldn't find that article :(`,
