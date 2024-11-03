@@ -9,7 +9,7 @@ interface InternalLinkProps {
 
 const InternalLink: React.FC<InternalLinkProps> = ({ text, href, style }) => {
     return (
-        <Link as="a" href={href} style={style}>
+        <Link href={href} style={style}>
             {text}
         </Link>
     );
