@@ -1,5 +1,5 @@
 import useAppStyles from '../../App.styles';
-import InternalLink from '../../components/InternalLink';
+import BlogCard from '../../components/BlogCard';
 import { allArticleIds, articleMetadata } from '../../utils/articles';
 
 const BlogPage: React.FC = () => {
@@ -7,11 +7,7 @@ const BlogPage: React.FC = () => {
     return (
         <div className={appStyles.article}>
             {allArticleIds().map((id) => (
-                <InternalLink
-                    href={`/blog/${id}`}
-                    text={articleMetadata[id].mainHeading}
-                    style={{ width: 'fit-content' }}
-                />
+                <BlogCard key={id} metadata={articleMetadata[id]} />
             ))}
         </div>
     );
