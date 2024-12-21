@@ -8,6 +8,7 @@
         "meganrogge.template-string-converter",
         "simonsiefke.svg-preview",
         "bierner.color-info",
-        "circlecodesolution.ccs-flutter-color"
+        "circlecodesolution.ccs-flutter-color",
+        "techer.open-in-browser"
     ]
 }
