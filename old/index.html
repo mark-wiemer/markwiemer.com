@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>markwiemer.com</title>
+        <!-- Tracked as binary, not via Git LFS, to serve via CDN -->
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script type="text/javascript">
+            // Single Page Apps for GitHub Pages
+            // MIT License
+            // https://github.com/rafgraph/spa-github-pages
+            // This script checks to see if a redirect is present in the query string,
+            // converts it back into the correct url and adds it to the
+            // browser's history using window.history.replaceState(...),
+            // which won't cause the browser to attempt to load the new url.
+            // When the single page app is loaded further down in this file,
+            // the correct url will be waiting in the browser's history for
+            // the single page app to route accordingly.
+            (function (winLocation) {
+                if (winLocation.search[1] === '/') {
+                    var decoded = winLocation.search
+                        .slice(1)
+                        .split('&')
+                        .map(function (s) {
+                            return s.replace(/~and~/g, '&');
+                        })
+                        .join('?');
+                    window.history.replaceState(
+                        null,
+                        null,
+                        winLocation.pathname.slice(0, -1) +
+                            decoded +
+                            winLocation.hash,
+                    );
+                }
+            })(window.location);
+        </script>
+        <!-- Custom emoji font: Noto Color Emoji -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <!--* do not change ID, used in main.tsx -->
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
+</html>

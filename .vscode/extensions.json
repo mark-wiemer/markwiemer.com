@@ -1,13 +1,10 @@
 {
     "recommendations": [
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "streetsidesoftware.code-spell-checker",
         "aaron-bond.better-comments",
+        "esbenp.prettier-vscode",
         "github.vscode-pull-request-github",
-        "meganrogge.template-string-converter",
-        "simonsiefke.svg-preview",
-        "bierner.color-info",
-        "circlecodesolution.ccs-flutter-color"
+        "streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries",
+        "techer.open-in-browser",
+        "tyriar.sort-lines"
     ]
 }
