@@ -13,19 +13,17 @@
                     flex-direction: row;
                     align-items: center;
                     column-gap: 1em;
+                    /* Row-gap in case of wraparound */
                     row-gap: 1em;
                     align-self: center;
                     flex-wrap: wrap;
                     justify-content: space-around;
                 "
             >
+                <img alt="Mark in 2023" src="assets/2023-07-20 profile.jpg" />
                 <img
-                    src="assets/2023-07-20 profile.jpg"
-                    className="headerImage"
-                />
-                <img
+                    alt="Wynonna in 2024"
                     src="assets/2024-04-29 Wynonna raincoat outside.jpg"
-                    className="headerImage"
                 />
             </div>
             <div style="padding: 2em">
@@ -39,18 +37,12 @@
                     P.S. I'm the human in the above photos. The cute dog is
                     Wynonna, my Australian shepherd 🥰
                 </p>
-                <div
-                    style="
-                        flex-direction: row;
-                        column-gap: 1em;
-                        row-gap: 1em;
-                        align-self: center;
-                        align-items: center;
-                    "
-                >
-                    <!-- More links coming soon! -->
-                    <a href="https://github.com/mark-wiemer/markwiemer.com">
-                        View on GitHub
+                <div style="align-items: center">
+                    <a
+                        href="https://github.com/mark-wiemer/markwiemer.com"
+                        target="_blank"
+                    >
+                        View website source
                     </a>
                 </div>
             </div>
