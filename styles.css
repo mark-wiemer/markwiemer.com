@@ -57,8 +57,8 @@ a {
             outline: 2px solid rgb(179 0 179);
         }
         &:active {
-            outline: 2px solid white;
-            color: white;
+            outline: 2px solid gainsboro;
+            color: gainsboro;
         }
     }
 }
