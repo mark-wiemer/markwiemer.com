@@ -1,6 +1,5 @@
 #!/bin/bash
+# For now, the dist is the same as the site
+# But as JS and whatnot are added, this will do the needful :)
 mkdir -p dist
-cp index.html dist/index.html
-cp styles.css dist/styles.css
-cp -r assets dist/assets
-cp -r public dist/public
+cp -r site dist
