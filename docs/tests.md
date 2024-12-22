@@ -9,12 +9,13 @@ When moving the site to a different framework, be sure to check the following:
 
 ## Link state matrix
 
-1. No hover, unvisited
-2. Hover unvisited
-3. No hover, visited
-4. Hover visited
-5. Active
+There are three colors: unvisited, visited, and plaintext. Plaintext color is, well, the color of plaintext.
+
+1. No hover, unvisited: unvisited
+2. Hover unvisited: unvisited outlined
+3. No hover, visited: visited
+4. Hover visited: visited outlined
+5. Active unvisited: plaintext outlined
+6. Active visited: plaintext outlined
 
 Then duplicate for light mode and dark mode!
-
-- When active, no other styles should matter
