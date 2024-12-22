@@ -40,6 +40,10 @@ a {
     &:visited:hover {
         outline: 2px solid rgb(107, 2, 107);
     }
+    &:visited:active {
+        outline: 2px solid black;
+        color: black;
+    }
     &:active {
         outline: 2px solid black;
         color: black;
@@ -55,6 +59,10 @@ a {
         }
         &:visited:hover {
             outline: 2px solid rgb(179 0 179);
+        }
+        &:visited:active {
+            outline: 2px solid gainsboro;
+            color: gainsboro;
         }
         &:active {
             outline: 2px solid gainsboro;
