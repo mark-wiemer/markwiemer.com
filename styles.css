@@ -10,6 +10,10 @@ body {
         sans-serif;
     font-size: 18px;
     line-height: 1.5em;
+    @media (prefers-color-scheme: dark) {
+        background-color: black;
+        color: gainsboro;
+    }
 }
 
 h1 {
@@ -24,11 +28,46 @@ div {
 a {
     text-decoration: underline;
     border-radius: 5px;
+
+    /* See docs/tests.md for link state test matrix */
+    color: rgb(9 115 131);
     &:hover {
+        outline: 2px solid rgb(9 115 131);
+    }
+    &:visited {
+        color: rgb(107, 2, 107);
+    }
+    &:visited:hover {
+        outline: 2px solid rgb(107, 2, 107);
+    }
+    &:visited:active {
         outline: 2px solid black;
+        color: black;
     }
     &:active {
-        outline: 2px solid purple;
+        outline: 2px solid black;
+        color: black;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        color: rgb(0, 162, 174);
+        &:hover {
+            outline: 2px solid rgb(0, 162, 174);
+        }
+        &:visited {
+            color: rgb(179 0 179);
+        }
+        &:visited:hover {
+            outline: 2px solid rgb(179 0 179);
+        }
+        &:visited:active {
+            outline: 2px solid gainsboro;
+            color: gainsboro;
+        }
+        &:active {
+            outline: 2px solid gainsboro;
+            color: gainsboro;
+        }
     }
 }
 
