@@ -1,16 +1,18 @@
-# Hello GitHub Pages!
+# [markwiemer.com](https://markwiemer.com)
 
-Hosted at [mark-wiemer.github.io/hello-github-pages](https://mark-wiemer.github.io/hello-github-pages/)
+My personal site hosting my articles, pictures of my dog, and other stuff I like 😊
 
-Getting started with [GitHub Pages](https://https://pages.github.com/).
+## Developer notes
 
-Other tools:
+Hosting tools:
 
-- [Git LFS](https://git-lfs.com/) to better track changes to images
-- GitHub Actions to automatically deploy the site
+- GitHub Pages
+- namecheap.com
 
 Developer tools:
 
 - Bash to bundle the project
+- Git LFS to better track changes to images
+- GitHub Actions to automatically deploy the site
 - Node.js to run QoL scripts
 - Prettier to format the repo
