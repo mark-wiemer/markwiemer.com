@@ -11,7 +11,6 @@ Hosting tools:
 
 Developer tools:
 
-- Bash to bundle the project
 - Git LFS to better track changes to images
 - GitHub Actions to automatically deploy the site
 - Node.js to run QoL scripts
