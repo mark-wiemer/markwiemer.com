@@ -84,7 +84,7 @@ a {
     }
 }
 
-img {
+img.headerImage {
     height: 12em;
     width: 12em;
     border-radius: 5%;
