@@ -18,24 +18,28 @@ body {
     }
 }
 
+h1 {
+    font-size: 3em;
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+}
+
+figure {
+    margin: 0;
+}
+
 footer {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-h1 {
-    font-size: 3em;
-}
-
 hr {
     width: 320px;
     max-width: calc(100% - 64px);
-}
-
-div {
-    display: flex;
-    flex-direction: column;
 }
 
 a {
