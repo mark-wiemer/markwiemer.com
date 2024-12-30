@@ -8,7 +8,8 @@
         "sort-package-json:fix": "sort-package-json"
     },
     "prettier": {
-        "tabWidth": 4
+        "tabWidth": 4,
+        "printWidth": 100
     },
     "devDependencies": {
         "prettier": "^3.4.2",
