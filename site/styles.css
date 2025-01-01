@@ -35,6 +35,9 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    & hr {
+        width: 640px;
+    }
 }
 
 hr {
@@ -72,10 +75,10 @@ a {
             outline: 2px solid rgb(0, 162, 174);
         }
         &:visited {
-            color: rgb(179 0 179);
+            color: rgb(219, 8, 219);
         }
         &:visited:hover {
-            outline: 2px solid rgb(179 0 179);
+            outline: 2px solid rgb(219, 8, 219);
         }
         &:visited:active {
             outline: 2px solid gainsboro;
