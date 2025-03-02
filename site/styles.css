@@ -122,4 +122,7 @@ img.headerImage {
         max-width: 640px;
         border-radius: 5%;
     }
+    figure img {
+        max-width: 100%;
+    }
 }
