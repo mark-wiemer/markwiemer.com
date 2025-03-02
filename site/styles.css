@@ -113,7 +113,6 @@ img.headerImage {
         max-width: calc(100vw - 24px);
     }
     h1 {
-        hyphens: auto;
         font-weight: 600;
         line-height: 52px;
         text-align: center;
@@ -122,5 +121,8 @@ img.headerImage {
     img {
         max-width: 640px;
         border-radius: 5%;
+    }
+    figure img {
+        max-width: 100%;
     }
 }
