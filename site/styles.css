@@ -113,7 +113,6 @@ img.headerImage {
         max-width: calc(100vw - 24px);
     }
     h1 {
-        hyphens: auto;
         font-weight: 600;
         line-height: 52px;
         text-align: center;
