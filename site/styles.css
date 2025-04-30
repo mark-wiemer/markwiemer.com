@@ -45,12 +45,6 @@ hr {
     max-width: calc(100% - 64px);
 }
 
-/* Dupe font-size to bypass mobile user agents shrinking it */
-p,
-a {
-    font-size: 18px;
-}
-
 a {
     text-decoration: underline;
     border-radius: 5px;
