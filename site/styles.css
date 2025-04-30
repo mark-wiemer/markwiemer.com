@@ -97,6 +97,18 @@ a {
     }
 }
 
+div.headerImages {
+    flex-direction: row;
+    align-items: center;
+    column-gap: 1em;
+    /* Row-gap in case of wraparound */
+    row-gap: 1em;
+    align-self: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding-bottom: 1em;
+}
+
 img.headerImage {
     height: 12em;
     width: 12em;
