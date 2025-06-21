@@ -6,11 +6,11 @@
     "type": "module",
     "scripts": {
         "build": "tsc && vite build",
+        "preci": "npx playwright install",
         "ci": "start-server-and-test start http-get://localhost:8080 playwright",
         "format": "npm run format:inner -- --check .",
         "format:fix": "npm run format:inner -- --write .",
         "format:inner": "prettier",
-        "postinstall": "npx playwright install",
         "lint": "npm run lint:inner -- src && echo No ESLint problems",
         "lint:fix": "npm run lint:inner -- --fix src",
         "lint:inner": "eslint . --report-unused-disable-directives --max-warnings 0",
