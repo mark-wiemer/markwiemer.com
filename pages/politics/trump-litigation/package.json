@@ -1,0 +1,57 @@
+{
+    "name": "@mark-wiemer/trump-litigation-tracker",
+    "version": "0.1.0",
+    "private": true,
+    "license": "MIT",
+    "type": "module",
+    "scripts": {
+        "build": "tsc && vite build",
+        "ci": "start-server-and-test start http-get://localhost:8080 playwright",
+        "format": "npm run format:inner -- --check .",
+        "format:fix": "npm run format:inner -- --write .",
+        "format:inner": "prettier",
+        "postinstall": "npx playwright install",
+        "lint": "npm run lint:inner -- src && echo No ESLint problems",
+        "lint:fix": "npm run lint:inner -- --fix src",
+        "lint:inner": "eslint . --report-unused-disable-directives --max-warnings 0",
+        "packagejson": "sort-package-json --check",
+        "packagejson:fix": "sort-package-json",
+        "playwright": "playwright test",
+        "preview": "vite preview",
+        "start": "vite",
+        "test": "vitest --run",
+        "tsc": "tsc && echo No TS problems",
+        "validate": "npm run packagejson && npm run format && npm run lint && npm run validate:unfixable",
+        "validate:fix": "npm run packagejson:fix && npm run format:fix && npm run lint:fix && npm run validate:unfixable",
+        "validate:unfixable": "npm run tsc && npm run test && npm run ci && echo Ready for review :)",
+        "watch": "vitest"
+    },
+    "dependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.29.0",
+        "@playwright/test": "^1.37.1",
+        "@testing-library/jest-dom": "^6.1.3",
+        "@testing-library/react": "^14.0.0",
+        "@testing-library/user-event": "^14.4.3",
+        "@types/jest": "^29.5.4",
+        "@types/node": "^24.0.3",
+        "@types/react": "^18.2.15",
+        "@types/react-dom": "^18.2.7",
+        "@vitejs/plugin-react": "^4.0.3",
+        "eslint": "^9.29.0",
+        "jsdom": "^26.1.0",
+        "prettier": "3.0.3",
+        "sort-package-json": "^2.5.1",
+        "start-server-and-test": "^2.0.0",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.34.1",
+        "vite": "^6.3.5",
+        "vitest": "^3.2.4"
+    },
+    "engines": {
+        "node": "^20 || ^22"
+    }
+}

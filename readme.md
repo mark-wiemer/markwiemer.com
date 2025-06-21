@@ -4,6 +4,10 @@ My personal site hosting my articles, pictures of my dog, and other stuff I like
 
 ## Developer notes
 
+General notes:
+
+- Some pages are tracked directly in the `site` folder, others are in the `pages` folder
+
 Hosting tools:
 
 - GitHub Pages
@@ -11,6 +15,7 @@ Hosting tools:
 
 Developer tools:
 
+- @types/node to silence false positive errors on references to Node globals
 - Git LFS to better track changes to images
 - GitHub Actions to automatically deploy the site
 - http-server for testing the site
