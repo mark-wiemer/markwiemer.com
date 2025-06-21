@@ -4,6 +4,10 @@ My personal site hosting my articles, pictures of my dog, and other stuff I like
 
 ## Developer notes
 
+General notes:
+
+- Some pages are tracked directly in the `site` folder, others are in the `pages` folder
+
 Hosting tools:
 
 - GitHub Pages
