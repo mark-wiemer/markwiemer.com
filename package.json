@@ -4,6 +4,7 @@
         "format:fix": "prettier --write .",
         "lint": "npm run sort-package-json && npm run format",
         "lint:fix": "npm run sort-package-json:fix && npm run format:fix",
+        "start": "http-server site -o",
         "sort-package-json": "sort-package-json --check",
         "sort-package-json:fix": "sort-package-json"
     },
@@ -12,6 +13,7 @@
         "printWidth": 100
     },
     "devDependencies": {
+        "http-server": "^14.1.1",
         "prettier": "^3.4.2",
         "sort-package-json": "^2.12.0"
     }
