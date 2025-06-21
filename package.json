@@ -13,6 +13,7 @@
         "printWidth": 100
     },
     "devDependencies": {
+        "@types/node": "^22.15.32",
         "http-server": "^14.1.1",
         "prettier": "^3.4.2",
         "sort-package-json": "^2.12.0"

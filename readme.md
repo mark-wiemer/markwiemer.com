@@ -11,6 +11,7 @@ Hosting tools:
 
 Developer tools:
 
+- @types/node to silence false positive errors on references to Node globals
 - Git LFS to better track changes to images
 - GitHub Actions to automatically deploy the site
 - http-server for testing the site
