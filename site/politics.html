@@ -11,9 +11,7 @@
     <body>
         <div class="article">
             <h1>Politics</h1>
-            <button hx-get="./src/text.html" hx-target="#test-div">Add some text</button>
-            <button hx-get="./src/empty.html" hx-target="#test-div">Remove the text</button>
-            <div id="test-div"></div>
+            <button hx-put="/messages">Put To Messages</button>
             <footer>
                 <hr />
                 <a href="/">Home</a>
