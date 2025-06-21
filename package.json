@@ -1,6 +1,7 @@
 {
     "scripts": {
         "build": "cd pages/politics/trump-litigation && npm run build",
+        "build:ci": "cd pages/politics/trump-litigation && npm i && npm run build",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "lint": "npm run sort-package-json && npm run format",
