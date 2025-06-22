@@ -16,10 +16,8 @@ type Item = {
 };
 
 const items: Item[] = [
-    {
-        id: "1",
-        name: "Mark",
-    },
+    { id: "1", name: "Wynonna" },
+    { id: "2", name: "Mark" },
 ];
 
 // doing some jank here to work around a Prettier bug in TSX files
@@ -30,8 +28,8 @@ let columns: TableColumnDefinition<Item>[];
 columns = [
     createTableColumn<Item>({
         columnId: "id",
-        compare: () => {
-            return 0;
+        compare: (a, b) => {
+            return a.id.localeCompare(b.id);
         },
         renderHeaderCell: () => {
             return "ID";
@@ -46,7 +44,7 @@ columns = [
             return a.name.localeCompare(b.name);
         },
         renderHeaderCell: () => {
-            return "Author";
+            return "Name";
         },
         renderCell: (item) => {
             return <TableCellLayout>{item.name}</TableCellLayout>;
@@ -56,7 +54,14 @@ columns = [
 
 export const Default = () => {
     return (
-        <DataGrid items={items} columns={columns}>
+        <DataGrid
+            items={items}
+            columns={columns}
+            sortable
+            selectionMode="multiselect"
+            getRowId={(item) => item.id}
+            focusMode="composite"
+        >
             <DataGridHeader>
                 <DataGridRow
                     selectionCell={{
