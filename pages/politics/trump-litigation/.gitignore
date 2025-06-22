@@ -1,3 +1,5 @@
+# Also update root prettierignore when updating this file
+
 # Logs
 logs
 *.log
