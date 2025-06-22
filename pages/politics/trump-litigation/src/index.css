@@ -12,6 +12,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
 }
 
 a {
@@ -29,6 +37,7 @@ body {
     place-items: center;
     min-width: 320px;
     min-height: 100vh;
+    text-align: center;
 }
 
 h1 {

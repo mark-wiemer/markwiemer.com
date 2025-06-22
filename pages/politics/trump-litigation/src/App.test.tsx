@@ -1,15 +1,19 @@
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import "@testing-library/jest-dom";
 import App from "./App";
-import { render, screen, userEvent } from "./utils/test-utils";
 
 describe("Simple working test", () => {
     it("the title is visible", () => {
         render(<App />);
-        expect(screen.getByText(/Hello Vite \+ React \+ TypeScript!/i)).toBeInTheDocument();
+        expect(screen.getByRole("heading")).toHaveTextContent("Hello Vite + React + TypeScript!");
     });
 
     it("should increment count on click", async () => {
         render(<App />);
-        userEvent.click(screen.getByRole("button"));
-        expect(await screen.findByText(/count is: 1/i)).toBeInTheDocument();
+        expect(screen.getByRole("button")).toHaveTextContent("Count is: 0");
+        await userEvent.click(screen.getByRole("button"));
+        expect(screen.getByRole("button")).toHaveTextContent("Count is: 1");
     });
 });
