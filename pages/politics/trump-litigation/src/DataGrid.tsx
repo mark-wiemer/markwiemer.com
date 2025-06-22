@@ -1,15 +1,4 @@
 import {
-    FolderRegular,
-    EditRegular,
-    OpenRegular,
-    DocumentRegular,
-    PeopleRegular,
-    DocumentPdfRegular,
-    VideoRegular,
-} from "@fluentui/react-icons";
-import {
-    PresenceBadgeStatus,
-    Avatar,
     DataGridBody,
     DataGridRow,
     DataGrid,
@@ -21,69 +10,15 @@ import {
     createTableColumn,
 } from "@fluentui/react-components";
 
-type FileCell = {
-    label: string;
-    icon: JSX.Element;
-};
-
-type LastUpdatedCell = {
-    label: string;
-    timestamp: number;
-};
-
-type LastUpdateCell = {
-    label: string;
-    icon: JSX.Element;
-};
-
-type AuthorCell = {
-    label: string;
-    status: PresenceBadgeStatus;
-};
-
 type Item = {
-    file: FileCell;
-    author: AuthorCell;
-    lastUpdated: LastUpdatedCell;
-    lastUpdate: LastUpdateCell;
+    id: string;
+    name: string;
 };
 
 const items: Item[] = [
     {
-        file: { label: "Meeting notes", icon: <DocumentRegular /> },
-        author: { label: "Max Mustermann", status: "available" },
-        lastUpdated: { label: "7h ago", timestamp: 1 },
-        lastUpdate: {
-            label: "You edited this",
-            icon: <EditRegular />,
-        },
-    },
-    {
-        file: { label: "Thursday presentation", icon: <FolderRegular /> },
-        author: { label: "Erika Mustermann", status: "busy" },
-        lastUpdated: { label: "Yesterday at 1:45 PM", timestamp: 2 },
-        lastUpdate: {
-            label: "You recently opened this",
-            icon: <OpenRegular />,
-        },
-    },
-    {
-        file: { label: "Training recording", icon: <VideoRegular /> },
-        author: { label: "John Doe", status: "away" },
-        lastUpdated: { label: "Yesterday at 1:45 PM", timestamp: 2 },
-        lastUpdate: {
-            label: "You recently opened this",
-            icon: <OpenRegular />,
-        },
-    },
-    {
-        file: { label: "Purchase order", icon: <DocumentPdfRegular /> },
-        author: { label: "Jane Doe", status: "offline" },
-        lastUpdated: { label: "Tue at 9:30 AM", timestamp: 3 },
-        lastUpdate: {
-            label: "You shared this in a Teams chat",
-            icon: <PeopleRegular />,
-        },
+        id: "1",
+        name: "Mark",
     },
 ];
 
@@ -94,68 +29,27 @@ let columns: TableColumnDefinition<Item>[];
 // eslint-disable-next-line prefer-const
 columns = [
     createTableColumn<Item>({
-        columnId: "file",
-        compare: (a, b) => {
-            return a.file.label.localeCompare(b.file.label);
+        columnId: "id",
+        compare: () => {
+            return 0;
         },
         renderHeaderCell: () => {
-            return "File";
+            return "ID";
         },
         renderCell: (item) => {
-            return <TableCellLayout media={item.file.icon}>{item.file.label}</TableCellLayout>;
+            return <TableCellLayout>{item.id}</TableCellLayout>;
         },
     }),
     createTableColumn<Item>({
-        columnId: "author",
+        columnId: "name",
         compare: (a, b) => {
-            return a.author.label.localeCompare(b.author.label);
+            return a.name.localeCompare(b.name);
         },
         renderHeaderCell: () => {
             return "Author";
         },
         renderCell: (item) => {
-            return (
-                <TableCellLayout
-                    media={
-                        <Avatar
-                            aria-label={item.author.label}
-                            name={item.author.label}
-                            badge={{ status: item.author.status }}
-                        />
-                    }
-                >
-                    {item.author.label}
-                </TableCellLayout>
-            );
-        },
-    }),
-    createTableColumn<Item>({
-        columnId: "lastUpdated",
-        compare: (a, b) => {
-            return a.lastUpdated.timestamp - b.lastUpdated.timestamp;
-        },
-        renderHeaderCell: () => {
-            return "Last updated";
-        },
-
-        renderCell: (item) => {
-            return item.lastUpdated.label;
-        },
-    }),
-    createTableColumn<Item>({
-        columnId: "lastUpdate",
-        compare: (a, b) => {
-            return a.lastUpdate.label.localeCompare(b.lastUpdate.label);
-        },
-        renderHeaderCell: () => {
-            return "Last update";
-        },
-        renderCell: (item) => {
-            return (
-                <TableCellLayout media={item.lastUpdate.icon}>
-                    {item.lastUpdate.label}
-                </TableCellLayout>
-            );
+            return <TableCellLayout>{item.name}</TableCellLayout>;
         },
     }),
 ];
