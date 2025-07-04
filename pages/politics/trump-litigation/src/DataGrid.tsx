@@ -51,7 +51,7 @@ const cases: LegalCase[] = trumpLitigationData;
 let columns: TableColumnDefinition<LegalCase>[];
 // eslint-disable-next-line prefer-const
 columns = [
-    // citation
+    // citation 1
     createTableColumn<LegalCase>({
         columnId: "citation",
         compare: (a, b) => {
@@ -62,9 +62,24 @@ columns = [
         },
         renderCell: (item) => {
             return (
-                <TableCellLayout truncate>
+                <TableCellLayout>
                     <ExternalLink href={item.citation1URL}>{item.citation1}</ExternalLink>
                 </TableCellLayout>
+            );
+        },
+    }),
+    // date filed
+    createTableColumn<LegalCase>({
+        columnId: "dateFiled",
+        compare: (a, b) => {
+            return new Date(a.dateFiled).getTime() - new Date(b.dateFiled).getTime();
+        },
+        renderHeaderCell: () => {
+            return "Date filed";
+        },
+        renderCell: (item) => {
+            return (
+                <TableCellLayout>{new Date(item.dateFiled).toLocaleDateString()}</TableCellLayout>
             );
         },
     }),
@@ -92,7 +107,7 @@ columns = [
         },
         renderCell: (item) => {
             return (
-                <TableCellLayout>
+                <TableCellLayout truncate>
                     {item.executiveActionURL ? (
                         <ExternalLink href={item.executiveActionURL}>
                             {item.executiveAction}
@@ -102,6 +117,81 @@ columns = [
                     )}
                 </TableCellLayout>
             );
+        },
+    }),
+    // government action
+    createTableColumn<LegalCase>({
+        columnId: "governmentAction",
+        renderHeaderCell: () => {
+            return "Government action";
+        },
+        renderCell: (item) => {
+            return <TableCellLayout>{item.governmentAction}</TableCellLayout>;
+        },
+    }),
+    // alleged violated laws
+    createTableColumn<LegalCase>({
+        columnId: "allegedViolatedLaws",
+        renderHeaderCell: () => {
+            return "Alleged violated laws";
+        },
+        renderCell: (item) => {
+            return <TableCellLayout>{item.allegedViolatedLaws}</TableCellLayout>;
+        },
+    }),
+    // current ruling
+    createTableColumn<LegalCase>({
+        columnId: "currentRuling",
+        renderHeaderCell: () => {
+            return "Current ruling";
+        },
+        renderCell: (item) => {
+            return <TableCellLayout>{item.currentRuling}</TableCellLayout>;
+        },
+    }),
+    // who's winning
+    createTableColumn<LegalCase>({
+        columnId: "whosWinning",
+        renderHeaderCell: () => {
+            return "Who's winning";
+        },
+        renderCell: (item) => {
+            return <TableCellLayout>{item.whosWinning}</TableCellLayout>;
+        },
+    }),
+    // status
+    createTableColumn<LegalCase>({
+        columnId: "status",
+        renderHeaderCell: () => {
+            return "Status";
+        },
+        renderCell: (item) => {
+            return <TableCellLayout>{item.status}</TableCellLayout>;
+        },
+    }),
+    // last update
+    createTableColumn<LegalCase>({
+        columnId: "lastUpdate",
+        compare: (a, b) => {
+            return new Date(a.lastUpdate).getTime() - new Date(b.lastUpdate).getTime();
+        },
+        renderHeaderCell: () => {
+            return "Last update";
+        },
+        renderCell: (item) => {
+            return (
+                <TableCellLayout>{new Date(item.lastUpdate).toLocaleDateString()}</TableCellLayout>
+            );
+        },
+    }),
+    // comments
+    createTableColumn<LegalCase>({
+        columnId: "comments",
+        renderHeaderCell: () => {
+            return "Comments";
+        },
+        renderCell: (item) => {
+            return <TableCellLayout truncate>{item.comments}</TableCellLayout>;
         },
     }),
 ];
@@ -151,7 +241,7 @@ export const TrumpLitigationDataGrid = () => {
                     )}
                 </DataGridRow>
             </DataGridHeader>
-            <DataGridBody<LegalCase> itemSize={50} height={900}>
+            <DataGridBody<LegalCase> itemSize={60} height={900}>
                 {renderRow}
             </DataGridBody>
         </DataGrid>
