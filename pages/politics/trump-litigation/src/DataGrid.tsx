@@ -250,7 +250,7 @@ export const TrumpLitigationDataGrid = () => {
                     )}
                 </DataGridRow>
             </DataGridHeader>
-            <DataGridBody<LegalCase> itemSize={60} height={900}>
+            <DataGridBody<LegalCase> itemSize={64} height={900}>
                 {renderRow}
             </DataGridBody>
         </DataGrid>
