@@ -1,4 +1,9 @@
 import {
+    Menu,
+    MenuItem,
+    MenuList,
+    MenuPopover,
+    MenuTrigger,
     TableCellLayout,
     TableColumnDefinition,
     createTableColumn,
@@ -16,6 +21,7 @@ import {
     DataGridHeaderCell,
     DataGridCell,
 } from "@fluentui-contrib/react-data-grid-react-window";
+import React from "react";
 
 type LegalCase = {
     citation1: string;
@@ -56,7 +62,7 @@ columns = [
         },
         renderCell: (item) => {
             return (
-                <TableCellLayout>
+                <TableCellLayout truncate>
                     <ExternalLink href={item.citation1URL}>{item.citation1}</ExternalLink>
                 </TableCellLayout>
             );
@@ -107,6 +113,7 @@ const renderRow: RowRenderer<LegalCase> = ({ item, rowId }, style) => (
 );
 
 export const TrumpLitigationDataGrid = () => {
+    const refMap = React.useRef<Record<string, HTMLElement | null>>({});
     const { targetDocument } = useFluent();
     const scrollbarWidth = useScrollbarWidth({ targetDocument });
     return (
@@ -116,13 +123,31 @@ export const TrumpLitigationDataGrid = () => {
             items={cases}
             columns={columns}
             sortable
-            selectionMode="multiselect"
+            resizableColumns
+            selectionMode="single"
             focusMode="cell"
         >
             <DataGridHeader style={{ paddingRight: scrollbarWidth }}>
                 <DataGridRow>
-                    {({ renderHeaderCell }) => (
-                        <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
+                    {({ renderHeaderCell, columnId }, dataGrid) => (
+                        <Menu openOnContext>
+                            <MenuTrigger>
+                                <DataGridHeaderCell ref={(el) => (refMap.current[columnId] = el)}>
+                                    {renderHeaderCell()}
+                                </DataGridHeaderCell>
+                            </MenuTrigger>
+                            <MenuPopover>
+                                <MenuList>
+                                    <MenuItem
+                                        onClick={dataGrid.columnSizing_unstable.enableKeyboardMode(
+                                            columnId,
+                                        )}
+                                    >
+                                        Keyboard column resizing
+                                    </MenuItem>
+                                </MenuList>
+                            </MenuPopover>
+                        </Menu>
                     )}
                 </DataGridRow>
             </DataGridHeader>
