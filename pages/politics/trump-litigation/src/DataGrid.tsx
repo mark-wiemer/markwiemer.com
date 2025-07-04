@@ -142,6 +142,9 @@ columns = [
     // current ruling
     createTableColumn<LegalCase>({
         columnId: "currentRuling",
+        compare: (a, b) => {
+            return a.currentRuling.localeCompare(b.currentRuling);
+        },
         renderHeaderCell: () => {
             return "Current ruling";
         },
@@ -152,6 +155,9 @@ columns = [
     // who's winning
     createTableColumn<LegalCase>({
         columnId: "whosWinning",
+        compare: (a, b) => {
+            return a.whosWinning.localeCompare(b.whosWinning);
+        },
         renderHeaderCell: () => {
             return "Who's winning";
         },
@@ -162,6 +168,9 @@ columns = [
     // status
     createTableColumn<LegalCase>({
         columnId: "status",
+        compare: (a, b) => {
+            return a.status.localeCompare(b.status);
+        },
         renderHeaderCell: () => {
             return "Status";
         },
