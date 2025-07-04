@@ -109,11 +109,7 @@ export const TrumpLitigationDataGrid = () => {
             resizableColumns
         >
             <DataGridHeader>
-                <DataGridRow
-                    selectionCell={{
-                        checkboxIndicator: { "aria-label": "Select all rows" },
-                    }}
-                >
+                <DataGridRow>
                     {({ renderHeaderCell }) => (
                         <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
                     )}
