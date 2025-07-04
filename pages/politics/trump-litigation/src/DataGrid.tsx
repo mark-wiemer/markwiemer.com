@@ -97,13 +97,16 @@ columns = [
 
 export const TrumpLitigationDataGrid = () => {
     return (
+        // https://react.fluentui.dev/?path=/docs/components-datagrid--docs
+        // todo use https://microsoft.github.io/fluentui-contrib/react-data-grid-react-window/?path=/docs/packages-react-data-grid-react-window--docs
         <DataGrid
             items={cases}
             columns={columns}
             sortable
-            selectionMode="multiselect"
+            selectionMode="single"
             getRowId={(item) => item.id}
             focusMode="composite"
+            resizableColumns
         >
             <DataGridHeader>
                 <DataGridRow
