@@ -9,53 +9,96 @@ import {
     TableColumnDefinition,
     createTableColumn,
 } from "@fluentui/react-components";
+import { ExternalLink } from "./ExternalLink";
+import trumpLitigationData from "./data/trump-litigation-data.json";
 
-type Item = {
-    id: string;
-    name: string;
+type LegalCase = {
+    citation1: string;
+    citation1URL: string;
+    citation2: string;
+    citation2URL: string;
+    citation3: string;
+    citation3URL: string;
+    index: string;
+    topic: string;
+    executiveAction: string;
+    executiveActionURL: string;
+    dateFiled: string;
+    governmentAction: string;
+    allegedViolatedLaws: string;
+    lastUpdate: string;
+    whosWinning: string;
+    currentRuling: string;
+    status: string;
+    comments: string;
 };
 
-const items: Item[] = [
-    { id: "1", name: "Wynonna" },
-    { id: "2", name: "Mark" },
-];
+const cases: LegalCase[] = trumpLitigationData;
 
 // doing some jank here to work around a Prettier bug in TSX files
 // if we can remove these without changing the code, let's do it
-/* prettier-ignore */
-let columns: TableColumnDefinition<Item>[];
+let columns: TableColumnDefinition<LegalCase>[];
 // eslint-disable-next-line prefer-const
 columns = [
-    createTableColumn<Item>({
-        columnId: "id",
+    // citation
+    createTableColumn<LegalCase>({
+        columnId: "citation",
         compare: (a, b) => {
-            return a.id.localeCompare(b.id);
+            return a.citation1.localeCompare(b.citation1);
         },
         renderHeaderCell: () => {
-            return "ID";
+            return "Citation";
         },
         renderCell: (item) => {
-            return <TableCellLayout>{item.id}</TableCellLayout>;
+            return (
+                <TableCellLayout>
+                    <ExternalLink href={item.citation1URL}>{item.citation1}</ExternalLink>
+                </TableCellLayout>
+            );
         },
     }),
-    createTableColumn<Item>({
-        columnId: "name",
+    // topic
+    createTableColumn<LegalCase>({
+        columnId: "topic",
         compare: (a, b) => {
-            return a.name.localeCompare(b.name);
+            return a.topic.localeCompare(b.topic);
         },
         renderHeaderCell: () => {
-            return "Name";
+            return "Topic";
         },
         renderCell: (item) => {
-            return <TableCellLayout>{item.name}</TableCellLayout>;
+            return <TableCellLayout>{item.topic}</TableCellLayout>;
+        },
+    }),
+    // executive action
+    createTableColumn<LegalCase>({
+        columnId: "executiveAction",
+        compare: (a, b) => {
+            return a.executiveAction.localeCompare(b.executiveAction);
+        },
+        renderHeaderCell: () => {
+            return "Executive action";
+        },
+        renderCell: (item) => {
+            return (
+                <TableCellLayout>
+                    {item.executiveActionURL ? (
+                        <ExternalLink href={item.executiveActionURL}>
+                            {item.executiveAction}
+                        </ExternalLink>
+                    ) : (
+                        item.executiveAction
+                    )}
+                </TableCellLayout>
+            );
         },
     }),
 ];
 
-export const Default = () => {
+export const TrumpLitigationDataGrid = () => {
     return (
         <DataGrid
-            items={items}
+            items={cases}
             columns={columns}
             sortable
             selectionMode="multiselect"
