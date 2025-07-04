@@ -118,7 +118,7 @@ export const TrumpLitigationDataGrid = () => {
     const scrollbarWidth = useScrollbarWidth({ targetDocument });
     return (
         // https://react.fluentui.dev/?path=/docs/components-datagrid--docs
-        // todo use https://microsoft.github.io/fluentui-contrib/react-data-grid-react-window/?path=/docs/packages-react-data-grid-react-window--docs
+        // https://microsoft.github.io/fluentui-contrib/react-data-grid-react-window/?path=/docs/packages-react-data-grid-react-window--docs
         <DataGrid
             items={cases}
             columns={columns}
