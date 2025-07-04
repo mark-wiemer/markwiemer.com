@@ -14,7 +14,8 @@ function App() {
                 <ExternalLink href="https://www.justsecurity.org/107087/tracker-litigation-legal-challenges-trump-administration">
                     Just Security
                 </ExternalLink>
-                , this page tracks litigation against the Trump administration.
+                , this page tracks litigation against the Trump administration. However, I'm not a
+                lawyer or legal expert. I'm just a curious guy!
             </p>
             <TrumpLitigationDataGrid />
         </>
