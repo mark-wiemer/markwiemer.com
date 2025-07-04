@@ -1,19 +1,21 @@
 import {
-    TableCellLayout,
     TableColumnDefinition,
     createTableColumn,
+    TableCellLayout,
+    useScrollbarWidth,
+    useFluent,
 } from "@fluentui/react-components";
+import {
+    DataGridBody,
+    DataGrid,
+    DataGridRow,
+    DataGridHeader,
+    DataGridCell,
+    DataGridHeaderCell,
+    RowRenderer,
+} from "@fluentui-contrib/react-data-grid-react-window";
 import { ExternalLink } from "./ExternalLink";
 import trumpLitigationData from "./data/trump-litigation-data.json";
-import {
-    RowRenderer,
-    DataGridBody,
-    DataGridRow,
-    DataGrid,
-    DataGridHeader,
-    DataGridHeaderCell,
-    DataGridCell,
-} from "@fluentui-contrib/react-data-grid-react-window";
 
 type LegalCase = {
     citation1: string;
@@ -40,9 +42,9 @@ const cases: LegalCase[] = trumpLitigationData;
 
 // doing some jank here to work around a Prettier bug in TSX files
 // if we can remove these without changing the code, let's do it
-let columns: TableColumnDefinition<LegalCase>[];
+let caseColumns: TableColumnDefinition<LegalCase>[];
 // eslint-disable-next-line prefer-const
-columns = [
+caseColumns = [
     // citation
     createTableColumn<LegalCase>({
         columnId: "citation",
@@ -98,38 +100,32 @@ columns = [
     }),
 ];
 
-const renderRow: RowRenderer<LegalCase> = ({ item, rowId }) => (
-    <DataGridRow
-        key={rowId}
-        selectionCell={{
-            checkboxIndicator: { "aria-label": "Select row" },
-        }}
-    >
-        {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
+const renderRow: RowRenderer<LegalCase> = ({ item, rowId }, style) => (
+    <DataGridRow<LegalCase> key={rowId} style={style}>
+        {({ renderCell }) => <DataGridCell focusMode="group">{renderCell(item)}</DataGridCell>}
     </DataGridRow>
 );
 
-export const TrumpLitigationDataGrid = () => {
+export const DemoDataGrid = () => {
+    const { targetDocument } = useFluent();
+    const scrollbarWidth = useScrollbarWidth({ targetDocument });
+
     return (
-        // https://react.fluentui.dev/?path=/docs/components-datagrid--docs
-        // todo use https://microsoft.github.io/fluentui-contrib/react-data-grid-react-window/?path=/docs/packages-react-data-grid-react-window--docs
         <DataGrid
             items={cases}
-            columns={columns}
+            columns={caseColumns}
+            focusMode="cell"
             sortable
-            selectionMode="single"
-            getRowId={(item) => item.id}
-            focusMode="composite"
-            resizableColumns
+            selectionMode="multiselect"
         >
-            <DataGridHeader>
+            <DataGridHeader style={{ paddingRight: scrollbarWidth }}>
                 <DataGridRow>
                     {({ renderHeaderCell }) => (
                         <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
                     )}
                 </DataGridRow>
             </DataGridHeader>
-            <DataGridBody<LegalCase> itemSize={44} height={900}>
+            <DataGridBody<LegalCase> itemSize={50} height={1100}>
                 {renderRow}
             </DataGridBody>
         </DataGrid>
