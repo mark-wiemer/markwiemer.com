@@ -2,6 +2,8 @@ import {
     TableCellLayout,
     TableColumnDefinition,
     createTableColumn,
+    useFluent,
+    useScrollbarWidth,
 } from "@fluentui/react-components";
 import { ExternalLink } from "./ExternalLink";
 import trumpLitigationData from "./data/trump-litigation-data.json";
@@ -98,18 +100,15 @@ columns = [
     }),
 ];
 
-const renderRow: RowRenderer<LegalCase> = ({ item, rowId }) => (
-    <DataGridRow
-        key={rowId}
-        selectionCell={{
-            checkboxIndicator: { "aria-label": "Select row" },
-        }}
-    >
+const renderRow: RowRenderer<LegalCase> = ({ item, rowId }, style) => (
+    <DataGridRow key={rowId} style={style}>
         {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
     </DataGridRow>
 );
 
 export const TrumpLitigationDataGrid = () => {
+    const { targetDocument } = useFluent();
+    const scrollbarWidth = useScrollbarWidth({ targetDocument });
     return (
         // https://react.fluentui.dev/?path=/docs/components-datagrid--docs
         // todo use https://microsoft.github.io/fluentui-contrib/react-data-grid-react-window/?path=/docs/packages-react-data-grid-react-window--docs
@@ -117,19 +116,17 @@ export const TrumpLitigationDataGrid = () => {
             items={cases}
             columns={columns}
             sortable
-            selectionMode="single"
-            getRowId={(item) => item.id}
-            focusMode="composite"
-            resizableColumns
+            selectionMode="multiselect"
+            focusMode="cell"
         >
-            <DataGridHeader>
+            <DataGridHeader style={{ paddingRight: scrollbarWidth }}>
                 <DataGridRow>
                     {({ renderHeaderCell }) => (
                         <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
                     )}
                 </DataGridRow>
             </DataGridHeader>
-            <DataGridBody<LegalCase> itemSize={44} height={900}>
+            <DataGridBody<LegalCase> itemSize={50} height={900}>
                 {renderRow}
             </DataGridBody>
         </DataGrid>

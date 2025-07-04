@@ -1,5 +1,4 @@
-// import { TrumpLitigationDataGrid } from "./DataGrid";
-import { DemoDataGrid } from "./DemoDataGrid";
+import { TrumpLitigationDataGrid } from "./DataGrid";
 import { ExternalLink } from "./ExternalLink";
 
 function App() {
@@ -17,7 +16,7 @@ function App() {
                 </ExternalLink>
                 , this page tracks litigation against the Trump administration.
             </p>
-            <DemoDataGrid />
+            <TrumpLitigationDataGrid />
         </>
     );
 }
