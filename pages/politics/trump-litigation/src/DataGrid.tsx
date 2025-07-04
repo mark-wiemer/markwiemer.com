@@ -53,7 +53,7 @@ let columns: TableColumnDefinition<LegalCase>[];
 columns = [
     // citation 1
     createTableColumn<LegalCase>({
-        columnId: "citation",
+        columnId: "citation1",
         compare: (a, b) => {
             return a.citation1.localeCompare(b.citation1);
         },
@@ -139,6 +139,21 @@ columns = [
             return <TableCellLayout>{item.allegedViolatedLaws}</TableCellLayout>;
         },
     }),
+    // last update
+    createTableColumn<LegalCase>({
+        columnId: "lastUpdate",
+        compare: (a, b) => {
+            return new Date(a.lastUpdate).getTime() - new Date(b.lastUpdate).getTime();
+        },
+        renderHeaderCell: () => {
+            return "Last update";
+        },
+        renderCell: (item) => {
+            return (
+                <TableCellLayout>{new Date(item.lastUpdate).toLocaleDateString()}</TableCellLayout>
+            );
+        },
+    }),
     // current ruling
     createTableColumn<LegalCase>({
         columnId: "currentRuling",
@@ -178,21 +193,6 @@ columns = [
             return <TableCellLayout>{item.status}</TableCellLayout>;
         },
     }),
-    // last update
-    createTableColumn<LegalCase>({
-        columnId: "lastUpdate",
-        compare: (a, b) => {
-            return new Date(a.lastUpdate).getTime() - new Date(b.lastUpdate).getTime();
-        },
-        renderHeaderCell: () => {
-            return "Last update";
-        },
-        renderCell: (item) => {
-            return (
-                <TableCellLayout>{new Date(item.lastUpdate).toLocaleDateString()}</TableCellLayout>
-            );
-        },
-    }),
     // comments
     createTableColumn<LegalCase>({
         columnId: "comments",
@@ -200,7 +200,7 @@ columns = [
             return "Comments";
         },
         renderCell: (item) => {
-            return <TableCellLayout truncate>{item.comments}</TableCellLayout>;
+            return <TableCellLayout>{item.comments}</TableCellLayout>;
         },
     }),
 ];
@@ -221,10 +221,23 @@ export const TrumpLitigationDataGrid = () => {
         <DataGrid
             items={cases}
             columns={columns}
+            columnSizingOptions={{
+                citation1: { minWidth: 328, defaultWidth: 328, idealWidth: 328 },
+                dateFiled: { minWidth: 60, defaultWidth: 60, idealWidth: 60 },
+                topic: { minWidth: 144, defaultWidth: 144, idealWidth: 144 },
+                governmentAction: { minWidth: 544, defaultWidth: 544, idealWidth: 544 },
+                allegedViolatedLaws: { minWidth: 405, defaultWidth: 405, idealWidth: 405 },
+                lastUpdate: { minWidth: 60, defaultWidth: 60, idealWidth: 60 },
+                currentRuling: { minWidth: 100, defaultWidth: 100, idealWidth: 100 },
+                whosWinning: { minWidth: 70, defaultWidth: 70, idealWidth: 70 },
+                status: { minWidth: 100, defaultWidth: 100, idealWidth: 100 },
+                comments: { minWidth: 745, defaultWidth: 745, idealWidth: 745 },
+            }}
             sortable
             resizableColumns
             selectionMode="single"
             focusMode="cell"
+            resizableColumnsOptions={{ autoFitColumns: false }}
         >
             <DataGridHeader style={{ paddingRight: scrollbarWidth }}>
                 <DataGridRow>
