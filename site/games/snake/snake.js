@@ -1,11 +1,11 @@
 let grid = document.querySelector(".grid");
 let popup = document.querySelector(".popup");
-let playAgain = document.querySelector(".playAgain");
+let restartButton = document.querySelector(".restart");
 let scoreDisplay = document.querySelector(".scoreDisplay");
-let newUp = document.querySelector(".up");
-let newRight = document.querySelector(".right");
-let newDown = document.querySelector(".down");
-let newLeft = document.querySelector(".left");
+let upButton = document.querySelector(".up");
+let rightButton = document.querySelector(".right");
+let downButton = document.querySelector(".down");
+let leftButton = document.querySelector(".left");
 let width = 10;
 let currentIndex = 0;
 let appleIndex = 0;
@@ -20,11 +20,33 @@ let intervalTime = baseIntervalTime;
 let interval;
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.addEventListener("keydown", control);
+    document.addEventListener("keydown", handleInputs);
+    restartButton.addEventListener("click", restart);
+    restart();
+});
+
+function handleInputs(e) {
+    if (e.key === "ArrowDown") {
+        direction = 1;
+    } else if (e.key === "ArrowLeft") {
+        direction = -width; // move left this many divs (yikes!)
+    } else if (e.key === "ArrowUp") {
+        direction = -1;
+    } else if (e.key === "ArrowRight") {
+        direction = +width;
+    }
+}
+
+leftButton.addEventListener("click", () => (direction = -width));
+rightButton.addEventListener("click", () => (direction = +width));
+upButton.addEventListener("click", () => (direction = -1));
+downButton.addEventListener("click", () => (direction = 1));
+
+function restart() {
+    grid.innerHTML = "";
     createBoard();
     startGame();
-    playAgain.addEventListener("click", replay);
-});
+}
 
 function createBoard() {
     popup.style.display = "none";
@@ -56,15 +78,6 @@ function moveOutcome() {
     }
 }
 
-function moveSnake(squares) {
-    let tail = currentSnake.pop();
-    squares[tail].classList.remove("snake");
-    // console.log(`direction ${direction}`);
-    currentSnake.unshift(currentSnake[0] + direction);
-    eatApple(squares, tail);
-    squares[currentSnake[0]].classList.add("snake");
-}
-
 function checkForHits(squares) {
     if (
         (currentSnake[0] + width >= width * width && direction === width) ||
@@ -77,6 +90,15 @@ function checkForHits(squares) {
     } else {
         return false;
     }
+}
+
+function moveSnake(squares) {
+    let tail = currentSnake.pop();
+    squares[tail].classList.remove("snake");
+    // console.log(`direction ${direction}`);
+    currentSnake.unshift(currentSnake[0] + direction);
+    eatApple(squares, tail);
+    squares[currentSnake[0]].classList.add("snake");
 }
 
 function eatApple(squares, tail) {
@@ -98,29 +120,4 @@ function randomApple(squares) {
         appleIndex = Math.floor(Math.random() * squares.length);
     } while (squares[appleIndex].classList.contains("snake"));
     squares[appleIndex].classList.add("apple");
-}
-
-function control(e) {
-    // console.log(e);
-    if (e.key === "ArrowDown") {
-        direction = 1;
-    } else if (e.key === "ArrowLeft") {
-        direction = -width;
-    } else if (e.key === "ArrowUp") {
-        direction = -1;
-    } else if (e.key === "ArrowRight") {
-        direction = +width;
-    }
-}
-
-newLeft.addEventListener("click", () => (direction = -width));
-newRight.addEventListener("click", () => (direction = +width));
-newUp.addEventListener("click", () => (direction = -1));
-newDown.addEventListener("click", () => (direction = 1));
-
-function replay() {
-    grid.innerHTML = "";
-    createBoard();
-    startGame();
-    popup.style.display = "none";
 }
