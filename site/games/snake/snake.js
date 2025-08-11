@@ -26,14 +26,24 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function handleInputs(e) {
-    if (e.key === "ArrowDown") {
-        direction = 1;
-    } else if (e.key === "ArrowLeft") {
-        direction = -width; // move left this many divs (yikes!)
-    } else if (e.key === "ArrowUp") {
-        direction = -1;
-    } else if (e.key === "ArrowRight") {
-        direction = +width;
+    console.log(e.key);
+    switch (e.key) {
+        case "w":
+        case "ArrowUp":
+            direction = -1;
+            break;
+        case "s":
+        case "ArrowDown":
+            direction = 1;
+            break;
+        case "a":
+        case "ArrowLeft":
+            direction = -width;
+            break;
+        case "d":
+        case "ArrowRight":
+            direction = width;
+            break;
     }
 }
 
