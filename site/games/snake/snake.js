@@ -2,6 +2,10 @@ main();
 
 function main() {
     const canvas = document.querySelector("canvas");
+    if (canvas === null) {
+        console.error("Failed to get canvas");
+        return -1;
+    }
     const ctx = canvas.getContext("2d");
     if (ctx === null) {
         console.error("Failed to get canvas context");
@@ -13,23 +17,14 @@ function main() {
 
     /** Number of cells per side */
     const boardSize = 8;
-    const canvasSize = getCanvasSize(
+    const canvasSize = calcCanvasSize(
         window.innerWidth,
         window.innerHeight,
         relativeSize,
         boardSize,
     );
+    setCanvasSize(canvasSize, canvas);
     const cellSize = canvasSize / boardSize;
-    canvas.setAttribute("width", canvasSize);
-    canvas.setAttribute("height", canvasSize);
-
-    for (let i = 0; i < boardSize; i++) {
-        for (let j = 0; j < boardSize; j++) {
-            const color = (i + j) % 2 === 1 ? "black" : "white";
-            // console.log({ i, j, cellSize, color: ctx.fillStyle });
-            fillCell(i, j, color, cellSize, ctx);
-        }
-    }
 }
 
 /**
@@ -58,10 +53,15 @@ function fillCell(x, y, color, cellSize, ctx) {
  * - takes up less than or exactly relative size of window
  * - divisible by boardSize
  */
-function getCanvasSize(windowWidth, windowHeight, relativeSize, boardSize) {
+function calcCanvasSize(windowWidth, windowHeight, relativeSize, boardSize) {
     // console.log(`getCanvasSize(${windowWidth}, ${windowHeight}, ${relativeSize}, ${boardSize})`);
     const rawSideLength = Math.min(windowWidth, windowHeight) * relativeSize;
     const roundedSideLength = Math.floor(rawSideLength / boardSize) * boardSize;
     // console.log(`getCanvasSize returning ${roundedSideLength}`);
     return roundedSideLength;
+}
+
+function setCanvasSize(size, canvas) {
+    canvas.setAttribute("width", size);
+    canvas.setAttribute("height", size);
 }
