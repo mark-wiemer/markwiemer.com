@@ -25,6 +25,62 @@ function main() {
     );
     setCanvasSize(canvasSize, canvas);
     const cellSize = canvasSize / boardSize;
+
+    /**
+     * @type {Directions}
+     */
+    const dirs = {
+        up: { x: 0, y: -1 },
+        down: { x: 0, y: 1 },
+        left: { x: -1, y: 0 },
+        right: { x: 1, y: 0 },
+    };
+
+    /**
+     * @type {Vector2D[]}
+     */
+    const snakeDirs = [];
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("keydown", (e) => handleInput(e, dirs, snakeDirs));
+    });
+}
+
+/**
+ *
+ * @param {KeyboardEvent} e
+ * @param {Directions} dirs
+ * @param {Vector2D[]} snakeDirs
+ */
+function handleInput(e, dirs, snakeDirs) {
+    const newDir = keyToDir(e.key, dirs);
+    console.log("newDir", newDir);
+    snakeDirs.push(newDir);
+}
+
+/**
+ *
+ * @param {string} key Key string, e.g. `w` or `ArrowUp`
+ *
+ * [MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key)
+ * @param {Directions} dirs
+ * @returns
+ */
+function keyToDir(key, dirs) {
+    switch (key) {
+        case "w":
+        case "ArrowUp":
+            return dirs.up;
+        case "s":
+        case "ArrowDown":
+            return dirs.down;
+        case "a":
+        case "ArrowLeft":
+            return dirs.left;
+        case "d":
+        case "ArrowRight":
+            return dirs.right;
+    }
 }
 
 /**
@@ -65,3 +121,18 @@ function setCanvasSize(size, canvas) {
     canvas.setAttribute("width", size);
     canvas.setAttribute("height", size);
 }
+
+/**
+ * @typedef {Object} Vector2D
+ * @property {number} x Horizontal component, positive is to the right
+ * @property {number} y Vertical component, positive is downward
+ */
+
+/**
+ * Unit vectors in cardinal directions
+ * @typedef {Object} Directions
+ * @property {Vector2D} up Unit vector upward
+ * @property {Vector2D} down Unit vector downward
+ * @property {Vector2D} left Unit vector going left
+ * @property {Vector2D} right Unit vector going right
+ */
