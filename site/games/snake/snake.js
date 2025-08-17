@@ -1,23 +1,45 @@
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
+main();
 
-const relativeSize = 0.9;
+function main() {
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+    if (ctx === null) {
+        console.error("Failed to get canvas context");
+        return -1;
+    }
+    /** Fraction of shorter side of screen to take up */
+    // includes small margin for scroll window for now
+    const relativeSize = 0.9;
 
-/** Number of cells per side */
-const boardSize = 8;
+    /** Number of cells per side */
+    const boardSize = 8;
+    const canvasSize = getCanvasSize(
+        window.innerWidth,
+        window.innerHeight,
+        relativeSize,
+        boardSize,
+    );
+    const cellSize = canvasSize / boardSize;
+    canvas.setAttribute("width", canvasSize);
+    canvas.setAttribute("height", canvasSize);
 
-const canvasSize = getCanvasSize(window.innerWidth, window.innerHeight, relativeSize, boardSize);
-const cellSize = canvasSize / boardSize;
-canvas.setAttribute("width", canvasSize);
-canvas.setAttribute("height", canvasSize);
-
-for (let i = 0; i < boardSize; i++) {
-    for (let j = 0; j < boardSize; j++) {
-        ctx.fillStyle = (i + j) % 2 === 1 ? "black" : "white";
-        console.log({ i, j, cellSize, color: ctx.fillStyle });
-        ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+    for (let i = 0; i < boardSize; i++) {
+        for (let j = 0; j < boardSize; j++) {
+            ctx.fillStyle = (i + j) % 2 === 1 ? "black" : "white";
+            console.log({ i, j, cellSize, color: ctx.fillStyle });
+            ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+        }
     }
 }
+
+/**
+ *
+ * @param {number} x x-coordinate (0 === leftmost)
+ * @param {number} y y-coordinate (o === topmost)
+ * @param {string} color CSS color string
+ * @param {CanvasRenderingContext2D} ctx
+ */
+function fillCell(x, y, color, ctx) {}
 
 /**
  * Get the width and height of the canvas
