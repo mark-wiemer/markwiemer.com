@@ -36,26 +36,40 @@ function main() {
         right: { x: 1, y: 0 },
     };
 
-    /**
-     * @type {Vector2D[]}
-     */
-    const snakeDirs = [];
+    /** @type {GameState} */
+    const state = {
+        snakeDirs: [],
+        snakeDir: dirs.down,
+        snakePos: [
+            { x: 0, y: 0 },
+            { x: 0, y: 1 },
+            { x: 0, y: 2 },
+        ],
+    };
 
     document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("keydown", (e) => handleInput(e, dirs, snakeDirs));
+        document.addEventListener("keydown", (e) => handleInput(e, dirs, state));
     });
+
+    let intervalTimeMs = 1_000;
+    state.interval = setInterval(() => tick(state), intervalTimeMs);
+}
+
+function tick(state) {
+    console.log("tick!");
+    console.log(state);
 }
 
 /**
  *
  * @param {KeyboardEvent} e
  * @param {Directions} dirs
- * @param {Vector2D[]} snakeDirs
+ * @param {GameState} state
  */
-function handleInput(e, dirs, snakeDirs) {
+function handleInput(e, dirs, state) {
     const newDir = keyToDir(e.key, dirs);
     console.log("newDir", newDir);
-    snakeDirs.push(newDir);
+    state.snakeDirs.push(newDir);
 }
 
 /**
@@ -135,4 +149,13 @@ function setCanvasSize(size, canvas) {
  * @property {Vector2D} down Unit vector downward
  * @property {Vector2D} left Unit vector going left
  * @property {Vector2D} right Unit vector going right
+ */
+
+/**
+ * Game state
+ * @typedef {Object} GameState
+ * @property {Vector2D[]} snakeDirs queued directions for the snake to turn in
+ * @property {Vector2D} snakeDir current direction snake is moving in
+ * @property {Vector2D[]} snakePos current positions of the snake's body.
+ * First entry is snake's head
  */
