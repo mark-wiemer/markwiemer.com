@@ -25,9 +25,9 @@ function main() {
 
     for (let i = 0; i < boardSize; i++) {
         for (let j = 0; j < boardSize; j++) {
-            ctx.fillStyle = (i + j) % 2 === 1 ? "black" : "white";
-            console.log({ i, j, cellSize, color: ctx.fillStyle });
-            ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            const color = (i + j) % 2 === 1 ? "black" : "white";
+            // console.log({ i, j, cellSize, color: ctx.fillStyle });
+            fillCell(i, j, color, cellSize, ctx);
         }
     }
 }
@@ -38,8 +38,14 @@ function main() {
  * @param {number} y y-coordinate (o === topmost)
  * @param {string} color CSS color string
  * @param {CanvasRenderingContext2D} ctx
+ * @returns {undefined} But returns ctx.fillStyle to previous value
  */
-function fillCell(x, y, color, ctx) {}
+function fillCell(x, y, color, cellSize, ctx) {
+    const oldFillStyle = ctx.fillStyle;
+    ctx.fillStyle = color;
+    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize, color);
+    ctx.fillStyle = oldFillStyle;
+}
 
 /**
  * Get the width and height of the canvas
@@ -53,9 +59,9 @@ function fillCell(x, y, color, ctx) {}
  * - divisible by boardSize
  */
 function getCanvasSize(windowWidth, windowHeight, relativeSize, boardSize) {
-    console.log(`getCanvasSize(${windowWidth}, ${windowHeight}, ${relativeSize}, ${boardSize})`);
+    // console.log(`getCanvasSize(${windowWidth}, ${windowHeight}, ${relativeSize}, ${boardSize})`);
     const rawSideLength = Math.min(windowWidth, windowHeight) * relativeSize;
     const roundedSideLength = Math.floor(rawSideLength / boardSize) * boardSize;
-    console.log(`getCanvasSize returning ${roundedSideLength}`);
+    // console.log(`getCanvasSize returning ${roundedSideLength}`);
     return roundedSideLength;
 }
