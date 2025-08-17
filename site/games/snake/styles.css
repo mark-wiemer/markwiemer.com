@@ -12,6 +12,11 @@
     height: 20px;
 }
 
+.game {
+    display: flex;
+    align-items: center;
+}
+
 .snake {
     background: cornflowerblue;
 }
