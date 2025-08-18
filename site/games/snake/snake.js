@@ -16,7 +16,7 @@ function main() {
     const relativeSize = 0.9;
 
     /** Number of cells per side */
-    const boardSize = 8;
+    const boardSize = 32;
     const canvasSize = calcCanvasSize(
         window.innerWidth,
         window.innerHeight,
@@ -56,10 +56,15 @@ function main() {
     document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
     });
+
+    state.interval = setInterval(
+        (e) => (state = tick(klona(state), state)),
+        Math.floor(1000.0 / 20),
+    );
 }
 
 /**
- *
+ * Draws the state of the game, assuming everything else is blank
  * @param {GameState} state
  */
 function drawFirstState(state) {
@@ -92,8 +97,8 @@ function drawState(newState, oldState) {
 function tick(newState, oldState) {
     console.log("tick, new state:");
     moveSnake(newState);
-    drawState(newState, oldState);
     console.log(newState);
+    drawState(newState, oldState);
     return newState;
 }
 
