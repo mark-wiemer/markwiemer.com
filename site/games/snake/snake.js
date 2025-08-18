@@ -163,8 +163,8 @@ function moveSnake(state) {
     state.snakeDir = state.snakeDirs.shift() ?? state.snakeDir;
     const newHead = addVector2D(oldHead, state.snakeDir);
     state.snakePos.unshift(newHead);
-    if (!eqVector2D(newHead, state.applePos)) state.snakePos.pop();
-    else state.applePos = calcApplePos(state);
+    if (eqVector2D(newHead, state.applePos)) state.applePos = calcApplePos(state);
+    else state.snakePos.pop();
 }
 
 /**
