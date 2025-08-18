@@ -155,7 +155,14 @@ function calcGameOver(state) {
 }
 
 /**
- *
+ * Moves the snake
+ * - Does not check for collisions, use `calcGameOver` for that
+ * - If apple at new head pos:
+ *    - eats apple
+ *    - calculates new apple position
+ *    - grows snake by 1 cell
+ * - Else, snake stays same size
+ * - Turns up to one time if there is a direction in the queue
  * @param {GameState} state
  */
 function moveSnake(state) {
