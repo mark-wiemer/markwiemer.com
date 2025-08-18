@@ -41,16 +41,13 @@ function main() {
 
     console.log("Starting game with state:");
     console.log(state);
-    drawFirstState(state);
+    drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
     });
 
-    state.interval = setInterval(
-        (e) => (state = tick(klona(state), state)),
-        Math.floor(1000.0 / 20),
-    );
+    state.interval = setInterval(() => (state = tick(klona(state))), Math.floor(1000.0 / 32));
 }
 
 /**
@@ -101,10 +98,15 @@ function calcApplePos(state) {
 }
 
 /**
- * Draws the state of the game, assuming everything else is blank
+ * Draws the state of the game
+ * - Background: black
+ * - Snake: cornflowerblue
+ * - Apple: darkred
  * @param {GameState} state
  */
-function drawFirstState(state) {
+function drawState(state) {
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, state.cellSize * state.boardSize, state.cellSize * state.boardSize);
     for (cell of state.snakePos) {
         fillCell(cell.x, cell.y, "cornflowerblue", state.cellSize, state.ctx);
     }
@@ -112,31 +114,17 @@ function drawFirstState(state) {
 }
 
 /**
- * Undraws the old state, draws the new state.
- * - Takes into account game logic to minimize work done
- * @param {GameState} newState New state to draw
- * @param {GameState} oldState Old state to clear
- */
-function drawState(newState, oldState) {
-    const oldTail = oldState.snakePos[oldState.snakePos.length - 1];
-    fillCell(oldTail.x, oldTail.y, "black", oldState.cellSize, oldState.ctx);
-    const newHead = newState.snakePos[0];
-    fillCell(newHead.x, newHead.y, "cornflowerblue", newState.cellSize, newState.ctx);
-}
-
-/**
  * Increments game state and draws new state
  * - Moves snake
  * - Draws new state
  * @param {GameState} newState To update directly (not pure)
- * @param {GameState?} oldState For referencing when updating view
  * @returns {GameState} updated game state (not pure)
  */
-function tick(newState, oldState) {
+function tick(newState) {
     console.log("tick, new state:");
     moveSnake(newState);
     console.log(newState);
-    drawState(newState, oldState);
+    drawState(newState);
     return newState;
 }
 
