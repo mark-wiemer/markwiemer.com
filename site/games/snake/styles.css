@@ -1,0 +1,8 @@
+.gameContainer {
+    display: flex;
+    align-items: center;
+}
+
+.gameCanvas {
+    outline: 1px solid white;
+}
