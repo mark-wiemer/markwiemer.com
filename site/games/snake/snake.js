@@ -159,11 +159,12 @@ function calcGameOver(state) {
  * @param {GameState} state
  */
 function moveSnake(state) {
-    state.snakePos.pop();
     const oldHead = state.snakePos[0];
     state.snakeDir = state.snakeDirs.shift() ?? state.snakeDir;
     const newHead = addVector2D(oldHead, state.snakeDir);
     state.snakePos.unshift(newHead);
+    if (!eqVector2D(newHead, state.applePos)) state.snakePos.pop();
+    else state.applePos = calcApplePos(state);
 }
 
 /**
@@ -229,6 +230,10 @@ function keyToDir(key, dirs) {
  */
 function addVector2D(a, b) {
     return { x: a.x + b.x, y: a.y + b.y };
+}
+
+function eqVector2D(a, b) {
+    return a.x === b.x && a.y === b.y;
 }
 
 /**
