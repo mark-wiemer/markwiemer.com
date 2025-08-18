@@ -1,33 +1,8 @@
-.grid {
-    width: 200px;
-    height: 200px;
-    border: 1px solid white;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.grid div {
-    width: 20px;
-    height: 20px;
-}
-
-.game {
+.gameContainer {
     display: flex;
     align-items: center;
 }
 
-.snake {
-    background: cornflowerblue;
-}
-
-.apple {
-    background: darkred;
-    border-radius: 20px;
-}
-
-.popup {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.gameCanvas {
+    outline: 1px solid white;
 }
