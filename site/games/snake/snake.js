@@ -122,12 +122,12 @@ function drawState(state) {
  */
 function tick(newState) {
     if (newState.paused) return newState;
-    console.log("tick, new state:");
     calcGameOver(newState);
     if (newState.gameOver) return newState;
     moveSnake(newState);
-    console.log(newState);
     drawState(newState);
+    console.log("tick, new state:");
+    console.log(newState);
     return newState;
 }
 
@@ -141,14 +141,28 @@ function calcGameOver(state) {
     if (state.gameOver) return;
     const newDir = state.snakeDirs[0] ?? state.snakeDir;
     const newHeadPos = addVector2D(state.snakePos[0], newDir);
+    // If crashed into wall
     if (
         newHeadPos.x < 0 ||
         newHeadPos.x >= state.boardSize ||
         newHeadPos.y < 0 ||
         newHeadPos.y >= state.boardSize
     ) {
-        console.log("game over");
+        console.log("Game over, crashed into wall");
         state.gameOver = true;
+        return;
+    }
+    // If crashed into self
+    if (
+        state.snakePos
+            // first 4 positions can't intersect with new head pos
+            // last position intersecting isn't a problem, it will move out of the way
+            .slice(3, state.snakePos.length - 1)
+            .some((pos) => eqVector2D(pos, newHeadPos))
+    ) {
+        console.log("Game over, crashed into self");
+        state.gameOver = true;
+        return;
     }
 }
 
