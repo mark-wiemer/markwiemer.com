@@ -45,29 +45,56 @@ function main() {
             { x: 0, y: 1 },
             { x: 0, y: 0 },
         ],
+        ctx,
+        cellSize,
     };
 
     console.log("Starting game with state:");
     console.log(state);
+    drawFirstState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
     });
-
-    let intervalTimeMs = 1_000;
 }
 
 /**
- * Increments game state
- * - Moves snake
+ *
  * @param {GameState} state
+ */
+function drawFirstState(state) {
+    for (cell of state.snakePos) {
+        fillCell(cell.x, cell.y, "cornflowerblue", state.cellSize, state.ctx);
+    }
+}
+
+/**
+ * Undraws the old state, draws the new state.
+ * - Takes into account game logic to minimize work done
+ * @param {GameState} newState New state to draw
+ * @param {GameState} oldState Old state to clear
+ */
+function drawState(newState, oldState) {
+    const oldTail = oldState.snakePos[oldState.snakePos.length - 1];
+    fillCell(oldTail.x, oldTail.y, "black", oldState.cellSize, oldState.ctx);
+    const newHead = newState.snakePos[0];
+    fillCell(newHead.x, newHead.y, "cornflowerblue", newState.cellSize, newState.ctx);
+}
+
+/**
+ * Increments game state and draws new state
+ * - Moves snake
+ * - Draws new state
+ * @param {GameState} newState To update directly (not pure)
+ * @param {GameState?} oldState For referencing when updating view
  * @returns {GameState} updated game state (not pure)
  */
-function tick(state) {
+function tick(newState, oldState) {
     console.log("tick, new state:");
-    moveSnake(state);
-    console.log(state);
-    return state;
+    moveSnake(newState);
+    drawState(newState, oldState);
+    console.log(newState);
+    return newState;
 }
 
 /**
@@ -94,7 +121,7 @@ function handleInput(e, dirs, state) {
     const newState = klona(state);
     console.log("keydown", e);
     if (e.key === " ") {
-        return tick(newState);
+        return tick(newState, state);
     }
     const newDir = keyToDir(e.key, dirs);
     if (newDir) {
@@ -202,13 +229,15 @@ function setCanvasSize(size, canvas) {
  */
 
 /**
- * Game state
- * @typedef {Readonly<Object>} GameState
+ * Mono-object tracking game state. Could be a bunch of globals, but this is easier to track
+ * @typedef {Object} GameState
  * @property {Vector2D[]} snakeDirs queued directions for the snake to turn in
  * @property {Vector2D} snakeDir current direction snake is moving in
  * @property {Vector2D[]} snakePos current positions of the snake's body.
  * First entry is snake's head
  * @property {NodeJS.Timeout} interval Tick interval, can be cleared by quitting
+ * @property {CanvasRenderingContext2D} ctx Canvas context for drawing the game. Only for view
+ * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
  */
 
 /**
