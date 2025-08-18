@@ -37,17 +37,7 @@ function main() {
     };
 
     /** @type {GameState} */
-    let state = {
-        cellSize,
-        ctx,
-        snakeDir: dirs.down,
-        snakeDirs: [],
-        snakePos: [
-            { x: 0, y: 2 },
-            { x: 0, y: 1 },
-            { x: 0, y: 0 },
-        ],
-    };
+    let state = calcInitialState(boardSize, cellSize, ctx, dirs);
 
     console.log("Starting game with state:");
     console.log(state);
@@ -64,6 +54,53 @@ function main() {
 }
 
 /**
+ * Calculate a starting game state
+ * @param {number} boardSize Number of cells on each size of the board
+ * @param {number} cellSize Size in pixels of each board cell
+ * @param {CanvasRenderingContext2D} ctx Drawing context for the canvas
+ * @param {Directions} dirs
+ * @returns {GameState} a starting game state
+ */
+function calcInitialState(boardSize, cellSize, ctx, dirs) {
+    let state = {
+        boardSize,
+        cellSize,
+        ctx,
+        snakeDir: dirs.down,
+        snakeDirs: [],
+        snakePos: [
+            { x: 0, y: 2 },
+            { x: 0, y: 1 },
+            { x: 0, y: 0 },
+        ],
+    };
+    state.applePos = calcApplePos(state);
+    return state;
+}
+
+/**
+ * Returns a valid position for an apple
+ * @param {GameState} state
+ */
+function calcApplePos(state) {
+    let foundValidPos = true;
+    do {
+        /** @type {Vector2D} */
+        let applePos = {
+            x: Math.floor(Math.random() * state.boardSize),
+            y: Math.floor(Math.random() * state.boardSize),
+        };
+        for (let pos of state.snakePos) {
+            if (pos.x === applePos.x && pos.y === applePos.y) {
+                foundValidPos = false;
+                break;
+            }
+        }
+        if (foundValidPos) return applePos;
+    } while (true);
+}
+
+/**
  * Draws the state of the game, assuming everything else is blank
  * @param {GameState} state
  */
@@ -71,6 +108,7 @@ function drawFirstState(state) {
     for (cell of state.snakePos) {
         fillCell(cell.x, cell.y, "cornflowerblue", state.cellSize, state.ctx);
     }
+    fillCell(state.applePos.x, state.applePos.y, "darkred", state.cellSize, state.ctx);
 }
 
 /**
@@ -236,6 +274,8 @@ function setCanvasSize(size, canvas) {
 /**
  * Mono-object tracking game state. Could be a bunch of globals, but this is easier to track
  * @typedef {Object} GameState
+ * @property {Vector2D} applePos position of current apple
+ * @property {number} boardSize number of cells on each side of the board
  * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
  * @property {CanvasRenderingContext2D} ctx Canvas context for drawing the game. Only for view
  * @property {NodeJS.Timeout} interval Tick interval, can be cleared by quitting
