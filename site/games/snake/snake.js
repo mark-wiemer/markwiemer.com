@@ -105,8 +105,8 @@ function calcApplePos(state) {
  * @param {GameState} state
  */
 function drawState(state) {
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, state.cellSize * state.boardSize, state.cellSize * state.boardSize);
+    state.ctx.fillStyle = "black";
+    state.ctx.fillRect(0, 0, state.cellSize * state.boardSize, state.cellSize * state.boardSize);
     for (cell of state.snakePos) {
         fillCell(cell, "cornflowerblue", state.cellSize, state.ctx);
     }
@@ -122,10 +122,36 @@ function drawState(state) {
  */
 function tick(newState) {
     console.log("tick, new state:");
+    calcGameOver(newState);
+    if (newState.gameOver) {
+        newState.interval = clearInterval(newState.interval);
+        return newState;
+    }
     moveSnake(newState);
     console.log(newState);
     drawState(newState);
     return newState;
+}
+
+/**
+ * Updates the state's gameOver value
+ * - If already game over, does nothing
+ * - If snake will crash into wall, game is over
+ * @param {GameState} state
+ */
+function calcGameOver(state) {
+    if (state.gameOver) return;
+    const newDir = state.snakeDirs[0] ?? state.snakeDir;
+    const newHeadPos = addVector2D(state.snakePos[0], newDir);
+    if (
+        newHeadPos.x < 0 ||
+        newHeadPos.x >= state.boardSize ||
+        newHeadPos.y < 0 ||
+        newHeadPos.y >= state.boardSize
+    ) {
+        console.log("game over");
+        state.gameOver = true;
+    }
 }
 
 /**
@@ -215,7 +241,7 @@ function addVector2D(a, b) {
 function fillCell(cell, color, cellSize, ctx) {
     const oldFillStyle = ctx.fillStyle;
     ctx.fillStyle = color;
-    ctx.fillRect(cell.x, cell.y, cellSize, cellSize, color);
+    ctx.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize, color);
     ctx.fillStyle = oldFillStyle;
 }
 
