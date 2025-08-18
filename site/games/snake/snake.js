@@ -37,39 +37,79 @@ function main() {
     };
 
     /** @type {GameState} */
-    const state = {
+    let state = {
         snakeDirs: [],
         snakeDir: dirs.down,
         snakePos: [
-            { x: 0, y: 0 },
-            { x: 0, y: 1 },
             { x: 0, y: 2 },
+            { x: 0, y: 1 },
+            { x: 0, y: 0 },
         ],
     };
 
+    console.log("Starting game with state:");
+    console.log(state);
+
     document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("keydown", (e) => handleInput(e, dirs, state));
+        document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
     });
 
     let intervalTimeMs = 1_000;
-    state.interval = setInterval(() => tick(state), intervalTimeMs);
 }
 
+/**
+ * Increments game state
+ * - Moves snake
+ * @param {GameState} state
+ * @returns {GameState} updated game state (not pure)
+ */
 function tick(state) {
-    console.log("tick!");
+    console.log("tick, new state:");
+    moveSnake(state);
     console.log(state);
+    return state;
 }
 
 /**
  *
+ * @param {GameState} state
+ */
+function moveSnake(state) {
+    state.snakePos.pop();
+    const oldHead = state.snakePos[0];
+    state.snakeDir = state.snakeDirs.shift() ?? state.snakeDir;
+    const newHead = addVector2D(oldHead, state.snakeDir);
+    state.snakePos.unshift(newHead);
+}
+
+/**
+ * Modifies the game state according to the user input
+ * - Escape quits the game, clearing state interval
+ * - WASD or arrow keys moves the snake, pushing an entry to `snakeDirs`
  * @param {KeyboardEvent} e
  * @param {Directions} dirs
  * @param {GameState} state
  */
 function handleInput(e, dirs, state) {
+    const newState = klona(state);
+    console.log("keydown", e);
+    if (e.key === " ") {
+        return tick(newState);
+    }
     const newDir = keyToDir(e.key, dirs);
-    console.log("newDir", newDir);
-    state.snakeDirs.push(newDir);
+    if (newDir) {
+        console.log("newDir", newDir);
+        newState.snakeDirs.push(newDir);
+        return newState;
+    }
+    if (e.key === "Escape") {
+        console.log("Quitting");
+        newState.interval = clearInterval(newState.interval);
+        return newState;
+    }
+
+    console.log(`Unused key pressed: '${e.key}'`);
+    return newState;
 }
 
 /**
@@ -98,9 +138,19 @@ function keyToDir(key, dirs) {
 }
 
 /**
+ * Add two vectors
+ * @param {Vector2D} a First vector to add
+ * @param {Vector2D} b Second vector to add
+ * @returns {Vector2D} Sum of two vectors
+ */
+function addVector2D(a, b) {
+    return { x: a.x + b.x, y: a.y + b.y };
+}
+
+/**
  *
- * @param {number} x x-coordinate (0 === leftmost)
- * @param {number} y y-coordinate (o === topmost)
+ * @param {number} x x-coordinate (0 === leftmost, + is to the right)
+ * @param {number} y y-coordinate (0 === topmost, + is downward)
  * @param {string} color CSS color string
  * @param {CanvasRenderingContext2D} ctx
  * @returns {undefined} But returns ctx.fillStyle to previous value
@@ -153,9 +203,52 @@ function setCanvasSize(size, canvas) {
 
 /**
  * Game state
- * @typedef {Object} GameState
+ * @typedef {Readonly<Object>} GameState
  * @property {Vector2D[]} snakeDirs queued directions for the snake to turn in
  * @property {Vector2D} snakeDir current direction snake is moving in
  * @property {Vector2D[]} snakePos current positions of the snake's body.
  * First entry is snake's head
+ * @property {NodeJS.Timeout} interval Tick interval, can be cleared by quitting
  */
+
+/**
+ * Copied from https://github.com/lukeed/klona, MIT licensed,
+ * copyright Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
+ * @param {any} val Input to deep clone
+ * @returns {any} Deep clone of input
+ */
+/*
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+function klona(val) {
+    var k, out, tmp;
+
+    if (Array.isArray(val)) {
+        out = Array((k = val.length));
+        while (k--) out[k] = (tmp = val[k]) && typeof tmp === "object" ? klona(tmp) : tmp;
+        return out;
+    }
+
+    if (Object.prototype.toString.call(val) === "[object Object]") {
+        out = {}; // null
+        for (k in val) {
+            if (k === "__proto__") {
+                Object.defineProperty(out, k, {
+                    value: klona(val[k]),
+                    configurable: true,
+                    enumerable: true,
+                    writable: true,
+                });
+            } else {
+                out[k] = (tmp = val[k]) && typeof tmp === "object" ? klona(tmp) : tmp;
+            }
+        }
+        return out;
+    }
+
+    return val;
+}
