@@ -108,9 +108,9 @@ function drawState(state) {
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, state.cellSize * state.boardSize, state.cellSize * state.boardSize);
     for (cell of state.snakePos) {
-        fillCell(cell.x, cell.y, "cornflowerblue", state.cellSize, state.ctx);
+        fillCell(cell, "cornflowerblue", state.cellSize, state.ctx);
     }
-    fillCell(state.applePos.x, state.applePos.y, "darkred", state.cellSize, state.ctx);
+    fillCell(state.applePos, "darkred", state.cellSize, state.ctx);
 }
 
 /**
@@ -207,16 +207,15 @@ function addVector2D(a, b) {
 
 /**
  *
- * @param {number} x x-coordinate (0 === leftmost, + is to the right)
- * @param {number} y y-coordinate (0 === topmost, + is downward)
+ * @param {Vector2D} cell Cell coordinate to fill
  * @param {string} color CSS color string
  * @param {CanvasRenderingContext2D} ctx
  * @returns {undefined} But returns ctx.fillStyle to previous value
  */
-function fillCell(x, y, color, cellSize, ctx) {
+function fillCell(cell, color, cellSize, ctx) {
     const oldFillStyle = ctx.fillStyle;
     ctx.fillStyle = color;
-    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize, color);
+    ctx.fillRect(cell.x, cell.y, cellSize, cellSize, color);
     ctx.fillStyle = oldFillStyle;
 }
 
