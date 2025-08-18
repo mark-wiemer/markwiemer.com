@@ -121,12 +121,10 @@ function drawState(state) {
  * @returns {GameState} updated game state (not pure)
  */
 function tick(newState) {
+    if (newState.paused) return newState;
     console.log("tick, new state:");
     calcGameOver(newState);
-    if (newState.gameOver) {
-        newState.interval = clearInterval(newState.interval);
-        return newState;
-    }
+    if (newState.gameOver) return newState;
     moveSnake(newState);
     console.log(newState);
     drawState(newState);
@@ -184,22 +182,27 @@ function moveSnake(state) {
  */
 function handleInput(e, dirs, state) {
     const newState = klona(state);
-    console.log("keydown", e);
+    // console.log("keydown", e);
+    // Debug mode: tick then pause
     if (e.key === " ") {
-        return tick(newState, state);
+        newState.paused = false;
+        tick(newState);
+        newState.paused = true;
+        return newState;
     }
+    // Change direction
     const newDir = keyToDir(e.key, dirs);
     if (newDir) {
         console.log("newDir", newDir);
         newState.snakeDirs.push(newDir);
         return newState;
     }
+    // Pause and unpause
     if (e.key === "Escape") {
-        console.log("Quitting");
-        newState.interval = clearInterval(newState.interval);
+        console.log(`${newState.paused ? "Unpausing" : "Pausing"}`);
+        newState.paused = !newState.paused;
         return newState;
     }
-
     console.log(`Unused key pressed: '${e.key}'`);
     return newState;
 }
@@ -303,7 +306,8 @@ function setCanvasSize(size, canvas) {
  * @property {number} boardSize number of cells on each side of the board
  * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
  * @property {CanvasRenderingContext2D} ctx Canvas context for drawing the game. Only for view
- * @property {NodeJS.Timeout} interval Tick interval, can be cleared by quitting
+ * @property {NodeJS.Timeout} interval Tick interval, never cleared
+ * @property {boolean} paused Whether the game is paused
  * @property {Vector2D} snakeDir current direction snake is moving in
  * @property {Vector2D[]} snakeDirs queued directions for the snake to turn in
  * @property {Vector2D[]} snakePos current positions of the snake's body.
