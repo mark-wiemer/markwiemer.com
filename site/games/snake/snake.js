@@ -37,53 +37,80 @@ function main() {
     };
 
     /** @type {GameState} */
-    let state = {
-        snakeDirs: [],
-        snakeDir: dirs.down,
-        snakePos: [
-            { x: 0, y: 2 },
-            { x: 0, y: 1 },
-            { x: 0, y: 0 },
-        ],
-        ctx,
-        cellSize,
-    };
+    let state = calcInitialState(boardSize, cellSize, ctx, dirs);
 
     console.log("Starting game with state:");
     console.log(state);
-    drawFirstState(state);
+    drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
     });
 
-    state.interval = setInterval(
-        (e) => (state = tick(klona(state), state)),
-        Math.floor(1000.0 / 20),
-    );
+    state.interval = setInterval(() => (state = tick(klona(state))), Math.floor(1000.0 / 16));
 }
 
 /**
- * Draws the state of the game, assuming everything else is blank
+ * Calculate a starting game state
+ * @param {number} boardSize Number of cells on each size of the board
+ * @param {number} cellSize Size in pixels of each board cell
+ * @param {CanvasRenderingContext2D} ctx Drawing context for the canvas
+ * @param {Directions} dirs
+ * @returns {GameState} a starting game state
+ */
+function calcInitialState(boardSize, cellSize, ctx, dirs) {
+    let state = {
+        boardSize,
+        cellSize,
+        ctx,
+        snakeDir: dirs.down,
+        snakeDirs: [],
+        snakePos: [
+            { x: 0, y: 2 },
+            { x: 0, y: 1 },
+            { x: 0, y: 0 },
+        ],
+    };
+    state.applePos = calcApplePos(state);
+    return state;
+}
+
+/**
+ * Returns a valid position for an apple
  * @param {GameState} state
  */
-function drawFirstState(state) {
-    for (cell of state.snakePos) {
-        fillCell(cell.x, cell.y, "cornflowerblue", state.cellSize, state.ctx);
-    }
+function calcApplePos(state) {
+    let foundValidPos = true;
+    do {
+        /** @type {Vector2D} */
+        let applePos = {
+            x: Math.floor(Math.random() * state.boardSize),
+            y: Math.floor(Math.random() * state.boardSize),
+        };
+        for (let pos of state.snakePos) {
+            if (pos.x === applePos.x && pos.y === applePos.y) {
+                foundValidPos = false;
+                break;
+            }
+        }
+        if (foundValidPos) return applePos;
+    } while (true);
 }
 
 /**
- * Undraws the old state, draws the new state.
- * - Takes into account game logic to minimize work done
- * @param {GameState} newState New state to draw
- * @param {GameState} oldState Old state to clear
+ * Draws the state of the game
+ * - Background: black
+ * - Snake: cornflowerblue
+ * - Apple: darkred
+ * @param {GameState} state
  */
-function drawState(newState, oldState) {
-    const oldTail = oldState.snakePos[oldState.snakePos.length - 1];
-    fillCell(oldTail.x, oldTail.y, "black", oldState.cellSize, oldState.ctx);
-    const newHead = newState.snakePos[0];
-    fillCell(newHead.x, newHead.y, "cornflowerblue", newState.cellSize, newState.ctx);
+function drawState(state) {
+    state.ctx.fillStyle = "black";
+    state.ctx.fillRect(0, 0, state.cellSize * state.boardSize, state.cellSize * state.boardSize);
+    for (cell of state.snakePos) {
+        fillCell(cell, "cornflowerblue", state.cellSize, state.ctx);
+    }
+    fillCell(state.applePos, "darkred", state.cellSize, state.ctx);
 }
 
 /**
@@ -91,27 +118,72 @@ function drawState(newState, oldState) {
  * - Moves snake
  * - Draws new state
  * @param {GameState} newState To update directly (not pure)
- * @param {GameState?} oldState For referencing when updating view
  * @returns {GameState} updated game state (not pure)
  */
-function tick(newState, oldState) {
-    console.log("tick, new state:");
+function tick(newState) {
+    if (newState.paused) return newState;
+    calcGameOver(newState);
+    if (newState.gameOver) return newState;
     moveSnake(newState);
+    drawState(newState);
+    console.log("tick, new state:");
     console.log(newState);
-    drawState(newState, oldState);
     return newState;
 }
 
 /**
- *
+ * Updates the state's gameOver value
+ * - If already game over, does nothing
+ * - If snake will crash into wall, game is over
+ * @param {GameState} state
+ */
+function calcGameOver(state) {
+    if (state.gameOver) return;
+    const newDir = state.snakeDirs[0] ?? state.snakeDir;
+    const newHeadPos = addVector2D(state.snakePos[0], newDir);
+    // If crashed into wall
+    if (
+        newHeadPos.x < 0 ||
+        newHeadPos.x >= state.boardSize ||
+        newHeadPos.y < 0 ||
+        newHeadPos.y >= state.boardSize
+    ) {
+        console.log("Game over, crashed into wall");
+        state.gameOver = true;
+        return;
+    }
+    // If crashed into self
+    if (
+        state.snakePos
+            // first 4 positions can't intersect with new head pos
+            // last position intersecting isn't a problem, it will move out of the way
+            .slice(3, state.snakePos.length - 1)
+            .some((pos) => eqVector2D(pos, newHeadPos))
+    ) {
+        console.log("Game over, crashed into self");
+        state.gameOver = true;
+        return;
+    }
+}
+
+/**
+ * Moves the snake
+ * - Does not check for collisions, use `calcGameOver` for that
+ * - If apple at new head pos:
+ *    - eats apple
+ *    - calculates new apple position
+ *    - grows snake by 1 cell
+ * - Else, snake stays same size
+ * - Turns up to one time if there is a direction in the queue
  * @param {GameState} state
  */
 function moveSnake(state) {
-    state.snakePos.pop();
     const oldHead = state.snakePos[0];
     state.snakeDir = state.snakeDirs.shift() ?? state.snakeDir;
     const newHead = addVector2D(oldHead, state.snakeDir);
     state.snakePos.unshift(newHead);
+    if (eqVector2D(newHead, state.applePos)) state.applePos = calcApplePos(state);
+    else state.snakePos.pop();
 }
 
 /**
@@ -124,24 +196,45 @@ function moveSnake(state) {
  */
 function handleInput(e, dirs, state) {
     const newState = klona(state);
-    console.log("keydown", e);
+    // console.log("keydown", e);
+    // Debug mode: tick then pause
     if (e.key === " ") {
-        return tick(newState, state);
+        newState.paused = false;
+        tick(newState);
+        newState.paused = true;
+        return newState;
     }
+    // Change direction
     const newDir = keyToDir(e.key, dirs);
     if (newDir) {
         console.log("newDir", newDir);
-        newState.snakeDirs.push(newDir);
+        if (isValidDir(newState, newDir)) {
+            newState.snakeDirs.push(newDir);
+        } else {
+            console.log("New direction not valid, ignoring");
+        }
         return newState;
     }
+    // Pause and unpause
     if (e.key === "Escape") {
-        console.log("Quitting");
-        newState.interval = clearInterval(newState.interval);
+        console.log(`${newState.paused ? "Unpausing" : "Pausing"}`);
+        newState.paused = !newState.paused;
         return newState;
     }
-
     console.log(`Unused key pressed: '${e.key}'`);
     return newState;
+}
+
+/**
+ * Dir can be queued if it's perpendicular to last queued dir.
+ * - If no other dir queued, then given dir must be perp. to current dir.
+ * @param {GameState} state
+ * @param {Vector2D} dir
+ * @returns {boolean} Whether the given dir can be queued onto the given state
+ */
+function isValidDir(state, dir) {
+    const relevantDir = state.snakeDirs[state.snakeDirs.length - 1] ?? state.snakeDir;
+    return (relevantDir.x + dir.x) % 2 !== 0;
 }
 
 /**
@@ -179,18 +272,21 @@ function addVector2D(a, b) {
     return { x: a.x + b.x, y: a.y + b.y };
 }
 
+function eqVector2D(a, b) {
+    return a.x === b.x && a.y === b.y;
+}
+
 /**
  *
- * @param {number} x x-coordinate (0 === leftmost, + is to the right)
- * @param {number} y y-coordinate (0 === topmost, + is downward)
+ * @param {Vector2D} cell Cell coordinate to fill
  * @param {string} color CSS color string
  * @param {CanvasRenderingContext2D} ctx
  * @returns {undefined} But returns ctx.fillStyle to previous value
  */
-function fillCell(x, y, color, cellSize, ctx) {
+function fillCell(cell, color, cellSize, ctx) {
     const oldFillStyle = ctx.fillStyle;
     ctx.fillStyle = color;
-    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize, color);
+    ctx.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize, color);
     ctx.fillStyle = oldFillStyle;
 }
 
@@ -236,13 +332,16 @@ function setCanvasSize(size, canvas) {
 /**
  * Mono-object tracking game state. Could be a bunch of globals, but this is easier to track
  * @typedef {Object} GameState
- * @property {Vector2D[]} snakeDirs queued directions for the snake to turn in
+ * @property {Vector2D} applePos position of current apple
+ * @property {number} boardSize number of cells on each side of the board
+ * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
+ * @property {CanvasRenderingContext2D} ctx Canvas context for drawing the game. Only for view
+ * @property {NodeJS.Timeout} interval Tick interval, never cleared
+ * @property {boolean} paused Whether the game is paused
  * @property {Vector2D} snakeDir current direction snake is moving in
+ * @property {Vector2D[]} snakeDirs queued directions for the snake to turn in
  * @property {Vector2D[]} snakePos current positions of the snake's body.
  * First entry is snake's head
- * @property {NodeJS.Timeout} interval Tick interval, can be cleared by quitting
- * @property {CanvasRenderingContext2D} ctx Canvas context for drawing the game. Only for view
- * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
  */
 
 /**
