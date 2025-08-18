@@ -47,7 +47,7 @@ function main() {
         document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
     });
 
-    state.interval = setInterval(() => (state = tick(klona(state))), Math.floor(1000.0 / 32));
+    state.interval = setInterval(() => (state = tick(klona(state))), Math.floor(1000.0 / 16));
 }
 
 /**
