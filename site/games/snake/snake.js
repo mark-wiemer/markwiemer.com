@@ -208,7 +208,11 @@ function handleInput(e, dirs, state) {
     const newDir = keyToDir(e.key, dirs);
     if (newDir) {
         console.log("newDir", newDir);
-        newState.snakeDirs.push(newDir);
+        if (isValidDir(newState, newDir)) {
+            newState.snakeDirs.push(newDir);
+        } else {
+            console.log("New direction not valid, ignoring");
+        }
         return newState;
     }
     // Pause and unpause
@@ -219,6 +223,18 @@ function handleInput(e, dirs, state) {
     }
     console.log(`Unused key pressed: '${e.key}'`);
     return newState;
+}
+
+/**
+ * Dir can be queued if it's perpendicular to last queued dir.
+ * - If no other dir queued, then given dir must be perp. to current dir.
+ * @param {GameState} state
+ * @param {Vector2D} dir
+ * @returns {boolean} Whether the given dir can be queued onto the given state
+ */
+function isValidDir(state, dir) {
+    const relevantDir = state.snakeDirs[state.snakeDirs.length - 1] ?? state.snakeDir;
+    return (relevantDir.x + dir.x) % 2 !== 0;
 }
 
 /**
