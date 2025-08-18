@@ -38,15 +38,15 @@ function main() {
 
     /** @type {GameState} */
     let state = {
-        snakeDirs: [],
+        cellSize,
+        ctx,
         snakeDir: dirs.down,
+        snakeDirs: [],
         snakePos: [
             { x: 0, y: 2 },
             { x: 0, y: 1 },
             { x: 0, y: 0 },
         ],
-        ctx,
-        cellSize,
     };
 
     console.log("Starting game with state:");
@@ -236,13 +236,13 @@ function setCanvasSize(size, canvas) {
 /**
  * Mono-object tracking game state. Could be a bunch of globals, but this is easier to track
  * @typedef {Object} GameState
- * @property {Vector2D[]} snakeDirs queued directions for the snake to turn in
+ * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
+ * @property {CanvasRenderingContext2D} ctx Canvas context for drawing the game. Only for view
+ * @property {NodeJS.Timeout} interval Tick interval, can be cleared by quitting
  * @property {Vector2D} snakeDir current direction snake is moving in
+ * @property {Vector2D[]} snakeDirs queued directions for the snake to turn in
  * @property {Vector2D[]} snakePos current positions of the snake's body.
  * First entry is snake's head
- * @property {NodeJS.Timeout} interval Tick interval, can be cleared by quitting
- * @property {CanvasRenderingContext2D} ctx Canvas context for drawing the game. Only for view
- * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
  */
 
 /**
