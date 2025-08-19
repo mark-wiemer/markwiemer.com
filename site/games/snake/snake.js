@@ -39,8 +39,8 @@ function main() {
     /** @type {GameState} */
     let state = calcInitialState(boardSize, cellSize, ctx, dirs);
 
-    console.log("Starting game with state:");
-    console.log(state);
+    // console.log("Starting game with state:");
+    // console.log(state);
     drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -80,18 +80,17 @@ function calcInitialState(boardSize, cellSize, ctx, dirs) {
  * @param {GameState} state
  */
 function calcApplePos(state) {
-    let foundValidPos = true;
     do {
+        let foundValidPos = true;
         /** @type {Vector2D} */
         let applePos = {
             x: Math.floor(Math.random() * state.boardSize),
             y: Math.floor(Math.random() * state.boardSize),
         };
-        for (let pos of state.snakePos) {
-            if (pos.x === applePos.x && pos.y === applePos.y) {
-                foundValidPos = false;
-                break;
-            }
+        // console.log(`New apple pos: ${strVector2D(applePos)}`);
+        if (state.snakePos.some((pos) => eqVector2D(pos, applePos))) {
+            foundValidPos = false;
+            // console.log("New apple position overlaps snake, trying again");
         }
         if (foundValidPos) return applePos;
     } while (true);
@@ -126,8 +125,8 @@ function tick(newState) {
     if (newState.gameOver) return newState;
     moveSnake(newState);
     drawState(newState);
-    console.log("tick, new state:");
-    console.log(newState);
+    // console.log("tick, new state:");
+    // console.log(newState);
     return newState;
 }
 
@@ -148,7 +147,7 @@ function calcGameOver(state) {
         newHeadPos.y < 0 ||
         newHeadPos.y >= state.boardSize
     ) {
-        console.log("Game over, crashed into wall");
+        // console.log("Game over, crashed into wall");
         state.gameOver = true;
         return;
     }
@@ -160,7 +159,7 @@ function calcGameOver(state) {
             .slice(3, state.snakePos.length - 1)
             .some((pos) => eqVector2D(pos, newHeadPos))
     ) {
-        console.log("Game over, crashed into self");
+        // console.log("Game over, crashed into self");
         state.gameOver = true;
         return;
     }
@@ -207,21 +206,21 @@ function handleInput(e, dirs, state) {
     // Change direction
     const newDir = keyToDir(e.key, dirs);
     if (newDir) {
-        console.log("newDir", newDir);
+        // console.log("newDir", newDir);
         if (isValidDir(newState, newDir)) {
             newState.snakeDirs.push(newDir);
         } else {
-            console.log("New direction not valid, ignoring");
+            // console.log("New direction not valid, ignoring");
         }
         return newState;
     }
     // Pause and unpause
     if (e.key === "Escape") {
-        console.log(`${newState.paused ? "Unpausing" : "Pausing"}`);
+        // console.log(`${newState.paused ? "Unpausing" : "Pausing"}`);
         newState.paused = !newState.paused;
         return newState;
     }
-    console.log(`Unused key pressed: '${e.key}'`);
+    // console.log(`Unused key pressed: '${e.key}'`);
     return newState;
 }
 
@@ -274,6 +273,10 @@ function addVector2D(a, b) {
 
 function eqVector2D(a, b) {
     return a.x === b.x && a.y === b.y;
+}
+
+function strVector2D(v) {
+    return `(${v.x}, ${v.y})`;
 }
 
 /**
