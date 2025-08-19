@@ -80,18 +80,17 @@ function calcInitialState(boardSize, cellSize, ctx, dirs) {
  * @param {GameState} state
  */
 function calcApplePos(state) {
-    let foundValidPos = true;
     do {
+        let foundValidPos = true;
         /** @type {Vector2D} */
         let applePos = {
             x: Math.floor(Math.random() * state.boardSize),
             y: Math.floor(Math.random() * state.boardSize),
         };
-        for (let pos of state.snakePos) {
-            if (pos.x === applePos.x && pos.y === applePos.y) {
-                foundValidPos = false;
-                break;
-            }
+        console.log(`New apple pos: ${strVector2D(applePos)}`);
+        if (state.snakePos.some((pos) => eqVector2D(pos, applePos))) {
+            foundValidPos = false;
+            console.log("New apple position overlaps snake, trying again");
         }
         if (foundValidPos) return applePos;
     } while (true);
@@ -126,8 +125,8 @@ function tick(newState) {
     if (newState.gameOver) return newState;
     moveSnake(newState);
     drawState(newState);
-    console.log("tick, new state:");
-    console.log(newState);
+    // console.log("tick, new state:");
+    // console.log(newState);
     return newState;
 }
 
@@ -274,6 +273,10 @@ function addVector2D(a, b) {
 
 function eqVector2D(a, b) {
     return a.x === b.x && a.y === b.y;
+}
+
+function strVector2D(v) {
+    return `(${v.x}, ${v.y})`;
 }
 
 /**
