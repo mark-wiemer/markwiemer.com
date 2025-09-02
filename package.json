@@ -1,7 +1,6 @@
 {
     "scripts": {
-        "build": "cd pages/politics/trump-litigation && npm run build",
-        "build:ci": "cd pages/politics/trump-litigation && npm i && npm run build",
+        "build": "node src/build.js",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "lint": "npm run sort-package-json && npm run format",
@@ -20,5 +19,6 @@
         "http-server": "^14.1.1",
         "prettier": "^3.5.3",
         "sort-package-json": "^2.12.0"
-    }
+    },
+    "type": "module"
 }
