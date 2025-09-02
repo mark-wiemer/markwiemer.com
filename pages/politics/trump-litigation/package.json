@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "module",
     "scripts": {
-        "build": "tsc && vite build",
+        "build": "tsc && vite build && echo \"Trump litigation build complete\"",
         "preci": "npx playwright install",
         "ci": "start-server-and-test start:ci http-get://localhost:8080 playwright",
         "format": "npm run format:inner -- --check .",
