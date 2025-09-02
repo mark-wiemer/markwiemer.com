@@ -1,10 +1,12 @@
 {
     "type": "module",
     "scripts": {
-        "build": "node build.js",
+        "build": "node build.js && npm run build:format",
+        "build:format": "prettier ../../site/blog/** --write",
         "clean": "rimraf ../../site/blog/**"
     },
     "dependencies": {
+        "prettier": "^3.6.2",
         "rehype-external-links": "^3.0.0",
         "rehype-raw": "^7.0.0",
         "rehype-stringify": "^10.0.1",
