@@ -18,7 +18,7 @@ async function build() {
     console.log(`Building ${fileNames.length} ${fileNames.length === 1 ? "file" : "files"}`);
     const templatePath = path.join(blogDir, "template.html");
     const template = fs.readFileSync(templatePath, "utf8");
-    const replace = `<div id="article"></div>`;
+    const replace = `<!-- __ARTICLE_CONTENTS__ -->`;
     for (const fileName of fileNames) {
         const filePath = path.join(blogDir, fileName);
         const mdString = fs.readFileSync(filePath, "utf8");
