@@ -28,7 +28,7 @@ async function build() {
         const htmlBodyString = await remark()
             .use(remarkRehype, { allowDangerousHtml: true })
             .use(rehypeRaw)
-            .use(rehypeExternalLinks, { target: "_blank", rel: ["noopener"] })
+            .use(rehypeExternalLinks, { target: "_blank", rel: ["noreferrer"] })
             .use(rehypeStringify, { allowDangerousHtml: true })
             .process(mdString);
         const outName = fileName.replace(/\.md$/, ".html").slice("yyyy-mm-dd-".length);

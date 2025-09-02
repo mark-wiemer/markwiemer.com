@@ -5,7 +5,7 @@ export const ExternalLink: React.FC<{ href: string; children: React.ReactNode }>
     children,
 }) => {
     return (
-        <Link href={href} target="_blank" rel="noopener noreferrer">
+        <Link href={href} target="_blank" rel="noreferrer noreferrer">
             {children}
         </Link>
         // todo add icon to indicate external link
