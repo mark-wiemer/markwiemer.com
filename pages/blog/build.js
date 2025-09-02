@@ -1,15 +1,17 @@
 import fs from "fs";
 import path from "path";
 import { remark } from "remark";
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
+import rehypeExternalLinks from "rehype-external-links";
 import rehypeRaw from "rehype-raw";
+import rehypeStringify from "rehype-stringify";
+import remarkRehype from "remark-rehype";
 
 /**
  * Turn all markdown files in this folder
  * into HTML in the `site` folder
  * using remark, remark-rehype, and rehype-stringify.
- * Wrap the contents with `template.html`
+ * - Wrap the contents with `template.html`
+ * - Have external links safely open in a new tab
  * Ref https://www.npmjs.com/package/remark-html#when-should-i-use-this
  */
 async function build() {
@@ -26,6 +28,7 @@ async function build() {
         const htmlBodyString = await remark()
             .use(remarkRehype, { allowDangerousHtml: true })
             .use(rehypeRaw)
+            .use(rehypeExternalLinks, { target: "_blank", rel: ["noopener"] })
             .use(rehypeStringify, { allowDangerousHtml: true })
             .process(mdString);
         const outName = fileName.replace(/\.md$/, ".html").slice("yyyy-mm-dd-".length);
