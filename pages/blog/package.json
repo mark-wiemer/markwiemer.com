@@ -1,0 +1,13 @@
+{
+    "type": "module",
+    "scripts": {
+        "build": "node build.js",
+        "clean": "rimraf ../../site/blog/**"
+    },
+    "dependencies": {
+        "rehype-stringify": "^10.0.1",
+        "remark": "^15.0.1",
+        "remark-rehype": "^11.1.2",
+        "rimraf": "^6.0.1"
+    }
+}
