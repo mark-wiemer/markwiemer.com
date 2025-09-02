@@ -37,9 +37,9 @@ async function build() {
         const outPath = path.join(siteDir, outName);
         const fullHtml = template.replace(replace, htmlBodyString);
         fs.writeFileSync(outPath, String(fullHtml));
-        console.log(`Built ${outPath}`);
+        console.log(`Wrote ${outPath}`);
     }
-    console.log("Build complete");
+    console.log(`All blog HTML written to site dir`);
 }
 
 build();
