@@ -3,7 +3,7 @@
     "scripts": {
         "build": "node build.js && npm run build:format && echo \"Blog build complete\"",
         "build:format": "prettier ../../site/blog/** --write",
-        "clean": "rimraf ../../site/blog/**"
+        "clean": "find ../../site/blog -type f ! -name 'index.html' -exec rimraf {} +"
     },
     "dependencies": {
         "prettier": "^3.6.2",
