@@ -3,6 +3,7 @@ import path from "path";
 import { remark } from "remark";
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
+import rehypeRaw from "rehype-raw";
 
 /**
  * Turn all markdown files in this folder
@@ -23,8 +24,9 @@ async function build() {
         const filePath = path.join(blogDir, fileName);
         const mdString = fs.readFileSync(filePath, "utf8");
         const htmlBodyString = await remark()
-            .use(remarkRehype)
-            .use(rehypeStringify)
+            .use(remarkRehype, { allowDangerousHtml: true })
+            .use(rehypeRaw)
+            .use(rehypeStringify, { allowDangerousHtml: true })
             .process(mdString);
         const outName = fileName.replace(/\.md$/, ".html").slice("yyyy-mm-dd-".length);
         const outPath = path.join(siteDir, outName);
