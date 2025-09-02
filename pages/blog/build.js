@@ -16,7 +16,9 @@ import remarkRehype from "remark-rehype";
  */
 async function build() {
     const blogDir = path.dirname(new URL(import.meta.url).pathname);
-    const fileNames = fs.readdirSync(blogDir).filter((f) => f.endsWith(".md"));
+    const fileNames = fs
+        .readdirSync(blogDir)
+        .filter((f) => f.endsWith(".md") && !(f === "readme.md"));
     const siteDir = path.join(blogDir, "..", "..", "site", "blog");
     console.log(`Building ${fileNames.length} ${fileNames.length === 1 ? "file" : "files"}`);
     const templatePath = path.join(blogDir, "template.html");
