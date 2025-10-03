@@ -220,6 +220,9 @@ function handleInput(e, dirs, state) {
         newState.paused = !newState.paused;
         return newState;
     }
+    if (e.key === "r") {
+        return calcInitialState(state.boardSize, state.cellSize, state.ctx, dirs);
+    }
     // console.log(`Unused key pressed: '${e.key}'`);
     return newState;
 }
