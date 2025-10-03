@@ -57,6 +57,7 @@ function main() {
  * @returns {GameState} a starting game state
  */
 function calcInitialState(boardSize, cellSize, ctx, dirs) {
+    /** @type {GameState} */
     let state = {
         boardSize,
         cellSize,
