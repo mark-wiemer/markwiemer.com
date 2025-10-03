@@ -1,16 +1,27 @@
 main();
 
-function main() {
+/**
+ * @returns {Result<{canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D}>}
+ */
+function getDomElements() {
     const canvas = document.querySelector("canvas");
     if (canvas === null) {
-        console.error("Failed to get canvas");
-        return -1;
+        return { success: false, error: "Failed to get canvas" };
     }
     const ctx = canvas.getContext("2d");
     if (ctx === null) {
-        console.error("Failed to get canvas context");
+        return { success: false, error: "Failed to get canvas context" };
+    }
+    return { success: true, value: { canvas, ctx } };
+}
+
+function main() {
+    const getDomElementsResult = getDomElements();
+    if (!getDomElementsResult.success) {
+        console.log(getDomElementsResult.error);
         return -1;
     }
+    const { canvas, ctx } = getDomElementsResult.value;
     /** Fraction of shorter side of screen to take up */
     // includes small margin for scroll window for now
     const relativeSize = 0.9;
@@ -321,11 +332,25 @@ function setCanvasSize(size, canvas) {
 }
 
 /**
+ * @typedef {Object} FailResult
+ * @property {false} success
+ * @property {string} error message when not successful
+ */
+/**
+ * @template T
+ * @typedef {Object} SuccessResult
+ * @property {true} success
+ * @property {T} value
+ */
+/**
+ * @template T
+ * @typedef {FailResult|SuccessResult<T>} Result
+ */
+/**
  * @typedef {Object} Vector2D
  * @property {number} x Horizontal component, positive is to the right
  * @property {number} y Vertical component, positive is downward
  */
-
 /**
  * Unit vectors in cardinal directions
  * @typedef {Object} Directions
@@ -334,7 +359,6 @@ function setCanvasSize(size, canvas) {
  * @property {Vector2D} left Unit vector going left
  * @property {Vector2D} right Unit vector going right
  */
-
 /**
  * Mono-object tracking game state. Could be a bunch of globals, but this is easier to track
  * @typedef {Object} GameState
@@ -350,6 +374,9 @@ function setCanvasSize(size, canvas) {
  * First entry is snake's head
  */
 
+//
+// Klona library
+//
 /**
  * Copied from https://github.com/lukeed/klona, MIT licensed,
  * copyright Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
