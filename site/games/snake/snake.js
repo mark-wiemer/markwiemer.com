@@ -1,9 +1,9 @@
-import { getDomElements } from "../game.js";
+import * as core from "../game.js";
 
 main();
 
 function main() {
-    const getDomElementsResult = getDomElements();
+    const getDomElementsResult = core.getDomElements();
     if (!getDomElementsResult.success) {
         console.error(getDomElementsResult.error);
         return -1;
@@ -15,13 +15,13 @@ function main() {
 
     /** Number of cells per side */
     const boardSize = 32;
-    const canvasSize = calcCanvasSize(
+    const canvasSize = core.calcCanvasSize(
         window.innerWidth,
         window.innerHeight,
         relativeSize,
         boardSize,
     );
-    setCanvasSize(canvasSize, canvas);
+    core.setCanvasSize(canvasSize, canvas);
     const cellSize = canvasSize / boardSize;
 
     /**
@@ -303,30 +303,6 @@ function fillCell(cell, color, cellSize, ctx) {
     ctx.fillStyle = color;
     ctx.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize, color);
     ctx.fillStyle = oldFillStyle;
-}
-
-/**
- * Get the width and height of the canvas
- * @param {number} windowWidth Inner width of window
- * @param {number} windowHeight Inner height of window
- * @param {number} relativeSize Fraction of window size to take up, from 0 to 1
- * @param {number} boardSize Number of cells per side of the game board (int)
- * @returns {number} Width and height of square canvas, with guarantees:
- * - is an integer
- * - takes up less than or exactly relative size of window
- * - divisible by boardSize
- */
-function calcCanvasSize(windowWidth, windowHeight, relativeSize, boardSize) {
-    // console.debug(`getCanvasSize(${windowWidth}, ${windowHeight}, ${relativeSize}, ${boardSize})`);
-    const rawSideLength = Math.min(windowWidth, windowHeight) * relativeSize;
-    const roundedSideLength = Math.floor(rawSideLength / boardSize) * boardSize;
-    // console.debug(`getCanvasSize returning ${roundedSideLength}`);
-    return roundedSideLength;
-}
-
-function setCanvasSize(size, canvas) {
-    canvas.setAttribute("width", size);
-    canvas.setAttribute("height", size);
 }
 
 /**
