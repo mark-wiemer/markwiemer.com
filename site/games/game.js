@@ -1,12 +1,4 @@
 /**
- * @template T
- * @typedef {Object} Result
- * @property {boolean} success
- * @property {T} [value] - Present when success is true
- * @property {string} [error] - Present when success is false
- */
-
-/**
  * Gets the canvas and 2D context from the DOM
  * @returns {Result<{canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D}>}
  */
@@ -21,3 +13,19 @@ export function getDomElements() {
     }
     return { success: true, value: { canvas, ctx } };
 }
+
+/**
+ * @typedef {Object} FailResult
+ * @property {false} success
+ * @property {string} error message when not successful
+ */
+/**
+ * @template T
+ * @typedef {Object} SuccessResult
+ * @property {true} success
+ * @property {T} value
+ */
+/**
+ * @template T
+ * @typedef {FailResult|SuccessResult<T>} Result
+ */
