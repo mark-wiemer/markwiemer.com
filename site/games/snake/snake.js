@@ -1,29 +1,27 @@
+import * as core from "../game.js";
+
 main();
 
 function main() {
-    const canvas = document.querySelector("canvas");
-    if (canvas === null) {
-        console.error("Failed to get canvas");
+    const getDomElementsResult = core.getDomElements();
+    if (!getDomElementsResult.success) {
+        console.error(getDomElementsResult.error);
         return -1;
     }
-    const ctx = canvas.getContext("2d");
-    if (ctx === null) {
-        console.error("Failed to get canvas context");
-        return -1;
-    }
+    const { canvas, ctx } = getDomElementsResult.value;
     /** Fraction of shorter side of screen to take up */
     // includes small margin for scroll window for now
     const relativeSize = 0.9;
 
     /** Number of cells per side */
     const boardSize = 32;
-    const canvasSize = calcCanvasSize(
+    const canvasSize = core.calcCanvasSize(
         window.innerWidth,
         window.innerHeight,
         relativeSize,
         boardSize,
     );
-    setCanvasSize(canvasSize, canvas);
+    core.setCanvasSize(canvasSize, canvas);
     const cellSize = canvasSize / boardSize;
 
     /**
@@ -39,15 +37,14 @@ function main() {
     /** @type {GameState} */
     let state = calcInitialState(boardSize, cellSize, ctx, dirs);
 
-    // console.log("Starting game with state:");
-    // console.log(state);
+    console.debug("Starting game with state:");
+    console.debug(state);
     drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
+        state.interval = setInterval(() => (state = tick(klona(state))), Math.floor(1000.0 / 16));
     });
-
-    state.interval = setInterval(() => (state = tick(klona(state))), Math.floor(1000.0 / 16));
 }
 
 /**
@@ -59,6 +56,7 @@ function main() {
  * @returns {GameState} a starting game state
  */
 function calcInitialState(boardSize, cellSize, ctx, dirs) {
+    /** @type {GameState} */
     let state = {
         boardSize,
         cellSize,
@@ -78,6 +76,7 @@ function calcInitialState(boardSize, cellSize, ctx, dirs) {
 /**
  * Returns a valid position for an apple
  * @param {GameState} state
+ * @returns {Vector2D} A position that doesn't overlap with the snake
  */
 function calcApplePos(state) {
     do {
@@ -87,10 +86,10 @@ function calcApplePos(state) {
             x: Math.floor(Math.random() * state.boardSize),
             y: Math.floor(Math.random() * state.boardSize),
         };
-        // console.log(`New apple pos: ${strVector2D(applePos)}`);
+        // console.debug(`New apple pos: ${strVector2D(applePos)}`);
         if (state.snakePos.some((pos) => eqVector2D(pos, applePos))) {
             foundValidPos = false;
-            // console.log("New apple position overlaps snake, trying again");
+            // console.debug("New apple position overlaps snake, trying again");
         }
         if (foundValidPos) return applePos;
     } while (true);
@@ -106,7 +105,7 @@ function calcApplePos(state) {
 function drawState(state) {
     state.ctx.fillStyle = "black";
     state.ctx.fillRect(0, 0, state.cellSize * state.boardSize, state.cellSize * state.boardSize);
-    for (cell of state.snakePos) {
+    for (const cell of state.snakePos) {
         fillCell(cell, "cornflowerblue", state.cellSize, state.ctx);
     }
     fillCell(state.applePos, "darkred", state.cellSize, state.ctx);
@@ -125,8 +124,8 @@ function tick(newState) {
     if (newState.gameOver) return newState;
     moveSnake(newState);
     drawState(newState);
-    // console.log("tick, new state:");
-    // console.log(newState);
+    // console.debug("tick, new state:");
+    // console.debug(newState);
     return newState;
 }
 
@@ -147,7 +146,7 @@ function calcGameOver(state) {
         newHeadPos.y < 0 ||
         newHeadPos.y >= state.boardSize
     ) {
-        // console.log("Game over, crashed into wall");
+        // console.debug("Game over, crashed into wall");
         state.gameOver = true;
         return;
     }
@@ -159,7 +158,7 @@ function calcGameOver(state) {
             .slice(3, state.snakePos.length - 1)
             .some((pos) => eqVector2D(pos, newHeadPos))
     ) {
-        // console.log("Game over, crashed into self");
+        // console.debug("Game over, crashed into self");
         state.gameOver = true;
         return;
     }
@@ -195,7 +194,7 @@ function moveSnake(state) {
  */
 function handleInput(e, dirs, state) {
     const newState = klona(state);
-    // console.log("keydown", e);
+    // console.debug("keydown", e);
     // Debug mode: tick then pause
     if (e.key === " ") {
         newState.paused = false;
@@ -206,24 +205,24 @@ function handleInput(e, dirs, state) {
     // Change direction
     const newDir = keyToDir(e.key, dirs);
     if (newDir) {
-        // console.log("newDir", newDir);
+        // console.debug("newDir", newDir);
         if (isValidDir(newState, newDir)) {
             newState.snakeDirs.push(newDir);
         } else {
-            // console.log("New direction not valid, ignoring");
+            // console.debug("New direction not valid, ignoring");
         }
         return newState;
     }
     // Pause and unpause
     if (e.key === "Escape") {
-        // console.log(`${newState.paused ? "Unpausing" : "Pausing"}`);
+        // console.debug(`${newState.paused ? "Unpausing" : "Pausing"}`);
         newState.paused = !newState.paused;
         return newState;
     }
     if (e.key === "r") {
         return calcInitialState(state.boardSize, state.cellSize, state.ctx, dirs);
     }
-    // console.log(`Unused key pressed: '${e.key}'`);
+    // console.debug(`Unused key pressed: '${e.key}'`);
     return newState;
 }
 
@@ -240,12 +239,11 @@ function isValidDir(state, dir) {
 }
 
 /**
- *
+ * Convert keyboard key to direction vector
  * @param {string} key Key string, e.g. `w` or `ArrowUp`
- *
  * [MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key)
  * @param {Directions} dirs
- * @returns
+ * @returns {Vector2D|undefined} Direction vector or undefined if key doesn't match
  */
 function keyToDir(key, dirs) {
     switch (key) {
@@ -274,10 +272,21 @@ function addVector2D(a, b) {
     return { x: a.x + b.x, y: a.y + b.y };
 }
 
+/**
+ * Check if two vectors are equal
+ * @param {Vector2D} a First vector
+ * @param {Vector2D} b Second vector
+ * @returns {boolean} True if vectors have same x and y components
+ */
 function eqVector2D(a, b) {
     return a.x === b.x && a.y === b.y;
 }
 
+/**
+ * Convert vector to string representation
+ * @param {Vector2D} v Vector to convert
+ * @returns {string} String in format "(x, y)"
+ */
 function strVector2D(v) {
     return `(${v.x}, ${v.y})`;
 }
@@ -297,35 +306,10 @@ function fillCell(cell, color, cellSize, ctx) {
 }
 
 /**
- * Get the width and height of the canvas
- * @param {number} windowWidth Inner width of window
- * @param {number} windowHeight Inner height of window
- * @param {number} relativeSize Fraction of window size to take up, from 0 to 1
- * @param {number} boardSize Number of cells per side of the game board (int)
- * @returns {number} Width and height of square canvas, with guarantees:
- * - is an integer
- * - takes up less than or exactly relative size of window
- * - divisible by boardSize
- */
-function calcCanvasSize(windowWidth, windowHeight, relativeSize, boardSize) {
-    // console.log(`getCanvasSize(${windowWidth}, ${windowHeight}, ${relativeSize}, ${boardSize})`);
-    const rawSideLength = Math.min(windowWidth, windowHeight) * relativeSize;
-    const roundedSideLength = Math.floor(rawSideLength / boardSize) * boardSize;
-    // console.log(`getCanvasSize returning ${roundedSideLength}`);
-    return roundedSideLength;
-}
-
-function setCanvasSize(size, canvas) {
-    canvas.setAttribute("width", size);
-    canvas.setAttribute("height", size);
-}
-
-/**
  * @typedef {Object} Vector2D
  * @property {number} x Horizontal component, positive is to the right
  * @property {number} y Vertical component, positive is downward
  */
-
 /**
  * Unit vectors in cardinal directions
  * @typedef {Object} Directions
@@ -334,7 +318,6 @@ function setCanvasSize(size, canvas) {
  * @property {Vector2D} left Unit vector going left
  * @property {Vector2D} right Unit vector going right
  */
-
 /**
  * Mono-object tracking game state. Could be a bunch of globals, but this is easier to track
  * @typedef {Object} GameState
@@ -350,6 +333,9 @@ function setCanvasSize(size, canvas) {
  * First entry is snake's head
  */
 
+//
+// Klona library
+//
 /**
  * Copied from https://github.com/lukeed/klona, MIT licensed,
  * copyright Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
@@ -364,7 +350,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 function klona(val) {
-    var k, out, tmp;
+    let k, out, tmp;
 
     if (Array.isArray(val)) {
         out = Array((k = val.length));
