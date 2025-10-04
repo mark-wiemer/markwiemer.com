@@ -58,3 +58,50 @@ export function setCanvasSize(size, canvas) {
  * @template T
  * @typedef {FailResult|SuccessResult<T>} Result
  */
+
+//#region Vectors
+
+/**
+ * @typedef {Object} Vector2D
+ * @property {number} x Horizontal component, positive is to the right
+ * @property {number} y Vertical component, positive is downward
+ */
+/**
+ * Unit vectors in cardinal directions
+ * @typedef {Object} Directions
+ * @property {Vector2D} up Unit vector upward
+ * @property {Vector2D} down Unit vector downward
+ * @property {Vector2D} left Unit vector going left
+ * @property {Vector2D} right Unit vector going right
+ */
+
+/**
+ * Add two vectors
+ * @param {import("../game.js").Vector2D} a First vector to add
+ * @param {import("../game.js").Vector2D} b Second vector to add
+ * @returns {import("../game.js").Vector2D} Sum of two vectors
+ */
+export function addVector2D(a, b) {
+    return { x: a.x + b.x, y: a.y + b.y };
+}
+
+/**
+ * Check if two vectors are equal
+ * @param {import("../game.js").Vector2D} a First vector
+ * @param {import("../game.js").Vector2D} b Second vector
+ * @returns {boolean} True if vectors have same x and y components
+ */
+export function eqVector2D(a, b) {
+    return a.x === b.x && a.y === b.y;
+}
+
+/**
+ * Convert vector to string representation
+ * @param {import("../game.js").Vector2D} v Vector to convert
+ * @returns {string} String in format "(x, y)"
+ */
+export function strVector2D(v) {
+    return `(${v.x}, ${v.y})`;
+}
+
+//#endregion Vectors
