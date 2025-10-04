@@ -42,7 +42,7 @@ function main() {
     drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
-        // document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
+        document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
         /** ticks per second. Game will rerender this frequently as well. */
         const tps = 60;
         state.interval = setInterval(
@@ -50,6 +50,43 @@ function main() {
             Math.floor(1000.0 / tps),
         );
     });
+}
+
+/**
+ * Modifies the game state according to the user input
+ * - Escape quits the game, clearing state interval
+ * - WASD or arrow keys moves the snake, pushing an entry to `snakeDirs`
+ * @param {KeyboardEvent} e
+ * @param {Directions} dirs
+ * @param {GameState} state
+ */
+function handleInput(e, dirs, state) {
+    const newState = core.klona(state);
+    // console.debug("keydown", e);
+    // Debug mode: tick then pause
+    if (e.key === " ") {
+        newState.paused = false;
+        tick(newState);
+        newState.paused = true;
+        return newState;
+    }
+    // Change direction
+    const newDir = core.keyToDir(e.key, dirs);
+    if (newDir) {
+        newState.carAcc = newDir;
+        return newState;
+    }
+    // Pause and unpause
+    if (e.key === "Escape") {
+        // console.debug(`${newState.paused ? "Unpausing" : "Pausing"}`);
+        newState.paused = !newState.paused;
+        return newState;
+    }
+    if (e.key === "r") {
+        return calcInitialState(state.boardSize, state.cellSize, state.ctx, dirs);
+    }
+    // console.debug(`Unused key pressed: '${e.key}'`);
+    return newState;
 }
 
 /**
@@ -66,8 +103,8 @@ function calcInitialState(boardSize, cellSize, ctx) {
         boardSize,
         boardPxSize: boardSize * cellSize,
         carPos: { x: boardCenter, y: boardCenter },
-        carVel: { x: 1, y: 1 },
-        carAcc: { x: 1, y: 1 },
+        carVel: { x: 0, y: 0 },
+        carAcc: { x: 0, y: 0 },
         cellSize,
         ctx,
     };
@@ -104,6 +141,7 @@ function drawState(state) {
  * @typedef {Object} GameState
  * @property {number} boardSize number of cells on each side of the board. Each cell holds one track piece.
  * @property {import("../game.js").Vector2D} boardPxSize width and height of board
+ * @property {import("../game.js").Vector2D} carAcc acceleration of player's car, in pixels per tick^2
  * @property {import("../game.js").Vector2D} carPos center position of the player's car, in pixels from top left
  * @property {import("../game.js").Vector2D} carVel velocity of player's car, in pixels per tick
  * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
