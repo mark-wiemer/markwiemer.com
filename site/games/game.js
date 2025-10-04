@@ -15,12 +15,12 @@ export function getDomElements() {
 }
 
 /**
- * Get the width and height of the canvas
+ * Calc the desired width and height of a square tiled canvas
  * @param {number} windowWidth Inner width of window
  * @param {number} windowHeight Inner height of window
  * @param {number} relativeSize Fraction of window size to take up, from 0 to 1
  * @param {number} boardSize Number of cells per side of the game board (int)
- * @returns {number} Width and height of square canvas, with guarantees:
+ * @returns {number} Desired width and height of a square canvas, in pixels, with guarantees:
  * - is an integer
  * - takes up less than or exactly relative size of window
  * - divisible by boardSize
