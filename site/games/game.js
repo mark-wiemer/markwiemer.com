@@ -44,6 +44,20 @@ export function setCanvasSize(size, canvas) {
 }
 
 /**
+ *
+ * @param {Vector2D} cell Cell coordinate to fill
+ * @param {string} color CSS color string
+ * @param {CanvasRenderingContext2D} ctx
+ * @returns {void} But returns ctx.fillStyle to previous value
+ */
+export function fillCell(cell, color, cellSize, ctx) {
+    const oldFillStyle = ctx.fillStyle;
+    ctx.fillStyle = color;
+    ctx.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize, color);
+    ctx.fillStyle = oldFillStyle;
+}
+
+/**
  * @typedef {Object} FailResult
  * @property {false} success
  * @property {string} error message when not successful

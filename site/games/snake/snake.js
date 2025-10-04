@@ -107,9 +107,9 @@ function drawState(state) {
     state.ctx.fillStyle = "black";
     state.ctx.fillRect(0, 0, state.cellSize * state.boardSize, state.cellSize * state.boardSize);
     for (const cell of state.snakePos) {
-        fillCell(cell, "cornflowerblue", state.cellSize, state.ctx);
+        core.fillCell(cell, "cornflowerblue", state.cellSize, state.ctx);
     }
-    fillCell(state.applePos, "darkred", state.cellSize, state.ctx);
+    core.fillCell(state.applePos, "darkred", state.cellSize, state.ctx);
 }
 
 /**
@@ -261,20 +261,6 @@ function keyToDir(key, dirs) {
         case "ArrowRight":
             return dirs.right;
     }
-}
-
-/**
- *
- * @param {import("../game.js").Vector2D} cell Cell coordinate to fill
- * @param {string} color CSS color string
- * @param {CanvasRenderingContext2D} ctx
- * @returns {undefined} But returns ctx.fillStyle to previous value
- */
-function fillCell(cell, color, cellSize, ctx) {
-    const oldFillStyle = ctx.fillStyle;
-    ctx.fillStyle = color;
-    ctx.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize, color);
-    ctx.fillStyle = oldFillStyle;
 }
 
 /**
