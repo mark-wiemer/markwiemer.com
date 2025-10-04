@@ -1,3 +1,6 @@
+// Helper functions for a browser game using JavaScript and an HTML canvas
+
+//#region Canvas and drawing
 /**
  * Gets the canvas and 2D context from the DOM
  * @returns {Result<{canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D}>}
@@ -56,7 +59,9 @@ export function fillCell(cell, color, cellSize, ctx) {
     ctx.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize, color);
     ctx.fillStyle = oldFillStyle;
 }
+//#endregion Canvas an drawing
 
+//#region General types
 /**
  * @typedef {Object} FailResult
  * @property {false} success
@@ -72,9 +77,9 @@ export function fillCell(cell, color, cellSize, ctx) {
  * @template T
  * @typedef {FailResult|SuccessResult<T>} Result
  */
+//#endregion General types
 
 //#region Vectors
-
 /**
  * @typedef {Object} Vector2D
  * @property {number} x Horizontal component, positive is to the right
@@ -117,14 +122,9 @@ export function eqVector2D(a, b) {
 export function strVector2D(v) {
     return `(${v.x}, ${v.y})`;
 }
-
 //#endregion Vectors
 
 //#region Klona
-
-//
-// Klona library
-//
 /**
  * Copied from https://github.com/lukeed/klona, MIT licensed,
  * copyright Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
