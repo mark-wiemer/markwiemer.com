@@ -24,25 +24,15 @@ function main() {
     core.setCanvasSize(canvasSize, canvas);
     const cellSize = canvasSize / boardSize;
 
-    /**
-     * @type {Directions}
-     */
-    const dirs = {
-        up: { x: 0, y: -1 },
-        down: { x: 0, y: 1 },
-        left: { x: -1, y: 0 },
-        right: { x: 1, y: 0 },
-    };
-
     /** @type {GameState} */
-    let state = calcInitialState(boardSize, cellSize, ctx, dirs);
+    let state = calcInitialState(boardSize, cellSize, ctx, core.dirs);
 
     console.debug("Starting game with state:");
     console.debug(state);
     drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
+        document.addEventListener("keydown", (e) => (state = handleInput(e, core.dirs, state)));
         state.interval = setInterval(
             () => (state = tick(core.klona(state))),
             Math.floor(1000.0 / 16),
@@ -210,7 +200,7 @@ function handleInput(e, dirs, state) {
         return newState;
     }
     // Change direction
-    const newDir = keyToDir(e.key, dirs);
+    const newDir = core.keyToDir(e.key, dirs);
     if (newDir) {
         // console.debug("newDir", newDir);
         if (isValidDir(newState, newDir)) {
@@ -243,30 +233,6 @@ function handleInput(e, dirs, state) {
 function isValidDir(state, dir) {
     const relevantDir = state.snakeDirs[state.snakeDirs.length - 1] ?? state.snakeDir;
     return (relevantDir.x + dir.x) % 2 !== 0;
-}
-
-/**
- * Convert keyboard key to direction vector
- * @param {string} key Key string, e.g. `w` or `ArrowUp`
- * [MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key)
- * @param {Directions} dirs
- * @returns {import("../game.js").Vector2D | undefined} Direction vector or undefined if key doesn't match
- */
-function keyToDir(key, dirs) {
-    switch (key) {
-        case "w":
-        case "ArrowUp":
-            return dirs.up;
-        case "s":
-        case "ArrowDown":
-            return dirs.down;
-        case "a":
-        case "ArrowLeft":
-            return dirs.left;
-        case "d":
-        case "ArrowRight":
-            return dirs.right;
-    }
 }
 
 /**

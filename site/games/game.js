@@ -61,6 +61,33 @@ export function fillCell(cell, color, cellSize, ctx) {
 }
 //#endregion Canvas an drawing
 
+//#region User input
+/**
+ * Convert keyboard key to direction vector
+ * @param {string} key Key string, e.g. `w` or `ArrowUp`
+ * [MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key)
+ * @param {Directions} dirs
+ * @returns {import("../game.js").Vector2D | undefined} Direction vector or undefined if key doesn't match
+ */
+export function keyToDir(key, dirs) {
+    switch (key) {
+        case "w":
+        case "ArrowUp":
+            return dirs.up;
+        case "s":
+        case "ArrowDown":
+            return dirs.down;
+        case "a":
+        case "ArrowLeft":
+            return dirs.left;
+        case "d":
+        case "ArrowRight":
+            return dirs.right;
+    }
+    return undefined;
+}
+//#endregion User input
+
 //#region General types
 /**
  * @typedef {Object} FailResult
@@ -93,6 +120,16 @@ export function fillCell(cell, color, cellSize, ctx) {
  * @property {Vector2D} left Unit vector going left
  * @property {Vector2D} right Unit vector going right
  */
+
+/**
+ * @type {Directions}
+ */
+export const dirs = {
+    up: { x: 0, y: -1 },
+    down: { x: 0, y: 1 },
+    left: { x: -1, y: 0 },
+    right: { x: 1, y: 0 },
+};
 
 /**
  * Add two vectors
