@@ -24,26 +24,19 @@ function main() {
     core.setCanvasSize(canvasSize, canvas);
     const cellSize = canvasSize / boardSize;
 
-    /**
-     * @type {Directions}
-     */
-    const dirs = {
-        up: { x: 0, y: -1 },
-        down: { x: 0, y: 1 },
-        left: { x: -1, y: 0 },
-        right: { x: 1, y: 0 },
-    };
-
     /** @type {GameState} */
-    let state = calcInitialState(boardSize, cellSize, ctx, dirs);
+    let state = calcInitialState(boardSize, cellSize, ctx, core.dirs);
 
     console.debug("Starting game with state:");
     console.debug(state);
     drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
-        state.interval = setInterval(() => (state = tick(klona(state))), Math.floor(1000.0 / 16));
+        document.addEventListener("keydown", (e) => (state = handleInput(e, core.dirs, state)));
+        state.interval = setInterval(
+            () => (state = tick(core.klona(state))),
+            Math.floor(1000.0 / 16),
+        );
     });
 }
 
@@ -76,23 +69,24 @@ function calcInitialState(boardSize, cellSize, ctx, dirs) {
 /**
  * Returns a valid position for an apple
  * @param {GameState} state
- * @returns {Vector2D} A position that doesn't overlap with the snake
+ * @returns {import("../game.js").Vector2D} A position that doesn't overlap with the snake
  */
 function calcApplePos(state) {
+    let foundValidPos = false;
     do {
-        let foundValidPos = true;
-        /** @type {Vector2D} */
+        /** @type {import("../game.js").Vector2D} */
         let applePos = {
             x: Math.floor(Math.random() * state.boardSize),
             y: Math.floor(Math.random() * state.boardSize),
         };
-        // console.debug(`New apple pos: ${strVector2D(applePos)}`);
-        if (state.snakePos.some((pos) => eqVector2D(pos, applePos))) {
+        foundValidPos = true; // assume it worked
+        // console.debug(`New apple pos: ${core.strVector2D(applePos)}`);
+        if (state.snakePos.some((pos) => core.eqVector2D(pos, applePos))) {
             foundValidPos = false;
             // console.debug("New apple position overlaps snake, trying again");
         }
         if (foundValidPos) return applePos;
-    } while (true);
+    } while (!foundValidPos);
 }
 
 /**
@@ -103,12 +97,15 @@ function calcApplePos(state) {
  * @param {GameState} state
  */
 function drawState(state) {
+    // draw black background
     state.ctx.fillStyle = "black";
     state.ctx.fillRect(0, 0, state.cellSize * state.boardSize, state.cellSize * state.boardSize);
+    // draw each snake cell
     for (const cell of state.snakePos) {
-        fillCell(cell, "cornflowerblue", state.cellSize, state.ctx);
+        core.fillCell(cell, "cornflowerblue", state.cellSize, state.ctx);
     }
-    fillCell(state.applePos, "darkred", state.cellSize, state.ctx);
+    // draw apple
+    core.fillCell(state.applePos, "darkred", state.cellSize, state.ctx);
 }
 
 /**
@@ -138,7 +135,7 @@ function tick(newState) {
 function calcGameOver(state) {
     if (state.gameOver) return;
     const newDir = state.snakeDirs[0] ?? state.snakeDir;
-    const newHeadPos = addVector2D(state.snakePos[0], newDir);
+    const newHeadPos = core.addVector2D(state.snakePos[0], newDir);
     // If crashed into wall
     if (
         newHeadPos.x < 0 ||
@@ -156,7 +153,7 @@ function calcGameOver(state) {
             // first 4 positions can't intersect with new head pos
             // last position intersecting isn't a problem, it will move out of the way
             .slice(3, state.snakePos.length - 1)
-            .some((pos) => eqVector2D(pos, newHeadPos))
+            .some((pos) => core.eqVector2D(pos, newHeadPos))
     ) {
         // console.debug("Game over, crashed into self");
         state.gameOver = true;
@@ -178,9 +175,9 @@ function calcGameOver(state) {
 function moveSnake(state) {
     const oldHead = state.snakePos[0];
     state.snakeDir = state.snakeDirs.shift() ?? state.snakeDir;
-    const newHead = addVector2D(oldHead, state.snakeDir);
+    const newHead = core.addVector2D(oldHead, state.snakeDir);
     state.snakePos.unshift(newHead);
-    if (eqVector2D(newHead, state.applePos)) state.applePos = calcApplePos(state);
+    if (core.eqVector2D(newHead, state.applePos)) state.applePos = calcApplePos(state);
     else state.snakePos.pop();
 }
 
@@ -193,7 +190,7 @@ function moveSnake(state) {
  * @param {GameState} state
  */
 function handleInput(e, dirs, state) {
-    const newState = klona(state);
+    const newState = core.klona(state);
     // console.debug("keydown", e);
     // Debug mode: tick then pause
     if (e.key === " ") {
@@ -203,7 +200,7 @@ function handleInput(e, dirs, state) {
         return newState;
     }
     // Change direction
-    const newDir = keyToDir(e.key, dirs);
+    const newDir = core.keyToDir(e.key, dirs);
     if (newDir) {
         // console.debug("newDir", newDir);
         if (isValidDir(newState, newDir)) {
@@ -230,7 +227,7 @@ function handleInput(e, dirs, state) {
  * Dir can be queued if it's perpendicular to last queued dir.
  * - If no other dir queued, then given dir must be perp. to current dir.
  * @param {GameState} state
- * @param {Vector2D} dir
+ * @param {import("../game.js").Vector2D} dir
  * @returns {boolean} Whether the given dir can be queued onto the given state
  */
 function isValidDir(state, dir) {
@@ -239,141 +236,16 @@ function isValidDir(state, dir) {
 }
 
 /**
- * Convert keyboard key to direction vector
- * @param {string} key Key string, e.g. `w` or `ArrowUp`
- * [MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key)
- * @param {Directions} dirs
- * @returns {Vector2D|undefined} Direction vector or undefined if key doesn't match
- */
-function keyToDir(key, dirs) {
-    switch (key) {
-        case "w":
-        case "ArrowUp":
-            return dirs.up;
-        case "s":
-        case "ArrowDown":
-            return dirs.down;
-        case "a":
-        case "ArrowLeft":
-            return dirs.left;
-        case "d":
-        case "ArrowRight":
-            return dirs.right;
-    }
-}
-
-/**
- * Add two vectors
- * @param {Vector2D} a First vector to add
- * @param {Vector2D} b Second vector to add
- * @returns {Vector2D} Sum of two vectors
- */
-function addVector2D(a, b) {
-    return { x: a.x + b.x, y: a.y + b.y };
-}
-
-/**
- * Check if two vectors are equal
- * @param {Vector2D} a First vector
- * @param {Vector2D} b Second vector
- * @returns {boolean} True if vectors have same x and y components
- */
-function eqVector2D(a, b) {
-    return a.x === b.x && a.y === b.y;
-}
-
-/**
- * Convert vector to string representation
- * @param {Vector2D} v Vector to convert
- * @returns {string} String in format "(x, y)"
- */
-function strVector2D(v) {
-    return `(${v.x}, ${v.y})`;
-}
-
-/**
- *
- * @param {Vector2D} cell Cell coordinate to fill
- * @param {string} color CSS color string
- * @param {CanvasRenderingContext2D} ctx
- * @returns {undefined} But returns ctx.fillStyle to previous value
- */
-function fillCell(cell, color, cellSize, ctx) {
-    const oldFillStyle = ctx.fillStyle;
-    ctx.fillStyle = color;
-    ctx.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize, color);
-    ctx.fillStyle = oldFillStyle;
-}
-
-/**
- * @typedef {Object} Vector2D
- * @property {number} x Horizontal component, positive is to the right
- * @property {number} y Vertical component, positive is downward
- */
-/**
- * Unit vectors in cardinal directions
- * @typedef {Object} Directions
- * @property {Vector2D} up Unit vector upward
- * @property {Vector2D} down Unit vector downward
- * @property {Vector2D} left Unit vector going left
- * @property {Vector2D} right Unit vector going right
- */
-/**
  * Mono-object tracking game state. Could be a bunch of globals, but this is easier to track
  * @typedef {Object} GameState
- * @property {Vector2D} applePos position of current apple
+ * @property {import("../game.js").Vector2D} applePos position of current apple
  * @property {number} boardSize number of cells on each side of the board
  * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
  * @property {CanvasRenderingContext2D} ctx Canvas context for drawing the game. Only for view
  * @property {NodeJS.Timeout} interval Tick interval, never cleared
  * @property {boolean} paused Whether the game is paused
- * @property {Vector2D} snakeDir current direction snake is moving in
+ * @property {import("../game.js").Vector2D} snakeDir current direction snake is moving in
  * @property {Vector2D[]} snakeDirs queued directions for the snake to turn in
  * @property {Vector2D[]} snakePos current positions of the snake's body.
  * First entry is snake's head
  */
-
-//
-// Klona library
-//
-/**
- * Copied from https://github.com/lukeed/klona, MIT licensed,
- * copyright Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
- * @param {any} val Input to deep clone
- * @returns {any} Deep clone of input
- */
-/*
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-function klona(val) {
-    let k, out, tmp;
-
-    if (Array.isArray(val)) {
-        out = Array((k = val.length));
-        while (k--) out[k] = (tmp = val[k]) && typeof tmp === "object" ? klona(tmp) : tmp;
-        return out;
-    }
-
-    if (Object.prototype.toString.call(val) === "[object Object]") {
-        out = {}; // null
-        for (k in val) {
-            if (k === "__proto__") {
-                Object.defineProperty(out, k, {
-                    value: klona(val[k]),
-                    configurable: true,
-                    enumerable: true,
-                    writable: true,
-                });
-            } else {
-                out[k] = (tmp = val[k]) && typeof tmp === "object" ? klona(tmp) : tmp;
-            }
-        }
-        return out;
-    }
-
-    return val;
-}
