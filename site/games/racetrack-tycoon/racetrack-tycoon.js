@@ -42,8 +42,13 @@ function main() {
     drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
-        state.interval = setInterval(() => (state = tick(klona(state))), Math.floor(1000.0 / 16));
+        // document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
+        /** ticks per second. Game will rerender this frequently as well. */
+        const tps = 60;
+        state.interval = setInterval(
+            () => (state = tick(core.klona(state))),
+            Math.floor(1000.0 / tps),
+        );
     });
 }
 
@@ -52,13 +57,17 @@ function main() {
  * @param {number} boardSize Number of cells on each size of the board
  * @param {number} cellSize Size in pixels of each board cell
  * @param {CanvasRenderingContext2D} ctx Drawing context for the canvas
- * @param {Directions} dirs
  * @returns {GameState} a starting game state
  */
-function calcInitialState(boardSize, cellSize, ctx, dirs) {
+function calcInitialState(boardSize, cellSize, ctx) {
+    const boardCenter = Math.floor((boardSize * cellSize) / 2);
     /** @type {GameState} */
-    let state = {
+    const state = {
         boardSize,
+        boardPxSize: boardSize * cellSize,
+        carPos: { x: boardCenter, y: boardCenter },
+        carVel: { x: 1, y: 1 },
+        carAcc: { x: 1, y: 1 },
         cellSize,
         ctx,
     };
@@ -66,9 +75,37 @@ function calcInitialState(boardSize, cellSize, ctx, dirs) {
 }
 
 /**
+ * Core game loop
+ * @param {GameState} state
+ * @returns {GameState} modified state (impure)
+ */
+function tick(state) {
+    state.carPos = core.addVector2D(state.carPos, state.carVel);
+    state.carVel = core.addVector2D(state.carVel, state.carAcc);
+    drawState(state);
+    return state;
+}
+
+/**
+ * Draws the car
+ * @param {GameState} state
+ */
+function drawState(state) {
+    // draw black background
+    state.ctx.fillStyle = "black";
+    state.ctx.fillRect(0, 0, state.cellSize * state.boardSize, state.cellSize * state.boardSize);
+    // draw car
+    state.ctx.fillStyle = "red";
+    state.ctx.fillRect(state.carPos.x, state.carPos.y, 40, 40);
+}
+
+/**
  * Mono-object tracking game state. Could be a bunch of globals, but this is easier to track
  * @typedef {Object} GameState
  * @property {number} boardSize number of cells on each side of the board. Each cell holds one track piece.
+ * @property {import("../game.js").Vector2D} boardPxSize width and height of board
+ * @property {import("../game.js").Vector2D} carPos center position of the player's car, in pixels from top left
+ * @property {import("../game.js").Vector2D} carVel velocity of player's car, in pixels per tick
  * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
  * @property {CanvasRenderingContext2D} ctx Canvas context for drawing the game. Only for view
  * @property {NodeJS.Timeout} interval Tick interval, never cleared
