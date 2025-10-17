@@ -65,7 +65,7 @@ function handleInput(e, dirs, state) {
     const newDir = core.keyToDir(e.key, dirs);
     if (newDir) {
         if (e.type === "keyup") {
-            newState.carAcc = dirs.none;
+            newState.carAcc = dirs.zero;
         } else {
             newState.carAcc = newDir;
         }
@@ -117,8 +117,8 @@ function tick(state) {
     state.carVel = core.addVector2D(state.carVel, state.carAcc);
     // apply friction when not accelerating: reduce velocity vector magnitude by one unit, down to zero minimum
     if (
-        core.eqVector2D(state.carAcc, core.dirs.none) &&
-        !core.eqVector2D(state.carVel, core.dirs.none)
+        core.eqVector2D(state.carAcc, core.dirs.zero) &&
+        !core.eqVector2D(state.carVel, core.dirs.zero)
     ) {
         const magnitude = Math.sqrt(
             state.carVel.x * state.carVel.x + state.carVel.y * state.carVel.y,

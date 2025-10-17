@@ -113,13 +113,13 @@ export function keyToDir(key, dirs) {
  * @property {number} y Vertical component, positive is downward
  */
 /**
- * Unit vectors in cardinal directions
+ * Common vectors
  * @typedef {Object} Directions
  * @property {Vector2D} up Unit vector upward
  * @property {Vector2D} down Unit vector downward
  * @property {Vector2D} left Unit vector going left
  * @property {Vector2D} right Unit vector going right
- * @property {Vector2D} none Zero vector
+ * @property {Vector2D} zero Zero vector
  */
 
 /**
@@ -130,7 +130,7 @@ export const dirs = {
     down: { x: 0, y: 1 },
     left: { x: -1, y: 0 },
     right: { x: 1, y: 0 },
-    none: { x: 0, y: 0 },
+    zero: { x: 0, y: 0 },
 };
 
 /**
