@@ -67,7 +67,7 @@ export function fillCell(cell, color, cellSize, ctx) {
  * @param {string} key Key string, e.g. `w` or `ArrowUp`
  * [MDN reference](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key)
  * @param {Directions} dirs
- * @returns {import("../game.js").Vector2D | undefined} Direction vector or undefined if key doesn't match
+ * @returns {Vector2D | undefined} Direction vector or undefined if key doesn't match
  */
 export function keyToDir(key, dirs) {
     switch (key) {
@@ -135,12 +135,22 @@ export const dirs = {
 
 /**
  * Add two vectors
- * @param {import("../game.js").Vector2D} a First vector to add
- * @param {import("../game.js").Vector2D} b Second vector to add
- * @returns {import("../game.js").Vector2D} Sum of two vectors
+ * @param {Vector2D} a First vector to add
+ * @param {Vector2D} b Second vector to add
+ * @returns {Vector2D} Sum of two vectors
  */
 export function addVector2D(a, b) {
     return { x: a.x + b.x, y: a.y + b.y };
+}
+
+/**
+ * Check if two vectors are equal
+ * @param {Vector2D} a First vector
+ * @param {Vector2D} b Second vector
+ * @returns {boolean} True if vectors have same x and y components
+ */
+export function eqVector2D(a, b) {
+    return a.x === b.x && a.y === b.y;
 }
 
 export function multVector2D(v, k) {
@@ -148,18 +158,8 @@ export function multVector2D(v, k) {
 }
 
 /**
- * Check if two vectors are equal
- * @param {import("../game.js").Vector2D} a First vector
- * @param {import("../game.js").Vector2D} b Second vector
- * @returns {boolean} True if vectors have same x and y components
- */
-export function eqVector2D(a, b) {
-    return a.x === b.x && a.y === b.y;
-}
-
-/**
  * Convert vector to string representation
- * @param {import("../game.js").Vector2D} v Vector to convert
+ * @param {Vector2D} v Vector to convert
  * @returns {string} String in format "(x, y)"
  */
 export function strVector2D(v) {
