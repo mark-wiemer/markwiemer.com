@@ -120,10 +120,8 @@ function tick(state) {
         core.eqVector2D(state.carAcc, core.dirs.zero) &&
         !core.eqVector2D(state.carVel, core.dirs.zero)
     ) {
-        const magnitude = Math.sqrt(
-            state.carVel.x * state.carVel.x + state.carVel.y * state.carVel.y,
-        );
-        const unitVector = { x: state.carVel.x / magnitude, y: state.carVel.y / magnitude };
+        const magnitude = core.magnitudeOfVector2D(state.carVel);
+        const unitVector = core.toUnitVector2D(state.carVel);
         const frictionAmount = Math.min(1, magnitude); // don't overshoot to negative
         const frictionVector = core.multVector2D(unitVector, -frictionAmount);
         state.carVel = core.addVector2D(state.carVel, frictionVector);

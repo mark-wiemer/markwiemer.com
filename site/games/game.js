@@ -153,6 +153,21 @@ export function eqVector2D(a, b) {
     return a.x === b.x && a.y === b.y;
 }
 
+/**
+ *
+ * @param {Vector2D} v
+ * @returns {number} The magnitude of the vector
+ */
+export function magnitudeOfVector2D(v) {
+    return Math.sqrt(v.x * v.x + v.y * v.y);
+}
+
+/**
+ *
+ * @param {Vector2D} v
+ * @param {number} k
+ * @returns {Vector2D} The vector multiplied by the given scalar
+ */
 export function multVector2D(v, k) {
     return { x: v.x * k, y: v.y * k };
 }
@@ -164,6 +179,19 @@ export function multVector2D(v, k) {
  */
 export function strVector2D(v) {
     return `(${v.x}, ${v.y})`;
+}
+
+/**
+ * Returns the unit vector version of the given vector.
+ * Returns the given vector if its magnitude is zero.
+ * @param {Vector2D} v Vector to convert
+ * @returns {Vector2D} Unit vector in the same direction,
+ * or zero vector if `v` was zero vector
+ */
+export function toUnitVector2D(v) {
+    const magnitude = magnitudeOfVector2D(v);
+    if (magnitude === 0) return v;
+    return multVector2D(v, 1.0 / magnitude);
 }
 //#endregion Vectors
 
