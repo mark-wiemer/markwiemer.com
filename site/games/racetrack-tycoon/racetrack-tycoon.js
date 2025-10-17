@@ -54,18 +54,20 @@ function handleInput(e, state) {
     const newState = core.klona(state);
     // console.debug("keydown", e);
     // Debug mode: tick then pause
-    if (e.key === " ") {
+    if (e.key === " " && e.type === "keydown") {
         newState.paused = false;
         tick(newState);
         newState.paused = true;
         return newState;
     }
     // Change direction
+    // todo left and right turn wheels but don't change acc
     const newDir = core.keyToDir(e.key);
     if (newDir) {
         if (e.type === "keyup") {
             newState.carAcc = core.dirs.zero;
         } else {
+            // todo we need a hard top speed or this gets crazy fast
             newState.carAcc = newDir;
         }
         // console.debug("New car acc: ", newState.carAcc);
@@ -113,9 +115,11 @@ function calcInitialState(boardSize, cellSize, ctx) {
  * @returns {GameState} modified state (not pure)
  */
 function tick(state) {
+    if (state.paused) return state;
+    console.debug("tick");
     state.carPos = core.addVector2D(state.carPos, state.carVel);
     state.carVel = core.addVector2D(state.carVel, state.carAcc);
-    // apply friction when not accelerating: reduce velocity vector magnitude by one unit, down to zero minimum
+    // todo this friction logic sucks
     if (
         core.eqVector2D(state.carAcc, core.dirs.zero) &&
         !core.eqVector2D(state.carVel, core.dirs.zero)
