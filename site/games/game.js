@@ -69,7 +69,7 @@ export function fillCell(cell, color, cellSize, ctx) {
  * @param {Directions} dirs
  * @returns {Vector2D | undefined} Direction vector or undefined if key doesn't match
  */
-export function keyToDir(key, dirs) {
+export function keyToDir(key) {
     switch (key) {
         case "w":
         case "ArrowUp":

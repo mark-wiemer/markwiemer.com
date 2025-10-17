@@ -25,14 +25,14 @@ function main() {
     const cellSize = canvasSize / boardSize;
 
     /** @type {GameState} */
-    let state = calcInitialState(boardSize, cellSize, ctx, core.dirs);
+    let state = calcInitialState(boardSize, cellSize, ctx);
 
     console.debug("Starting game with state:");
     console.debug(state);
     drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("keydown", (e) => (state = handleInput(e, core.dirs, state)));
+        document.addEventListener("keydown", (e) => (state = handleInput(e, state)));
         state.interval = setInterval(
             () => (state = tick(core.klona(state))),
             Math.floor(1000.0 / 16),
@@ -45,16 +45,15 @@ function main() {
  * @param {number} boardSize Number of cells on each size of the board
  * @param {number} cellSize Size in pixels of each board cell
  * @param {CanvasRenderingContext2D} ctx Drawing context for the canvas
- * @param {import("../game.js").Directions} dirs
  * @returns {GameState} a starting game state
  */
-function calcInitialState(boardSize, cellSize, ctx, dirs) {
+function calcInitialState(boardSize, cellSize, ctx) {
     /** @type {GameState} */
     let state = {
         boardSize,
         cellSize,
         ctx,
-        snakeDir: dirs.down,
+        snakeDir: core.dirs.down,
         snakeDirs: [],
         snakePos: [
             { x: 0, y: 2 },
@@ -186,10 +185,9 @@ function moveSnake(state) {
  * - Escape quits the game, clearing state interval
  * - WASD or arrow keys moves the snake, pushing an entry to `snakeDirs`
  * @param {KeyboardEvent} e
- * @param {import("../game.js").Directions} dirs
  * @param {GameState} state
  */
-function handleInput(e, dirs, state) {
+function handleInput(e, state) {
     const newState = core.klona(state);
     // console.debug("keydown", e);
     // Debug mode: tick then pause
@@ -200,7 +198,7 @@ function handleInput(e, dirs, state) {
         return newState;
     }
     // Change direction
-    const newDir = core.keyToDir(e.key, dirs);
+    const newDir = core.keyToDir(e.key);
     if (newDir) {
         // console.debug("newDir", newDir);
         if (isValidDir(newState, newDir)) {
@@ -217,7 +215,7 @@ function handleInput(e, dirs, state) {
         return newState;
     }
     if (e.key === "r") {
-        return calcInitialState(state.boardSize, state.cellSize, state.ctx, dirs);
+        return calcInitialState(state.boardSize, state.cellSize, state.ctx);
     }
     // console.debug(`Unused key pressed: '${e.key}'`);
     return newState;

@@ -32,8 +32,8 @@ function main() {
     drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("keydown", (e) => (state = handleInput(e, core.dirs, state)));
-        document.addEventListener("keyup", (e) => (state = handleInput(e, core.dirs, state)));
+        document.addEventListener("keydown", (e) => (state = handleInput(e, state)));
+        document.addEventListener("keyup", (e) => (state = handleInput(e, state)));
         /** ticks per second. Game will rerender this frequently as well. */
         const tps = 60;
         state.interval = setInterval(
@@ -48,10 +48,9 @@ function main() {
  * - Escape quits the game, clearing state interval
  * - WASD or arrow keys moves the snake, pushing an entry to `snakeDirs`
  * @param {KeyboardEvent} e keydown or keyup event
- * @param {import("../game.js").Directions} dirs
  * @param {GameState} state
  */
-function handleInput(e, dirs, state) {
+function handleInput(e, state) {
     const newState = core.klona(state);
     // console.debug("keydown", e);
     // Debug mode: tick then pause
@@ -62,10 +61,10 @@ function handleInput(e, dirs, state) {
         return newState;
     }
     // Change direction
-    const newDir = core.keyToDir(e.key, dirs);
+    const newDir = core.keyToDir(e.key);
     if (newDir) {
         if (e.type === "keyup") {
-            newState.carAcc = dirs.zero;
+            newState.carAcc = core.dirs.zero;
         } else {
             newState.carAcc = newDir;
         }
@@ -79,7 +78,7 @@ function handleInput(e, dirs, state) {
         return newState;
     }
     if (e.key === "r") {
-        return calcInitialState(state.boardSize, state.cellSize, state.ctx, dirs);
+        return calcInitialState(state.boardSize, state.cellSize, state.ctx);
     }
     // console.debug(`Unused key pressed: '${e.key}'`);
     return newState;
