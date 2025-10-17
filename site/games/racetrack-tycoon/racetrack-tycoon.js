@@ -32,8 +32,8 @@ function main() {
     drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("keydown", (e) => (state = handleInput(e, state)));
-        document.addEventListener("keyup", (e) => (state = handleInput(e, state)));
+        document.addEventListener("keydown", (e) => (state = handleKeyDown(e, state)));
+        document.addEventListener("keyup", (e) => (state = handleKeyUp(e, state)));
         /** ticks per second. Game will rerender this frequently as well. */
         const tps = 60;
         state.interval = setInterval(
@@ -50,11 +50,11 @@ function main() {
  * @param {KeyboardEvent} e keydown or keyup event
  * @param {GameState} state
  */
-function handleInput(e, state) {
+function handleKeyDown(e, state) {
     const newState = core.klona(state);
     // console.debug("keydown", e);
     // Debug mode: tick then pause
-    if (e.key === " " && e.type === "keydown") {
+    if (e.key === " ") {
         newState.paused = false;
         tick(newState);
         newState.paused = true;
@@ -63,13 +63,9 @@ function handleInput(e, state) {
     // Change direction
     // todo left and right turn wheels but don't change acc
     const newDir = core.keyToDir(e.key);
-    if (newDir) {
-        if (e.type === "keyup") {
-            newState.carAcc = core.dirs.zero;
-        } else {
-            // todo we need a hard top speed or this gets crazy fast
-            newState.carAcc = newDir;
-        }
+    if (core.eqVector2D(newDir, core.dirs.up) || core.eqVector2D(newDir, core.dirs.down)) {
+        // todo we need a hard top speed or this gets crazy fast
+        newState.carVel = newDir;
         // console.debug("New car acc: ", newState.carAcc);
         return newState;
     }
@@ -82,7 +78,29 @@ function handleInput(e, state) {
     if (e.key === "r") {
         return calcInitialState(state.boardSize, state.cellSize, state.ctx);
     }
-    // console.debug(`Unused key pressed: '${e.key}'`);
+    // console.debug(`Unused key down: '${e.key}'`);
+    return newState;
+}
+
+/**
+ * Modifies the game state according to the user input
+ * - Escape quits the game, clearing state interval
+ * - WASD or arrow keys moves the snake, pushing an entry to `snakeDirs`
+ * @param {KeyboardEvent} e keydown or keyup event
+ * @param {GameState} state
+ */
+function handleKeyUp(e, state) {
+    const newState = core.klona(state);
+    // console.debug("keyup", e);
+    // Change direction
+    // todo left and right turn wheels but don't change acc
+    const newDir = core.keyToDir(e.key);
+    if (core.eqVector2D(newDir, core.dirs.up) || core.eqVector2D(newDir, core.dirs.down)) {
+        newState.carVel = core.dirs.zero;
+        // console.debug("New car acc: ", newState.carAcc);
+        return newState;
+    }
+    // console.debug(`Unused key up: '${e.key}'`);
     return newState;
 }
 
@@ -120,16 +138,16 @@ function tick(state) {
     state.carPos = core.addVector2D(state.carPos, state.carVel);
     state.carVel = core.addVector2D(state.carVel, state.carAcc);
     // todo this friction logic sucks
-    if (
-        core.eqVector2D(state.carAcc, core.dirs.zero) &&
-        !core.eqVector2D(state.carVel, core.dirs.zero)
-    ) {
-        const magnitude = core.magnitudeOfVector2D(state.carVel);
-        const unitVector = core.toUnitVector2D(state.carVel);
-        const frictionAmount = Math.min(1, magnitude); // don't overshoot to negative
-        const frictionVector = core.multVector2D(unitVector, -frictionAmount);
-        state.carVel = core.addVector2D(state.carVel, frictionVector);
-    }
+    // if (
+    //     core.eqVector2D(state.carAcc, core.dirs.zero) &&
+    //     !core.eqVector2D(state.carVel, core.dirs.zero)
+    // ) {
+    //     const magnitude = core.magnitudeOfVector2D(state.carVel);
+    //     const unitVector = core.toUnitVector2D(state.carVel);
+    //     const frictionAmount = Math.min(1, magnitude); // don't overshoot to negative
+    //     const frictionVector = core.multVector2D(unitVector, -frictionAmount);
+    //     state.carVel = core.addVector2D(state.carVel, frictionVector);
+    // }
     drawState(state);
     return state;
 }
