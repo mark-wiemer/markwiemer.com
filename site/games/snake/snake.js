@@ -45,7 +45,7 @@ function main() {
  * @param {number} boardSize Number of cells on each size of the board
  * @param {number} cellSize Size in pixels of each board cell
  * @param {CanvasRenderingContext2D} ctx Drawing context for the canvas
- * @param {Directions} dirs
+ * @param {import("../game.js").Directions} dirs
  * @returns {GameState} a starting game state
  */
 function calcInitialState(boardSize, cellSize, ctx, dirs) {
@@ -186,7 +186,7 @@ function moveSnake(state) {
  * - Escape quits the game, clearing state interval
  * - WASD or arrow keys moves the snake, pushing an entry to `snakeDirs`
  * @param {KeyboardEvent} e
- * @param {Directions} dirs
+ * @param {import("../game.js").Directions} dirs
  * @param {GameState} state
  */
 function handleInput(e, dirs, state) {

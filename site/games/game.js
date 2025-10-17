@@ -119,6 +119,7 @@ export function keyToDir(key, dirs) {
  * @property {Vector2D} down Unit vector downward
  * @property {Vector2D} left Unit vector going left
  * @property {Vector2D} right Unit vector going right
+ * @property {Vector2D} none Zero vector
  */
 
 /**
@@ -129,6 +130,7 @@ export const dirs = {
     down: { x: 0, y: 1 },
     left: { x: -1, y: 0 },
     right: { x: 1, y: 0 },
+    none: { x: 0, y: 0 },
 };
 
 /**
@@ -139,6 +141,10 @@ export const dirs = {
  */
 export function addVector2D(a, b) {
     return { x: a.x + b.x, y: a.y + b.y };
+}
+
+export function multVector2D(v, k) {
+    return { x: v.x * k, y: v.y * k };
 }
 
 /**

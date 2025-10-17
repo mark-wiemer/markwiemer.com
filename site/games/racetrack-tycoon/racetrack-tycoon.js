@@ -24,25 +24,16 @@ function main() {
     core.setCanvasSize(canvasSize, canvas);
     const cellSize = canvasSize / boardSize;
 
-    /**
-     * @type {Directions}
-     */
-    const dirs = {
-        up: { x: 0, y: -1 },
-        down: { x: 0, y: 1 },
-        left: { x: -1, y: 0 },
-        right: { x: 1, y: 0 },
-    };
-
     /** @type {GameState} */
-    let state = calcInitialState(boardSize, cellSize, ctx, dirs);
+    let state = calcInitialState(boardSize, cellSize, ctx, core.dirs);
 
     console.debug("Starting game with state:");
     console.debug(state);
     drawState(state);
 
     document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("keydown", (e) => (state = handleInput(e, dirs, state)));
+        document.addEventListener("keydown", (e) => (state = handleInput(e, core.dirs, state)));
+        document.addEventListener("keyup", (e) => (state = handleInput(e, core.dirs, state)));
         /** ticks per second. Game will rerender this frequently as well. */
         const tps = 60;
         state.interval = setInterval(
@@ -56,8 +47,8 @@ function main() {
  * Modifies the game state according to the user input
  * - Escape quits the game, clearing state interval
  * - WASD or arrow keys moves the snake, pushing an entry to `snakeDirs`
- * @param {KeyboardEvent} e
- * @param {Directions} dirs
+ * @param {KeyboardEvent} e keydown or keyup event
+ * @param {import("../game.js").Directions} dirs
  * @param {GameState} state
  */
 function handleInput(e, dirs, state) {
@@ -73,7 +64,12 @@ function handleInput(e, dirs, state) {
     // Change direction
     const newDir = core.keyToDir(e.key, dirs);
     if (newDir) {
-        newState.carAcc = newDir;
+        if (e.type === "keyup") {
+            newState.carAcc = dirs.none;
+        } else {
+            newState.carAcc = newDir;
+        }
+        // console.debug("New car acc: ", newState.carAcc);
         return newState;
     }
     // Pause and unpause
@@ -112,13 +108,26 @@ function calcInitialState(boardSize, cellSize, ctx) {
 }
 
 /**
- * Core game loop
+ * Core game loop, not pure
  * @param {GameState} state
- * @returns {GameState} modified state (impure)
+ * @returns {GameState} modified state (not pure)
  */
 function tick(state) {
     state.carPos = core.addVector2D(state.carPos, state.carVel);
     state.carVel = core.addVector2D(state.carVel, state.carAcc);
+    // apply friction when not accelerating: reduce velocity vector magnitude by one unit, down to zero minimum
+    if (
+        core.eqVector2D(state.carAcc, core.dirs.none) &&
+        !core.eqVector2D(state.carVel, core.dirs.none)
+    ) {
+        const magnitude = Math.sqrt(
+            state.carVel.x * state.carVel.x + state.carVel.y * state.carVel.y,
+        );
+        const unitVector = { x: state.carVel.x / magnitude, y: state.carVel.y / magnitude };
+        const frictionAmount = Math.min(1, magnitude); // don't overshoot to negative
+        const frictionVector = core.multVector2D(unitVector, -frictionAmount);
+        state.carVel = core.addVector2D(state.carVel, frictionVector);
+    }
     drawState(state);
     return state;
 }
