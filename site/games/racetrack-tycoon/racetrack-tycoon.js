@@ -99,8 +99,9 @@ function calcInitialState(boardSize, cellSize, ctx) {
         boardSize,
         boardPxSize: boardSize * cellSize,
         carPos: { x: boardCenter, y: boardCenter },
-        carVel: { x: 0, y: 0 },
-        carAcc: { x: 0, y: 0 },
+        carVel: core.dirs.zero,
+        carAcc: core.dirs.zero,
+        carDir: core.dirs.up, // car always points up for now
         cellSize,
         ctx,
     };
@@ -138,9 +139,21 @@ function drawState(state) {
     // draw black background
     state.ctx.fillStyle = "black";
     state.ctx.fillRect(0, 0, state.cellSize * state.boardSize, state.cellSize * state.boardSize);
-    // draw car
+
+    // draw car as triangle pointing in direction
+    const size = 20;
+    const carX = state.carPos.x;
+    const carY = state.carPos.y;
     state.ctx.fillStyle = "red";
-    state.ctx.fillRect(state.carPos.x, state.carPos.y, 40, 40);
+    state.ctx.beginPath();
+
+    // todo right now this always draws a vertical triangle
+    state.ctx.moveTo(carX, carY - size); // tip
+    state.ctx.lineTo(carX - size / 2, carY + size / 2); // bottom left
+    state.ctx.lineTo(carX + size / 2, carY + size / 2); // bottom right
+
+    state.ctx.closePath();
+    state.ctx.fill();
 }
 
 /**
@@ -151,6 +164,7 @@ function drawState(state) {
  * @property {import("../game.js").Vector2D} carAcc acceleration of player's car, in pixels per tick^2
  * @property {import("../game.js").Vector2D} carPos center position of the player's car, in pixels from top left
  * @property {import("../game.js").Vector2D} carVel velocity of player's car, in pixels per tick
+ * @property {import("../game.js").Vector2D} carDir direction the car is pointing (unit vector)
  * @property {number} cellSize side length, in pixels, of a game cell on the grid. Only for view
  * @property {CanvasRenderingContext2D} ctx Canvas context for drawing the game. Only for view
  * @property {NodeJS.Timeout} interval Tick interval, never cleared
