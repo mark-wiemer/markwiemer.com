@@ -4,13 +4,24 @@
 
 ### Summary
 
-Quotes are from Trump unless otherwise specified. I started watching about 50 minutes in.
+Quotes are from Trump unless otherwise specified. Notes are not comprehensive, there was a lot of rambling.
 
 - JD Vance not present
+- "We've done some other good ones"
+- Afghanistan was "an embarrasment"
+- "We're a respected country again"
 - Trump says US "will run Venezuela," says newly sworn in Venezuela president (Maduro's VP) will "do anything to make Venezuela great again, ... [she] said 'we'll do whatever you need.'&nbsp;"
+    - "We're gonna run it until such time as a proper transition can take place"
+    - "The oil business has been a total bust"
+    - "We're going to have our very large United States oil companies ... fix the very broken infrastructure"
     - "It's gonna make a lot of money"
     - To the people of Venezuela: "You're gonna have some of the riches that have been stolen from you"
     - We're gonna have a team working with the people of Venezuela
+- "We were prepared to do a second wave"
+    - "We assumed a second wave would be necessary, but now it's probably not ... we're prepared to do ... a much bigger wave"
+- "Everyone's coming back to us"
+- "Tariffs are--they've made our country rich, and they've made our national security strong, stronger than ever before"
+- "Other presidents may have lacked the courage or whatever to proect America"
 - Trump repeats threat: President of Colombia should "watch his ass"
 - Maduro will be brought to "New York"
 - "They stole our oil"
@@ -40,3 +51,5 @@ Quotes are from Trump unless otherwise specified. I started watching about 50 mi
 ### My thoughts
 
 This is just Afghanistan again :(
+
+Also... can Trump read?? He's really struggling here.
