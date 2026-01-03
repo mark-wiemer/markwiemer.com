@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { remark } from "remark";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeRaw from "rehype-raw";
@@ -15,7 +16,7 @@ import remarkRehype from "remark-rehype";
  * Ref https://www.npmjs.com/package/remark-html#when-should-i-use-this
  */
 async function build() {
-    const blogDir = path.dirname(new URL(import.meta.url).pathname);
+    const blogDir = path.dirname(fileURLToPath(import.meta.url));
     const fileNames = fs
         .readdirSync(blogDir)
         .filter((f) => f.endsWith(".md") && !(f === "readme.md"));
