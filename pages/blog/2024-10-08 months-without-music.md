@@ -30,11 +30,11 @@ On the day one parent served the other papers, Wynonna ate about nine square inc
 
 For the next month I was on self-imposed house arrest with my dog as I didn't really have anyone to drop her off with. She was in a cone for the first week or so, then back to training, then she was behaving pretty well. I reached out to the day care and they were eager to make things right. I gave them a shot. I now take Wynonna back there on a regular basis and haven't had a problem since.
 
-<hr />
+---
 
 I returned to work in March to the highest severity incident my team had ever been assigned. Microsoft's Secure Future Initiative had begun. Our work was derailed, reprioritized, and lots was cut. But we learned a lot about security procedures that we hadn't enabled by default, and helped other teams follow in our footsteps, and our team has consistently been ahead of the curve. I just wish it wasn't so darn stressful.
 
-<hr />
+---
 
 <img
     src="/assets/2024-XX-XX Wynonna crate.jpg"
@@ -51,7 +51,7 @@ When we finished a batch of security work, I did find time to work on AI, and we
 
 And I reduced our page load time by 80%, that was fun. And I started an initiative to modernize kind of everything about our website, because we weren't experts when we started in 2020 and we hadn't made significant upgrades to our tooling, well, ever. It's been a blast learning about everything that's changed in the JavaScript ecosystem in the last 10 years. Things are almost stable! 🤓
 
-<hr />
+---
 
 I realized the clouds had started to lift. I hadn't been sick in months. Wynonna could stay in her crate for seconds, even minutes at a time without going crazy. Security became part of our workflow, not a disruption to it. So I doubled down on my big coding project: AHK++.
 
@@ -61,7 +61,7 @@ The problem is that AutoHotkey released a major upgrade back in 2023, and AHK++ 
 
 A few weeks of coding later I had merged my project with a different one, turning it into a true Wiemenstein's monster of code completions and syntax highlighting. But it worked: I had extracted the global config (not easy!), reorganized the user settings for readability, and hand-tested every feature (don't get me started on automated testing support for VS Code extensions!!). And it worked! AHK++ 6 was published on September 1, 2024, only one day after my self-imposed deadline.
 
-<hr />
+---
 
 <img
     src="/assets/2024-09-14 wedding profile.jpg"
@@ -86,7 +86,7 @@ But yesterday morning was also when my oldest brother recommended to me my new f
 
 I hadn't added any music to my playlist since February. I didn't even remember the last time I had listened to it.
 
-<hr />
+---
 
 Six months without music is a pretty long time. I'm sure I listened to a song or two here or there, right? Probably. Hopefully.
 
