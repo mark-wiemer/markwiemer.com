@@ -37,7 +37,17 @@ async function build() {
         const htmlBodyString = await remark()
             .use(remarkRehype, { allowDangerousHtml: true })
             .use(rehypeRaw)
-            .use(rehypeExternalLinks, { target: "_blank", rel: ["noreferrer"] })
+            .use(rehypeExternalLinks, {
+                target: "_blank",
+                rel: ["noreferrer"],
+                test: (node) => {
+                    const href = node.properties?.href;
+                    if (!href) return false;
+                    const url = new URL(href, "https://markwiemer.com");
+                    const domain = url.hostname;
+                    return !["markwiemer.com", "ahkpp.com"].includes(domain);
+                },
+            })
             .use(rehypeStringify, { allowDangerousHtml: true })
             .process(mdString);
         const outName = fileName.replace(/\.md$/, ".html").slice("yyyy-mm-dd-".length);
