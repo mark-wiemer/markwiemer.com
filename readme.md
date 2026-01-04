@@ -1,5 +1,8 @@
 # [markwiemer.com](https://markwiemer.com)
 
+> [!IMPORTANT]
+> This project has moved to [my hello-hello monorepo](https://github.com/mark-wiemer/hello-hello/tree/main/packages/markwiemer.com), it's not abandoned!
+
 My personal site hosting my articles, pictures of my dog, and other stuff I like 😊
 
 ## Developer notes
